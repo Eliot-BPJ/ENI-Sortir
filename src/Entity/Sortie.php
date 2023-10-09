@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SortieRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,6 +36,29 @@ class Sortie
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $motifAnnulation = null;
+
+
+
+    #[ORM\ManyToOne(inversedBy: 'sorties')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Sites $site = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Lieu $lieux = null;
+
+    #[ORM\OneToMany(mappedBy: 'sortie', targetEntity: Inscription::class, orphanRemoval: true)]
+    private Collection $inscriptions;
+
+    #[ORM\ManyToOne(inversedBy: 'sorties')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?utilisateur $organisateur = null;
+
+    public function __construct()
+    {
+        $this->inscriptions = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -120,6 +145,72 @@ class Sortie
     public function setMotifAnnulation(?string $motifAnnulation): static
     {
         $this->motifAnnulation = $motifAnnulation;
+
+        return $this;
+    }
+
+    public function getSite(): ?Sites
+    {
+        return $this->site;
+    }
+
+    public function setSite(?Sites $site): static
+    {
+        $this->site = $site;
+
+        return $this;
+    }
+
+    public function getLieux(): ?Lieu
+    {
+        return $this->lieux;
+    }
+
+    public function setLieux(?Lieu $lieux): static
+    {
+        $this->lieux = $lieux;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Inscription>
+     */
+    public function getInscriptions(): Collection
+    {
+        return $this->inscriptions;
+    }
+
+    public function addInscription(Inscription $inscription): static
+    {
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions->add($inscription);
+            $inscription->setSortie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Inscription $inscription): static
+    {
+        if ($this->inscriptions->removeElement($inscription)) {
+            // set the owning side to null (unless already changed)
+            if ($inscription->getSortie() === $this) {
+                $inscription->setSortie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getOrganisateur(): ?utilisateur
+    {
+        return $this->organisateur;
+    }
+
+    public function setOrganisateur(?utilisateur $organisateur): static
+    {
+        $this->organisateur = $organisateur;
 
         return $this;
     }
