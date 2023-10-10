@@ -23,11 +23,6 @@ class Inscription
     #[ORM\JoinColumn(nullable: false)]
     private ?Sortie $sortie = null;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getDateInscription(): ?\DateTimeInterface
     {
         return $this->dateInscription;
