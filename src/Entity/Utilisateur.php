@@ -42,6 +42,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $telephone = null;
 
     #[ORM\Column]
+    //A garder ou pas ? Doublon avec Role
     private ?bool $administrateur = null;
 
     #[ORM\Column]

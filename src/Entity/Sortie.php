@@ -43,7 +43,7 @@ class Sortie
     #[ORM\JoinColumn(nullable: false)]
     private ?Sites $site = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(cascade: ["persist"])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Lieu $lieux = null;
 
