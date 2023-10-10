@@ -14,13 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/utilisateur', name: 'app_utilisateur')]
 class UtilisateurController extends AbstractController
 {
-    /*#[Route('/', name: 'app_utilisateur')]
-    public function index(): Response
-    {
-        return $this->render('utilisateur/index.html.twig');
-    }*/
 
-    //#[Route('/ajouter', name: '_ajouter')]
     #[Route('/modifier/{id}', name: '_modifier')]
     public function editer(Request $request,
                            EntityManagerInterface $entityManager,
@@ -28,7 +22,7 @@ class UtilisateurController extends AbstractController
                            UploadService $uploadService,
                            int $id = null): Response
     {
-
+        //TODO valeur a enlevé une fois les sessions faites !!!
         $id=1;
         $utilisateur = $utilisateurRepository->find($id);
 
@@ -55,15 +49,17 @@ class UtilisateurController extends AbstractController
                 $newFilename = $uploadService->upload($form->get('imageProfil')->getData(), $this->getParameter('imageProfil_directory'));
                 $utilisateur->setImageProfil($newFilename);
             }
+            if($utilisateur->getPassword() == $form->get('password')->getData()){
+                $entityManager->persist($utilisateur);
+                $entityManager->flush();
 
+                $this->addFlash(
+                    'success',
+                    'L \'utilisateur a été modifié !'
+                );
+            }
             // traitement des données
-            $entityManager->persist($utilisateur);
-            $entityManager->flush();
 
-            $this->addFlash(
-                'success',
-                'L \'utilisateur a été modifié !'
-            );
 
             //return $this->redirectToRoute('app_utilisateur_ajouter');
 
