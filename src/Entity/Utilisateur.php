@@ -44,6 +44,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $telephone = null;
 
     #[ORM\Column]
+    //A garder ou pas ? Doublon avec Role
     private ?bool $administrateur = null;
 
     #[ORM\Column]
@@ -58,6 +59,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Sortie::class)]
     private Collection $sorties;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageProfil = null;
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
