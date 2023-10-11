@@ -226,6 +226,18 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getImageProfil(): ?string
+    {
+        return $this->imageProfil;
+    }
+
+    public function setImageProfil(?string $imageProfil): static
+    {
+        $this->imageProfil = $imageProfil;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Inscription>
      */
@@ -297,15 +309,4 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    public function getImageProfil(): ?string
-    {
-        return $this->imageProfil;
-    }
-
-    public function setImageProfil(?string $imageProfil): void
-    {
-        $this->imageProfil = $imageProfil;
-    }
-
 }
