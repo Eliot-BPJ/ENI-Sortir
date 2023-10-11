@@ -37,11 +37,11 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $site = new Sites();
-            $site->setNom("Niort");
-            $sortie->setSite($site);
+            $sortie->setSite($this->getUser()->getIdSite());
+            $sortie->setOrganisateur($this->getUser());
 
-            $duree = date_diff($form->get("dateDebut")->getData(), $form->get("dateDebut")->getData());
+            $duree = $form->get("dateDebut")->getData()->diff($form->get("dateDebut")->getData());
+            $sortie->setDuree(intval($duree->format('%R%a minutes')));
 
             $entityManager->persist($sortie);
             $entityManager->flush();
