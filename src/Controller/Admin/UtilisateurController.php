@@ -56,7 +56,7 @@ class UtilisateurController extends AbstractController
      * @throws UnavailableStream
      * @throws Exception
      */
-    #[Route('/ajouter/csv', name: '_ajouter_csv')]
+    #[Route('/ajouter-csv', name: '_ajouter_csv')]
     public function importUsers(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, SitesRepository $sitesRepository): Response
     {
         $form = $this->createForm(RegisterWithCsvType::class);
