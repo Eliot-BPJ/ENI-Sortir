@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Utilisateur;
 use App\Form\UtilisateurType;
 use App\Repository\UtilisateurRepository;
 use App\Service\UploadService;
@@ -14,60 +15,41 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/utilisateur', name: 'app_utilisateur')]
 class UtilisateurController extends AbstractController
 {
-
-    #[Route('/modifier/{id}', name: '_modifier')]
+    #[Route('/modifier', name: '_modifier')]
     public function editer(Request $request,
                            EntityManagerInterface $entityManager,
-                           UtilisateurRepository $utilisateurRepository,
-                           UploadService $uploadService,
-                           int $id = null): Response
+                           UploadService $uploadService): Response
     {
-        //TODO valeur a enlevé une fois les sessions faites !!!
-        $id=1;
-        $utilisateur = $utilisateurRepository->find($id);
+        // Récupérez l'utilisateur connecté
+        $utilisateur = $this->getUser();
 
-        // je contrôle que l'utilisateur correspond bien à la personne connecté
-        if($utilisateur->getUserIdentifier() !== $this->getUser()){
-
-            $this->addFlash(
-                'danger',
-                'Non petit coquin, je sais où tu habites'
-            );
-
-            //return $this->redirectToRoute('app_admin_bien_lister');
-        }
-
-        $form = $this->createForm(UtilisateurType::class,$utilisateur);
-
+        // Créez le formulaire de modification
+        $form = $this->createForm(UtilisateurType::class, $utilisateur);
         $form->handleRequest($request);
 
-        // si le form est soumis et est valide
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
 
             // JE GERE L'UPLOAD ICI
             if ($form->get('imageProfil')->getData()) {
                 $newFilename = $uploadService->upload($form->get('imageProfil')->getData(), $this->getParameter('imageProfil_directory'));
                 $utilisateur->setImageProfil($newFilename);
             }
-            if($utilisateur->getPassword() == $form->get('password')->getData()){
-                $entityManager->persist($utilisateur);
-                $entityManager->flush();
+            // Enregistrez les modifications dans la base de données
+            $entityManager->persist($utilisateur);
+            $entityManager->flush();
 
-                $this->addFlash(
+            $this->addFlash(
                     'success',
                     'L \'utilisateur a été modifié !'
                 );
-            }
-            // traitement des données
 
-
-            //return $this->redirectToRoute('app_utilisateur_ajouter');
-
+            // Redirigez l'utilisateur vers une autre page (par exemple, page_bateau.html.twig)
+            return $this->redirectToRoute('app_page_bateau');
         }
 
-        return $this->render('utilisateur/index.html.twig',[
-            'form' => $form,
-            'utilisateur' => $utilisateur
+        return $this->render('utilisateur/index.html.twig', [
+            'form' => $form->createView(),
+            'utilisateur' => $utilisateur,
         ]);
     }
 }

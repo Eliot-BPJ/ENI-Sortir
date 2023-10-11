@@ -64,6 +64,7 @@ class AppFixtures extends Fixture
         $utilisateur->setAdministrateur(true);
         $utilisateur->setActif(true);
         $utilisateur->setIdSite($site);
+        $utilisateur->setImageProfil('fleurDelacours-6525394eca12a.jpg');
         $manager->persist($utilisateur);
 
         $utilisateur = new Utilisateur();
