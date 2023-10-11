@@ -30,7 +30,6 @@ class RegistrationController extends AbstractController
     {
         $user = new Utilisateur();
         $form = $this->createForm(RegistrationFormType::class, $user);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -56,10 +55,16 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
-
+            if($this->getUser()->getRoles()[0] === 'ROLE_ADMIN') {
+                return $this->redirectToRoute('app_admin_utilisateur_lister');
+            }
             return $this->redirectToRoute('app_login');
         }
-
+        if($this->getUser()->getRoles()[0] === 'ROLE_ADMIN') {
+            return $this->render('admin/utilisateur/adminRegister.html.twig', [
+                'registrationForm' => $form->createView(),
+            ]);
+        }
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
