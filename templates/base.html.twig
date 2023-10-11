@@ -54,7 +54,10 @@
         </div>
         <nav class="nav-links">
             <a href="#">Accueil</a>
+            {% if is_granted('ROLE_USER') %}
             <a href="{{ path('app_utilisateur_modifier') }}">Mon profil</a>
+            {% endif %}
+
             <a href="#">Se déconnecter</a>
         </nav>
     </div>

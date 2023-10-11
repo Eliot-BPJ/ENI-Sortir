@@ -7,8 +7,15 @@
 
         <h1 class="mb-4">Mon profile</h1>
 
-        {{ form_start(form) }}
+        <div class="col-md-4">
+            {% if utilisateur.imageProfil is not null %}
+                <img src="{{ asset('assets/uploads/' ~ utilisateur.imageProfil) }}" class="img-fluid rounded-start" alt="image profile">
+            {% else %}
+                <img src="{{ asset('assets/image_profile.jpg') }}" class="img-fluid rounded-start" alt="image profile">
+            {% endif %}
+        </div>
 
+        {{ form_start(form) }}
         <div class="row">
             <div class="col-4">
                 {{ form_row(form.pseudo) }}
@@ -26,21 +33,20 @@
                 {{ form_row(form.email) }}
             </div>
             <div class="col-4">
-                {{ form_row(form.password) }}
+                {{ form_row(form.password.first) }}
+            </div>
+            <div class="col-4">
+                {{ form_row(form.password.second) }}
             </div>
             <div class="col-4">
                 {{ form_row(form.idSite) }}
             </div>
             <div class="col-4">
-                <img src="" />
                 {{ form_row(form.imageProfil) }}
             </div>
         </div>
-
-            <button class="btn btn-primary" type="submit">Enregistrer</button>
-            <button class="btn btn-primary" type="submit">Annuler</button>
-
+        <button class="btn btn-primary" type="submit">Enregistrer</button>
+        <a href="{{ path('app_page_bateau') }}" class="btn btn-secondary">Annuler</a>
         {{ form_end(form) }}
-
     </div>
 {% endblock %}

@@ -34,13 +34,13 @@ class UtilisateurType extends AbstractType
             ->add('email',null, [
                 'label' => 'Email* :',
             ])
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'invalid_message' => 'Les mots de passe doivent correspondre.',
-                'required' => true,
-                'first_options'  => ['label' => 'Mot de passe* :'],
-                'second_options' => ['label' => 'Confirmation* :']
-            ])
+//            ->add('password', RepeatedType::class, [
+//                'type' => PasswordType::class,
+//                'invalid_message' => 'Les mots de passe doivent correspondre.',
+//                'required' => true,
+//                'first_options'  => ['label' => 'Mot de passe* :'],
+//                'second_options' => ['label' => 'Confirmation* :'],
+//            ])
             ->add('idSite', EntityType::class,[
                 'class' => Sites::class,
                 'choice_label' => 'nom',
