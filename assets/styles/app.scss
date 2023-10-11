@@ -1,0 +1,17 @@
+@import '~bootstrap/scss/bootstrap';
+
+header {
+    background-color: #63b7ff;
+    height: 48px;
+}
+footer {
+    background-color: #63b7ff;
+    height: 24px;
+}
+body {
+    background-color: #fafafa;
+}
+.page-container {
+    height: calc(100vh - 48px - 24px);
+    padding: 1em;
+}
