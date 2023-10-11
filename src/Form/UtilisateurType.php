@@ -39,12 +39,9 @@ class UtilisateurType extends AbstractType
                 'choice_label' => 'nom',
                 'label' => 'Ville de rattachement* :'
             ])
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'invalid_message' => 'Les mots de passe doivent correspondre.',
+            ->add('password', PasswordType::class, [
                 'required' => true,
-                'first_options'  => ['label' => 'Mot de passe* :'],
-                'second_options' => ['label' => 'Confirmation* :'],
+                'label' => 'Mot de passe* :',
                 'mapped' => false,
             ])
             ->add('imageProfil', FileType::class, [

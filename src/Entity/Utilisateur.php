@@ -72,9 +72,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         $this->sorties = new ArrayCollection();
     }
 
-
-
-
     public function getId(): ?int
     {
         return $this->id;
