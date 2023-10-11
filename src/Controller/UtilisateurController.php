@@ -31,7 +31,7 @@ class UtilisateurController extends AbstractController
 
             // JE GERE L'UPLOAD ICI
             if ($form->get('imageProfil')->getData()) {
-                $newFilename = $uploadService->upload($form->get('imageProfil')->getData(), $this->getParameter('imageProfil_directory'));
+                $newFilename = $uploadService->upload($form->get('imageProfil')->getData(), $this->getParameter('photo_profil'));
                 $utilisateur->setImageProfil($newFilename);
             }
             // Enregistrez les modifications dans la base de données
