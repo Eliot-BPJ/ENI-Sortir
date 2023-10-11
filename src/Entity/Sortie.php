@@ -59,7 +59,6 @@ class Sortie
         $this->inscriptions = new ArrayCollection();
     }
 
-
     public function getId(): ?int
     {
         return $this->id;
