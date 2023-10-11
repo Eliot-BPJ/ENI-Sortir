@@ -5,6 +5,12 @@
 {% block body %}
     <div class="container">
 
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-error" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         <h1 class="mb-4">Mon profile</h1>
 
         <div class="col-md-4">
@@ -32,12 +38,28 @@
             <div class="col-4">
                 {{ form_row(form.email) }}
             </div>
+
             <div class="col-4">
-                {{ form_row(form.password.first) }}
+                <div class="form-group">
+                    <div class="input-group">
+                        <label for="{{ form.password.first.vars.id }}">Mot de passe* :</label>
+                        {{ form_widget(form.password.first, {'attr': {'class': 'form-control form-control-sm password', 'aria-describedby': 'inputGroupPrepend', 'required': 'required', 'autocomplete': 'off'}}) }}
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.password.first) }}
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-4">
-                {{ form_row(form.password.second) }}
+                <div class="input-group">
+                    <label for="{{ form.password.second.vars.id }}">Confirmation* :</label>
+                    {{ form_widget(form.password.second, {'attr': {'class': 'form-control form-control-sm password', 'aria-describedby': 'inputGroupPrepend', 'required': 'required', 'autocomplete': 'off'}}) }}
+                    <div class="invalid-feedback">
+                        {{ form_errors(form.password.second) }}
+                    </div>
+                </div>
             </div>
+
             <div class="col-4">
                 {{ form_row(form.idSite) }}
             </div>
@@ -45,8 +67,25 @@
                 {{ form_row(form.imageProfil) }}
             </div>
         </div>
-        <button class="btn btn-primary" type="submit">Enregistrer</button>
+        <button class="btn btn-success" type="submit">Enregistrer</button>
         <a href="{{ path('app_page_bateau') }}" class="btn btn-secondary">Annuler</a>
+        <a href="{{ path('app_page_bateau') }}" class="btn btn-secondary">Modifier Mot de Passe</a>
+
         {{ form_end(form) }}
     </div>
+
+
+    <script>
+        // Check if passwords match
+        $(".password").on("keyup", function () {
+            if ($("#password").val() !== $("#confirmPassword").val()) {
+                $("#confirmPassword").get(0).setCustomValidity("Les mots de passe doivent correspondre.");
+            } else {
+                $("#confirmPassword").get(0).setCustomValidity("");
+            }
+        });
+
+    </script>
+
 {% endblock %}
+
