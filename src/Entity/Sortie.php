@@ -37,8 +37,6 @@ class Sortie
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $motifAnnulation = null;
 
-
-
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Sites $site = null;
@@ -47,12 +45,16 @@ class Sortie
     #[ORM\JoinColumn(nullable: false)]
     private ?Lieu $lieux = null;
 
-    #[ORM\OneToMany(mappedBy: 'sortie', targetEntity: Inscription::class, orphanRemoval: true)]
-    private Collection $inscriptions;
-
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $organisateur = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\Column(length: 10)]
+    private ?Etats $etat = null;
+
+    #[ORM\ManyToMany(targetEntity: Utilisateur::class, inversedBy: 'sorties')]
+    private Collection $inscriptions;
 
     public function __construct()
     {
@@ -172,36 +174,6 @@ class Sortie
         return $this;
     }
 
-    /**
-     * @return Collection<int, Inscription>
-     */
-    public function getInscriptions(): Collection
-    {
-        return $this->inscriptions;
-    }
-
-    public function addInscription(Inscription $inscription): static
-    {
-        if (!$this->inscriptions->contains($inscription)) {
-            $this->inscriptions->add($inscription);
-            $inscription->setSortie($this);
-        }
-
-        return $this;
-    }
-
-    public function removeInscription(Inscription $inscription): static
-    {
-        if ($this->inscriptions->removeElement($inscription)) {
-            // set the owning side to null (unless already changed)
-            if ($inscription->getSortie() === $this) {
-                $inscription->setSortie(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getOrganisateur(): ?utilisateur
     {
         return $this->organisateur;
@@ -210,6 +182,42 @@ class Sortie
     public function setOrganisateur(?utilisateur $organisateur): static
     {
         $this->organisateur = $organisateur;
+
+        return $this;
+    }
+
+    public function getEtat(): ?Etats
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(?Etats $etat): static
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Utilisateur>
+     */
+    public function getInscriptions(): Collection
+    {
+        return $this->inscriptions;
+    }
+
+    public function addInscription(Utilisateur $inscription): static
+    {
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions->add($inscription);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Utilisateur $inscription): static
+    {
+        $this->inscriptions->removeElement($inscription);
 
         return $this;
     }

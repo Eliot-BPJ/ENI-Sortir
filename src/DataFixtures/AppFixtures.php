@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Etats;
 use App\Entity\Lieu;
 use App\Entity\Sites;
 use App\Entity\Sortie;
@@ -106,10 +107,9 @@ class AppFixtures extends Fixture
         $sortie->setInfosSortie("Sortie au Prison Island avec 3 équipes de 3");
         $sortie->setSite($site);
         $sortie->setLieux($lieu);
+        $sortie->setEtat(Etats::Ouverte);
         $sortie->setOrganisateur($utilisateur);
         $manager->persist($sortie);
-
-
 
         $manager->flush();
     }
