@@ -40,8 +40,12 @@ class SortieController extends AbstractController
             $sortie->setSite($this->getUser()->getIdSite());
             $sortie->setOrganisateur($this->getUser());
 
-            $duree = $form->get("dateDebut")->getData()->diff($form->get("dateDebut")->getData());
-            $sortie->setDuree(intval($duree->format('%R%a minutes')));
+            $dateDeb = $form->get("dateDebut")->getData();
+            $dateFin = $form->get("dateRetour")->getData();
+            $diff_in_seconds = $dateFin->getTimestamp() - $dateDeb->getTimestamp();
+            $duree =  floor($diff_in_seconds / 60); #in minutes
+
+            $sortie->setDuree($duree);
 
             $entityManager->persist($sortie);
             $entityManager->flush();
