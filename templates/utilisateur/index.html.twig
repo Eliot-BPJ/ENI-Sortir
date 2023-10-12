@@ -1,66 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profile{% endblock %}
+{% block title %}Mon Profile{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('profil') }}
+{% endblock %}
 
 {% block body %}
     <div class="container">
-
         {% for message in app.flashes('error') %}
             <div class="alert alert-error" role="alert">
                 {{ message }}
             </div>
         {% endfor %}
 
-        <h1 class="mb-4">Mon profile</h1>
+        <div class="card mb-3" style="width: 80% ; padding: 8px;">
+            <div class="row g-0">
+                <h2 class="mb-4">Mon profile</h2>
+                <div class="card-body">
+                    {{ form_start(form, {'attr':{'class':'form-floating'}}) }}
 
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <div class="col-md-4">
-                    {% if utilisateur.imageProfil is not null %}
-                        <img src="{{ asset('assets/uploads/' ~ utilisateur.imageProfil) }}" class="img-fluid rounded-start" alt="image profile">
-                    {% else %}
-                        <img src="{{ asset('assets/image_profile.jpg') }}" class="img-fluid rounded-start" alt="image profile">
-                    {% endif %}
+                    <div class="form-floating mb-3">
+                        {{ form_row(form.pseudo, {'attr':{'class':'form-control'}}) }}
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_row(form.nom, {'attr':{'class':'form-control'}}) }}
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_row(form.prenom, {'attr':{'class':'form-control'}}) }}
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_row(form.telephone, {'attr':{'class':'form-control'}}) }}
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_row(form.email, {'attr':{'class':'form-select'}}) }}
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_row(form.password, {'attr':{'class':'form-control'}}) }}
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_row(form.idSite, {'attr':{'class':'form-select'}}) }}
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_row(form.imageProfil, {'attr':{'class':'form-control form-control-sm'}}) }}
+                    </div>
+
+                    <div class="col-sm" style="text-align: center">
+                        <button class="btn btn-success" type="submit">Enregistrer</button>
+                        <a href="{{ path('app_accueil') }}" class="btn btn-secondary">Annuler</a>
+                        <a href="{{ path('app_utilisateur_modifier_pw', {'id' : utilisateur.id}) }}" class="btn btn-primary">Modifier Mot de Passe</a>
+                    </div>
+                    {{ form_end(form) }}
                 </div>
-
-                {{ form_start(form) }}
-                <div class="row">
-                    <div class="col-4">
-                        {{ form_row(form.pseudo) }}
-                    </div>
-                    <div class="col-4">
-                        {{ form_row(form.prenom) }}
-                    </div>
-                    <div class="col-4">
-                        {{ form_row(form.nom) }}
-                    </div>
-                    <div class="col-4">
-                        {{ form_row(form.telephone) }}
-                    </div>
-                    <div class="col-4">
-                        {{ form_row(form.email) }}
-                    </div>
-
-                    <div class="col-4">
-                        {{ form_row(form.password) }}
-                        </div>
-                    </div>
-
-                    <div class="col-4">
-                        {{ form_row(form.idSite) }}
-                    </div>
-                    <div class="col-4">
-                        {{ form_row(form.imageProfil) }}
-                    </div>
-                </div>
-                <div class="col-sm" style="text-align: center">
-                    <button class="btn btn-success" type="submit">Enregistrer</button>
-                    <a href="{{ path('app_accueil') }}" class="btn btn-secondary">Annuler</a>
-                    <a href="{{ path('app_utilisateur_modifier_pw', {'id' : utilisateur.id}) }}" class="btn btn-primary">Modifier Mot de Passe</a>
-                </div>
-                {{ form_end(form) }}
             </div>
         </div>
 
 {% endblock %}
-

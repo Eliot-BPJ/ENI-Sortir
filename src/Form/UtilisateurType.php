@@ -45,7 +45,7 @@ class UtilisateurType extends AbstractType
                 'mapped' => false,
             ])
             ->add('imageProfil', FileType::class, [
-                'label' => 'Photo (PNG, JPG, BMP)* :)',
+                'label' => 'Photo (PNG, JPG, BMP)* :',
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
