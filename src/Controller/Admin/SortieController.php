@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\DTO\FiltersDTO;
 use App\Form\FiltersFormType;
 use App\Repository\SortieRepository;
-use PhpParser\Node\Expr\Array_;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AccueilController extends AbstractController
+#[Route('/admin/sortie', name: 'app_admin_sortie')]
+class SortieController extends AbstractController
 {
-    #[Route('/accueil/liste', name: 'app_accueil')]
-    public function index(SortieRepository $sortieRepository, Request $request): Response
+    #[Route('/', name: '_lister')]
+    public function index(Request $request, SortieRepository $sortieRepository): Response
     {
         $user = $this->getUser();
         if (!$user) {
@@ -46,9 +47,20 @@ class AccueilController extends AbstractController
             return !$sorties->isEstHistorise();
         });
 
-        return $this->render('accueil/index.html.twig',
+        return $this->render('admin/sortie/index.html.twig',
             ['sorties' => $sorties,
-             'form' => $form,
-             'inscrit' => $inscrit]);
+                'form' => $form,
+                'inscrit' => $inscrit]);
+    }
+    #[Route('/annuler/{id}', name: '_annuler')]
+    public function annulerSortie(EntityManagerInterface $entityManager,
+                                  SortieRepository $sortieRepository,
+                                  int $id): Response {
+        $sortie = $sortieRepository->find($id);
+        $sortie->setEstHistorise(true);
+        $entityManager->persist($sortie);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_admin_sortie_lister');
     }
 }

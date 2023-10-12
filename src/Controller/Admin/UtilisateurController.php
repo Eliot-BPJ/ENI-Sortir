@@ -41,11 +41,10 @@ class UtilisateurController extends AbstractController
         return $this->redirectToRoute('app_admin_utilisateur_lister');
     }
     #[Route('/supprimer/{id}', name: '_supprimer')]
-    public function supprimerRealisation(EntityManagerInterface $entityManager,
+    public function supprimerUtilisateur(EntityManagerInterface $entityManager,
                                          UtilisateurRepository $utilisateurRepository,
                                          int $id): Response {
         $utilisateur = $utilisateurRepository->find($id);
-        //$utilisateur->setPassword('historiser');
         $utilisateur->setHistoriser(true);
         $entityManager->persist($utilisateur);
         $entityManager->flush();

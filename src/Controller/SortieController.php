@@ -57,4 +57,15 @@ class SortieController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/annuler/{id}', name: '_annuler')]
+    public function annulerSortie(EntityManagerInterface $entityManager,
+                                  SortieRepository $sortieRepository,
+                                  int $id): Response {
+        $sortie = $sortieRepository->find($id);
+        $sortie->setEstHistorise(true);
+        $entityManager->persist($sortie);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_accueil');
+    }
 }

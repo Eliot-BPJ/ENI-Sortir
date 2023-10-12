@@ -10,8 +10,8 @@
 
 <div class="example-wrapper">
     <div style="display: flex; flex-direction: column; justify-content: end; align-items: end">
-        <p>Date du jour: </p>
-        <p>Participant: </p>
+        <p>Date du jour: {{ "now"|date("m-d-Y") }}</p>
+        <p>Participant: {{ app.user.pseudo }}</p>
     </div>
     <h2>Filtrer les sorties</h2>
     <div class="container">
@@ -81,9 +81,12 @@
                             ❌
                         {% endif %}
                     </td>
-                    <td>{{ sortie.organisateur.nom }}</td>
+                    <td><a href="{{ path('app_utilisateur_afficher_participant', {'id' : sortie.organisateur.id})}}">{{ sortie.organisateur.nom }}</a></td>
                     <td>
-                        <button class="btn btn-primary">à définir</button>
+                        <a class="btn btn-primary">à définir</a>
+                        {% if sortie.organisateur.id == app.user.id %}
+                            <a href="{{path('app_sortie_annuler', {id : sortie.id})}}" class="btn btn-primary">Annuler</a>
+                        {% endif %}
                     </td>
                 </tr>
             </tbody>
