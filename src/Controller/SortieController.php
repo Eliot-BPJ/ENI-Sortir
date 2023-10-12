@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Etats;
 use App\Entity\Sites;
 use App\Entity\Sortie;
+use App\Form\AnnulerSortieType;
 use App\Form\SortieType;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,6 +20,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
 class SortieController extends AbstractController
 {
     #[Route('/add', name: '_add')]
+    #[Route('/save', name: '_save')]
     #[Route('/edit/{id}', name: '_edit')]
     public function editer(
         Request $request,
@@ -27,6 +30,7 @@ class SortieController extends AbstractController
         int $id = null
     ): Response
     {
+        //dd($request);
         if ($id == null) {
             $sortie = new Sortie();
         } else {
@@ -46,11 +50,20 @@ class SortieController extends AbstractController
             $duree =  floor($diff_in_seconds / 60); #in minutes
 
             $sortie->setDuree($duree);
+            //dd($request->request->has('save'));
+            if($request->request->has('save')) {
+                $etat = Etats::Creee;
+            } else if($request->request->has('add')) {
+                $etat = Etats::Ouverte;
+            }
+            //dd($etat);
+            $sortie->setEtat($etat);
+            $sortie->setEstHistorise(false);
 
             $entityManager->persist($sortie);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_sortie_edit');
+            return $this->redirectToRoute('app_accueil');
         }
 
         return $this->render('sortie/editer.html.twig', [
@@ -58,14 +71,30 @@ class SortieController extends AbstractController
         ]);
     }
     #[Route('/annuler/{id}', name: '_annuler')]
-    public function annulerSortie(EntityManagerInterface $entityManager,
+    public function annulerSortie(Request $request,
+                                  EntityManagerInterface $entityManager,
                                   SortieRepository $sortieRepository,
                                   int $id): Response {
         $sortie = $sortieRepository->find($id);
-        $sortie->setEstHistorise(true);
-        $entityManager->persist($sortie);
-        $entityManager->flush();
+        if($sortie->getEtat()->value === "Ouverte") {
+            $form = $this->createForm(AnnulerSortieType::class);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $sortie->setMotifAnnulation($form->get('motifAnnulation')->getData());
+                $sortie->setEstHistorise(true);
+                $entityManager->persist($sortie);
+                $entityManager->flush();
+                return $this->redirectToRoute('app_accueil');
+            }
+            return $this->render('sortie/annulerSortie.html.twig', [
+                'formAnnulationSortie' => $form->createView(),
+            ]);
+        } else {
+            $sortie->setEstHistorise(true);
+            $entityManager->persist($sortie);
+            $entityManager->flush();
 
-        return $this->redirectToRoute('app_accueil');
+            return $this->redirectToRoute('app_accueil');
+        }
     }
 }
