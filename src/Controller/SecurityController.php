@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\UtilisateurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,12 +11,16 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     #[Route(path: '/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, UtilisateurRepository $utilisateurRepository): Response
     {
-         if ($this->getUser()) {
+        //dd($this->getUser()->isActif());
+
+         if ($this->getUser() ) {
+             if(!$this->getUser()->isActif() || $this->getUser()->isHistoriser()) {
+                 return $this->redirectToRoute('app_logout');
+             }
              return $this->redirectToRoute('app_page_bateau');
          }
-
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
