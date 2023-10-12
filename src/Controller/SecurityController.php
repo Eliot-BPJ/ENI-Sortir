@@ -13,13 +13,15 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils, UtilisateurRepository $utilisateurRepository): Response
     {
+
         //dd($this->getUser()->isActif());
 
          if ($this->getUser() ) {
              if(!$this->getUser()->isActif() || $this->getUser()->isHistoriser()) {
                  return $this->redirectToRoute('app_logout');
              }
-             return $this->redirectToRoute('app_page_bateau');
+             return $this->redirectToRoute('app_accueil');
+
          }
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -30,8 +32,9 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/logout', name: 'app_logout')]
-    public function logout(): void
+    public function logout(): never
     {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        // controller can be blank: it will never be called!
+        throw new \Exception('Don\'t forget to activate logout in security.yaml');
     }
 }
