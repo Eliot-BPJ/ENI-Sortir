@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\DTO\FiltersDTO;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -21,28 +22,18 @@ class SortieRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
-//    /**
-//     * @return Sortie[] Returns an array of Sortie objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findWithSearchFilters(FiltersDTO $filters)
+    {
+        $qb = $this->createQueryBuilder('s');
+        if (isset($filters->search)) {
+            if ($filters->search) {
+                $qb->andWhere('s.nom LIKE :term')->setParameter('term', '%' . $filters->search . '%');
+            }
+        }
+        if ($filters->organisateurFilter) {
+            $qb->andWhere('s.organisateur = :organisateur')->setParameter('organisateur', true);
+        }
 
-//    public function findOneBySomeField($value): ?Sortie
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        return $qb->getQuery()->getResult();
+    }
 }

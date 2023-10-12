@@ -52,23 +52,17 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinColumn(nullable: false)]
     private ?Sites $idSite = null;
 
-    #[ORM\OneToMany(mappedBy: 'participant', targetEntity: Inscription::class, orphanRemoval: true)]
-    private Collection $inscriptions;
-
-    #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Sortie::class)]
-    private Collection $sorties;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imageProfil = null;
 
+    #[ORM\ManyToMany(targetEntity: Sortie::class, mappedBy: 'inscriptions')]
+    private Collection $sorties;
+
     public function __construct()
     {
-        $this->inscriptions = new ArrayCollection();
         $this->sorties = new ArrayCollection();
     }
-
-
-
 
     public function getId(): ?int
     {
@@ -224,32 +218,14 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Inscription>
-     */
-    public function getInscriptions(): Collection
+    public function getImageProfil(): ?string
     {
-        return $this->inscriptions;
+        return $this->imageProfil;
     }
 
-    public function addInscription(Inscription $inscription): static
+    public function setImageProfil(?string $imageProfil): static
     {
-        if (!$this->inscriptions->contains($inscription)) {
-            $this->inscriptions->add($inscription);
-            $inscription->setParticipant($this);
-        }
-
-        return $this;
-    }
-
-    public function removeInscription(Inscription $inscription): static
-    {
-        if ($this->inscriptions->removeElement($inscription)) {
-            // set the owning side to null (unless already changed)
-            if ($inscription->getParticipant() === $this) {
-                $inscription->setParticipant(null);
-            }
-        }
+        $this->imageProfil = $imageProfil;
 
         return $this;
     }
@@ -266,7 +242,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->sorties->contains($sorty)) {
             $this->sorties->add($sorty);
-            $sorty->setOrganisateur($this);
+            $sorty->addInscription($this);
         }
 
         return $this;
@@ -275,23 +251,8 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeSorty(Sortie $sorty): static
     {
         if ($this->sorties->removeElement($sorty)) {
-            // set the owning side to null (unless already changed)
-            if ($sorty->getOrganisateur() === $this) {
-                $sorty->setOrganisateur(null);
-            }
+            $sorty->removeInscription($this);
         }
-
-        return $this;
-    }
-
-    public function getImageProfil(): ?string
-    {
-        return $this->imageProfil;
-    }
-
-    public function setImageProfil(?string $imageProfil): static
-    {
-        $this->imageProfil = $imageProfil;
 
         return $this;
     }
