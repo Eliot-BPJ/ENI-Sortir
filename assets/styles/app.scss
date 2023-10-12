@@ -1,17 +1,67 @@
 @import '~bootstrap/scss/bootstrap';
 
-header {
-    background-color: #63b7ff;
-    height: 48px;
+.pied-page{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 50px;
+    list-style: none;
+    & a{
+        text-decoration: none;
+        color: black;
+    }
 }
-footer {
-    background-color: #63b7ff;
-    height: 24px;
-}
+
 body {
-    background-color: #fafafa;
+     background-color: #fafafa;
+    & a {
+        text-decoration: none;
+        color: black;
+    }
+    & header {
+        height: 90px;
+        display: block;
+        justify-content: left;
+        padding: 20px 20px;
+        background-color: #f8f9fa;
+    }
+    & main {
+        margin: 1em auto;
+        min-height: calc(100vh);
+        padding-top: 30px;
+        display: block;
+    }
+    & footer {
+        //background-color: #63b7ff;
+        bottom: 0;
+        width: 100%;
+        display: block;
+    }
+ }
+.nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
 }
+
 .page-container {
     height: calc(100vh - 48px - 24px);
     padding: 1em;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    width: auto;
+}
+
+h1, h2, h3, h4 {
+    font-weight: bold;
+    color: #2188c4;
+}
+
+.example-wrapper code {
+    background: #F5F5F5;
+    padding: 2px 6px;
 }
