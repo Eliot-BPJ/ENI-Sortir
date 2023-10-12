@@ -56,7 +56,7 @@ class UtilisateurController extends AbstractController
                     );
 
                 // Redirigez l'utilisateur vers une autre page (par exemple, page_bateau.html.twig)
-                return $this->redirectToRoute('app_page_bateau');
+                return $this->redirectToRoute('app_accueil');
             }
         } else {
             // Mot de passe actuel incorrect
@@ -104,8 +104,8 @@ class UtilisateurController extends AbstractController
 
                 $this->addFlash('success', 'L\'utilisateur a été modifié !');
 
-                // Redirigez l'utilisateur vers une autre page (par exemple, page_bateau.html.twig)
-                return $this->redirectToRoute('app_page_bateau');
+                // Redirigez l'utilisateur vers la paged'accueil
+                return $this->redirectToRoute('app_accueil');
             } else {
                 // Mot de passe actuel incorrect
                 $this->addFlash('error', 'Mot de passe actuel incorrect.');

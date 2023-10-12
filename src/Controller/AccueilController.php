@@ -12,8 +12,12 @@ class AccueilController extends AbstractController
     #[Route('/accueil/liste', name: 'app_accueil')]
     public function index(SortieRepository $sortieRepository): Response
     {
-        $sorties = $sortieRepository->findAll();
-
+        $user = $this->getUser();
+        if ($user) {
+            $sorties = $sortieRepository->findAll();
+        }else{
+            return $this->redirectToRoute('app_login');
+        }
         return $this->render('accueil/index.html.twig',
             ['sorties' => $sorties]);
     }
