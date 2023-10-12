@@ -45,7 +45,7 @@ class UtilisateurController extends AbstractController
                                          UtilisateurRepository $utilisateurRepository,
                                          int $id): Response {
         $utilisateur = $utilisateurRepository->find($id);
-        $utilisateur->setPassword('historiser');
+        //$utilisateur->setPassword('historiser');
         $utilisateur->setHistoriser(true);
         $entityManager->persist($utilisateur);
         $entityManager->flush();
