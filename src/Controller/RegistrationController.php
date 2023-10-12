@@ -53,6 +53,7 @@ class RegistrationController extends AbstractController
             } else {
                 $user->setImageProfil('photoDefaut');
             }
+            $user->setHistoriser(false);
             $user->setAdministrateur(false);
             $user->setActif(true);
             $user->setPassword(
@@ -74,12 +75,12 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
-            if($this->getUser()->getRoles()[0] === 'ROLE_ADMIN') {
+            if($this->getUser() && $this->getUser()->getRoles()[0] === 'ROLE_ADMIN') {
                 return $this->redirectToRoute('app_admin_utilisateur_lister');
             }
             return $this->redirectToRoute('app_login');
         }
-        if($this->getUser()->getRoles()[0] === 'ROLE_ADMIN') {
+        if($this->getUser() && $this->getUser()->getRoles()[0] === 'ROLE_ADMIN') {
             return $this->render('admin/utilisateur/adminRegister.html.twig', [
                 'registrationForm' => $form->createView(),
             ]);

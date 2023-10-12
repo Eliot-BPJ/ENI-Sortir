@@ -13,7 +13,6 @@ class RegisterWithCsvType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('pseudo')
             ->add('fichierCSV', FileType::class, [
                 'label' => 'Image',
                 'mapped' => false,
