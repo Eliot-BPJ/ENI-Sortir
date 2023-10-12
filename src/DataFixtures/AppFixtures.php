@@ -66,6 +66,7 @@ class AppFixtures extends Fixture
         $utilisateur->setActif(true);
         $utilisateur->setIdSite($site);
         $utilisateur->setImageProfil('fleurDelacours-6525394eca12a.jpg');
+        $utilisateur->setHistoriser(false);
         $manager->persist($utilisateur);
 
         $utilisateur = new Utilisateur();
@@ -79,6 +80,7 @@ class AppFixtures extends Fixture
         $utilisateur->setAdministrateur(false);
         $utilisateur->setActif(true);
         $utilisateur->setIdSite($site);
+        $utilisateur->setHistoriser(false);
         $manager->persist($utilisateur);
 
         $utilisateur = new Utilisateur();
@@ -92,6 +94,7 @@ class AppFixtures extends Fixture
         $utilisateur->setAdministrateur(false);
         $utilisateur->setActif(true);
         $utilisateur->setIdSite($site);
+        $utilisateur->setHistoriser(false);
         $manager->persist($utilisateur);
 
         // ------------ SORTIE ------------

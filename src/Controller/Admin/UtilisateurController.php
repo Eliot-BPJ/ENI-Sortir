@@ -24,6 +24,9 @@ class UtilisateurController extends AbstractController
     public function index(UtilisateurRepository $utilisateurRepository): Response
     {
         $utilisateurs = $utilisateurRepository->findAll();
+        $utilisateurs = array_filter($utilisateurs, function($utilisateurs) {
+            return !$utilisateurs->isHistoriser();
+        });
         return $this->render('admin/utilisateur/index.html.twig', [
             'controller_name' => 'AdminFilRougeController',
             'utilisateurs' => $utilisateurs
@@ -42,7 +45,9 @@ class UtilisateurController extends AbstractController
                                          UtilisateurRepository $utilisateurRepository,
                                          int $id): Response {
         $utilisateur = $utilisateurRepository->find($id);
-        $entityManager->remove($utilisateur);
+        //$utilisateur->setPassword('historiser');
+        $utilisateur->setHistoriser(true);
+        $entityManager->persist($utilisateur);
         $entityManager->flush();
 
 //        $this->addFlash(
