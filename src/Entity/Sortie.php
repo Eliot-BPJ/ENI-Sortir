@@ -56,6 +56,9 @@ class Sortie
     #[ORM\ManyToMany(targetEntity: Utilisateur::class, inversedBy: 'sorties')]
     private Collection $inscriptions;
 
+    #[ORM\Column]
+    private ?bool $estHistorise = null;
+
     public function __construct()
     {
         $this->inscriptions = new ArrayCollection();
@@ -218,6 +221,18 @@ class Sortie
     public function removeInscription(Utilisateur $inscription): static
     {
         $this->inscriptions->removeElement($inscription);
+
+        return $this;
+    }
+
+    public function isEstHistorise(): ?bool
+    {
+        return $this->estHistorise;
+    }
+
+    public function setEstHistorise(bool $estHistorise): static
+    {
+        $this->estHistorise = $estHistorise;
 
         return $this;
     }
