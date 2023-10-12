@@ -59,15 +59,20 @@
             <img class="logo" src="{{ asset('assets/logo.jpg') }}" alt="Logo" />
         </div>
         <nav class="nav-links">
-            <a href="#">Accueil</a>
+            <a href="{{ path('app_accueil') }}">Accueil</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="#}">Administration</a>
+            {% endif %}
             {% if is_granted('ROLE_USER') %}
             <a href="{{ path('app_utilisateur_modifier') }}">Mon profil</a>
             {% endif %}
 
-            <a href="#">Se déconnecter</a>
+            <a href="{{ path('app_logout') }}">Se déconnecter</a>
         </nav>
     </div>
-{% block body %}{% endblock %}
+
+    {% block body %}{% endblock %}
+
     <div class="footer text-center">
         <p>Informations légales - Sortir.com by
             <a target=”_blank” class="text-info" href="https://www.eni-ecole.fr/">ENI Ecole Informatique</a>

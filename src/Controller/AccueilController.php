@@ -16,6 +16,11 @@ class AccueilController extends AbstractController
     #[Route('/accueil/liste', name: 'app_accueil')]
     public function index(SortieRepository $sortieRepository, Request $request): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $filters = new FiltersDTO();
         $form = $this->createForm(FiltersFormType::class, $filters);
         $form->handleRequest($request);
