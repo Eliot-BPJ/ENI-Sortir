@@ -14,12 +14,7 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils, UtilisateurRepository $utilisateurRepository): Response
     {
 
-        //dd($this->getUser()->isActif());
-
          if ($this->getUser() ) {
-             if(!$this->getUser()->isActif() || $this->getUser()->isHistoriser()) {
-                 return $this->redirectToRoute('app_logout');
-             }
              return $this->redirectToRoute('app_accueil');
 
          }
