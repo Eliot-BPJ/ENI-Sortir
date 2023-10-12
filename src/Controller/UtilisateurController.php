@@ -117,4 +117,16 @@ class UtilisateurController extends AbstractController
             'utilisateur' => $utilisateur,
         ]);
     }
+    #[Route('/participant/{id}', name: '_afficher_participant')]
+    public function afficherUtilisateur(UtilisateurRepository $utilisateurRepository,
+                             int $id): Response {
+
+        $utilisateur = $utilisateurRepository->find($id);
+
+
+        return $this->render('utilisateur/afficherUtilisateur.html.twig',
+            [
+                'utilisateur' => $utilisateur,
+            ]);
+    }
 }
