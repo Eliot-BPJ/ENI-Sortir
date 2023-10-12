@@ -66,6 +66,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[ORM\Column]
+    private ?bool $historiser = null;
+
     public function __construct()
     {
         $this->inscriptions = new ArrayCollection();
@@ -306,6 +309,18 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function isHistoriser(): ?bool
+    {
+        return $this->historiser;
+    }
+
+    public function setHistoriser(bool $historiser): static
+    {
+        $this->historiser = $historiser;
 
         return $this;
     }

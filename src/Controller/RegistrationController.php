@@ -53,6 +53,7 @@ class RegistrationController extends AbstractController
             } else {
                 $user->setImageProfil('photoDefaut');
             }
+            $user->setHistoriser(false);
             $user->setAdministrateur(false);
             $user->setActif(true);
             $user->setPassword(
