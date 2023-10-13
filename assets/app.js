@@ -7,3 +7,9 @@
 
 // any CSS you import will output into a single css file (app.scss in this case)
 import './styles/app.scss';
+
+const bootstrap = require('bootstrap');
+
+// tooltip javascript
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))

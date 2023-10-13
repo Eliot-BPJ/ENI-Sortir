@@ -1,27 +1,53 @@
-{% extends 'admin/baseAdmin.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Admin - Nouveau utilisateur{% endblock %}
 
-{% block contenu %}
+{% block body %}
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Register</h1>
+<div class="card mb-3" style="width: 80% ; padding: 8px;">
+    <div class="row g-0">
+        <h2 class="mb-4">Nouvel utilisateur</h2>
+        <div class="card-body">
+            {{ form_errors(registrationForm) }}
 
-    {{ form_errors(registrationForm) }}
+            {{ form_start(registrationForm, {'attr':{'class':'form-floating'}}) }}
 
-    {{ form_start(registrationForm) }}
-    {{ form_row(registrationForm.pseudo) }}
-    {{ form_row(registrationForm.prenom) }}
-    {{ form_row(registrationForm.nom) }}
-    {{ form_row(registrationForm.email) }}
-    {{ form_row(registrationForm.telephone) }}
-    {{ form_row(registrationForm.idSite) }}
-    {{ form_row(registrationForm.password, {
-        label: 'Password'
-    }) }}
+            <div class="form-floating mb-3">
+                {{ form_row(registrationForm.pseudo, {'attr':{'class':'form-control'}}) }}
+            </div>
+            <div class="form-floating mb-3">
+                {{ form_row(registrationForm.prenom, {'attr':{'class':'form-control'}}) }}
+            </div>
+            <div class="form-floating mb-3">
+                {{ form_row(registrationForm.nom, {'attr':{'class':'form-control'}}) }}
+            </div>
+            <div class="form-floating mb-3">
+                {{ form_row(registrationForm.email, {'attr':{'class':'form-control'}}) }}
+            </div>
+            <div class="form-floating mb-3">
+                {{ form_row(registrationForm.telephone, {'attr':{'class':'form-control'}}) }}
+            </div>
+            <div class="form-floating mb-3">
+                {{ form_row(registrationForm.password, {'attr':{'class':'form-control'}}) }}
+            </div>
+            <div class="form-floating mb-3">
+                {{ form_row(registrationForm.idSite, {'attr':{'class':'form-select'}}) }}
+            </div>
+            <div class="form-floating mb-3">
+                {{ form_row(registrationForm.imageProfil, {'attr':{'class':'form-control form-control-sm'}}) }}
+            </div>
 
-    <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+            <div class="col-sm" style="text-align: center">
+                <button class="btn btn-success" type="submit">Enregistrer</button>
+
+                <a href="{{ path('app_admin_utilisateur_lister') }}" class="btn btn-secondary">Annuler</a>
+{#                <a href="{{ path('app_login') }}" class="btn btn-secondary">Annuler</a>#}
+            </div>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+</div>
 {% endblock %}

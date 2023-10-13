@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div>
+        <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Afficher une sortie</p>
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-12 col-xl-12">
+                    <div class="text-black" style="border-radius: 25px;">
+                        <div class="row justify-content-center">
+                            <div class="col-6">
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <div>Nom de la sortie :</div>
+                                    <div>{{ sortie.nom }}</div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <div>Date et heure de la sortie :</div>
+                                    <div>{{ sortie.dateDebut | date('d-m-Y') }}</div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <div>Date limite d'inscription :</div>
+                                    <div>{{ sortie.dateLimiteInscription | date('d-m-Y') }}</div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <div>Nombre de places :</div>
+                                    <div>{{ sortie.nbInscriptionMax }}</div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <div>Durée (minutes) :</div>
+                                    <div>{{ sortie.duree }}</div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <div>Description et infos :</div>
+                                    <div>{{ sortie.infosSortie }}</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <div>Ville :</div>
+                                    <div>{{ sortie.lieux.ville.nom }}</div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <div>Lieu :</div>
+                                    <div>{{ sortie.lieux.nom }}</div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <div>Rue :</div>
+                                    <div>{{ sortie.lieux.rue }}</div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <div>Code postal :</div>
+                                    <div>{{ sortie.lieux.ville.codePostal }}</div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <div>Latitude :</div>
+                                    <div>{{ sortie.lieux.latitude }}</div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                    <div>Longitude :</div>
+                                    <div>{{ sortie.lieux.longitude }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="text-center h2 fw-bold mb-5 mx-1 mx-md-4 mt-4">Liste des participants inscrits</p>
+        {% if app.user in sortie.inscriptions %}
+            <i>Déjà inscrit !</i>
+        {% elseif nbInscrit == sortie.nbInscriptionMax %}
+            <i>Vous êtes l'organisateur</i>
+        {% elseif sortie.organisateur == app.user %}
+            <i>Il n'y a plus de place</i>
+        {% else %}
+            <a href="{{ path("app_sortie_signup", {'id': sortie.id}) }}" class="btn btn-outline-info btn-lg">S'inscrire</a>
+        {% endif %}
+        <div>
+            <table id="tableSortie" class="table table-striped" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Pseudo</th>
+                    <th>Nom</th>
+                </tr>
+                </thead>
+                {% for inscrit in sortie.inscriptions %}
+                    <tbody>
+                    <tr>
+                        <td>{{ inscrit.pseudo }}</td>
+                        <td>{{ inscrit.prenom }} {{ inscrit.nom }}</td>
+                    </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
