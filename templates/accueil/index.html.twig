@@ -75,7 +75,7 @@
                     <td>{{ sortie.dateLimiteInscription | date("d-m-Y") }}</td>
                     <td>{{ sortie.inscriptions.count }} / {{ sortie.nbInscriptionMax }}</td>
                     <td>{{ sortie.etat.value }}</td>
-                    <td> {% if inscrit[loop.index0] == 1 %}
+                    <td> {% if app.user in sortie.inscriptions %}
                             ✔️
                         {% else %}
                             ❌
