@@ -2,6 +2,11 @@
 
 {% block title %}Villes{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('ville') }}
+{% endblock %}
+
 {% block body %}
     <div>
         <table id="tableSortie" class="table table-striped" style="width:100%">

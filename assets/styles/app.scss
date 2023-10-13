@@ -43,6 +43,9 @@ body {
     gap: 20px;
     align-items: center;
 }
+.dropdown{
+    list-style-type: none;
+}
 
 .page-container {
     height: calc(100vh - 48px - 24px);

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Utilisateur;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
+use App\Service\UploadService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,30 +29,23 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    public function register(Request $request,
+                             UserPasswordHasherInterface $userPasswordHasher,
+                             EntityManagerInterface $entityManager,
+                             SluggerInterface $slugger,
+                             UploadService $uploadService): Response
     {
         $user = new Utilisateur();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $photoProfil = $form->get('photoProfil')->getData();
 
-            if($photoProfil) {
-                $originalFilename = pathinfo($photoProfil->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photoProfil->guessExtension();
-                try {
-                    $photoProfil->move(
-                        $this->getParameter('photo_profil'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                }
+            if($form->get('imageProfil')->getData()) {
+                $newFilename = $uploadService->upload($form->get('imageProfil')->getData(), $this->getParameter('imageProfil_directory'));
                 $user->setImageProfil($newFilename);
             } else {
-                $user->setImageProfil('photoDefaut');
+                $user->setImageProfil('image_profile');
             }
             $user->setHistoriser(false);
             $user->setAdministrateur(false);

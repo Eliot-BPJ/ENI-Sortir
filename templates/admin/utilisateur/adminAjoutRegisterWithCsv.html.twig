@@ -1,19 +1,32 @@
-{% extends 'admin/baseAdmin.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Admin - Ajouter liste{% endblock %}
 
-{% block contenu %}
+{% block body %}
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Register</h1>
+<div class="card mb-3" style="width: 80% ; padding: 8px;">
+    <div class="row g-0">
+        <h2 class="mb-4">Nouvelle liste utilisateur</h2>
+        <div class="card-body">
 
-    {{ form_errors(formRegisterWithCsv) }}
+            {{ form_errors(formRegisterWithCsv) }}
 
-    {{ form_start(formRegisterWithCsv) }}
-    {{ form_row(formRegisterWithCsv.fichierCSV) }}
+            {{ form_start(formRegisterWithCsv, {'attr':{'class':'form-floating'}}) }}
 
-    <button type="submit" class="btn">Register</button>
-    {{ form_end(formRegisterWithCsv) }}
+            <div class="form-floating mb-3">
+                {{ form_row(formRegisterWithCsv.fichierCSV, {'attr':{'class':'form-control form-control-sm'}}) }}
+            </div>
+
+            <div class="col-sm" style="text-align: center">
+                <button class="btn btn-success" type="submit">Enregistrer</button>
+                <a href="{{ path('app_admin_utilisateur_lister') }}" class="btn btn-secondary">Annuler</a>
+            </div>
+
+            {{ form_end(formRegisterWithCsv) }}
+        </div>
+    </div>
+</div>
 {% endblock %}
