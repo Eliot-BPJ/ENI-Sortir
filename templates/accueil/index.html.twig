@@ -2,16 +2,15 @@
 
 {% block title %}Liste des sorties{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 1000px; width: 100%}
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
 
-<div class="example-wrapper">
+{% block body %}
+
     <div style="display: flex; flex-direction: column; justify-content: end; align-items: end">
-        <p>Date du jour: </p>
-        <p>Participant: </p>
+        <p>Date du jour: {{ "now"|date("m-d-Y") }}</p>
+        <p>Participant: {{ app.user.pseudo }}</p>
     </div>
     <h2>Filtrer les sorties</h2>
     <div class="container">
@@ -82,14 +81,17 @@
                             ❌
                         {% endif %}
                     </td>
-                    <td>{{ sortie.organisateur.nom }}</td>
+                    <td><a href="{{ path('app_utilisateur_afficher_participant', {'id' : sortie.organisateur.id})}}">{{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }}</a></td>
                     <td>
                         <a href="{{ path('app_sortie_list', {'id': sortie.id}) }}" class="btn btn-info">Afficher</a>
+                        {% if sortie.organisateur.id == app.user.id %}
+                            <a href="{{path('app_sortie_annuler', {id : sortie.id})}}" class="btn btn-primary">Annuler</a>
+                        {% endif %}
                     </td>
                 </tr>
             </tbody>
             {% endfor %}
         </table>
     </div>
-</div>
+
 {% endblock %}

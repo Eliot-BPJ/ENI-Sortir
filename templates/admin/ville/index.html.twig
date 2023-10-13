@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Villes{% endblock %}
+
+{% block body %}
+    <div>
+        <table id="tableSortie" class="table table-striped" style="width:100%">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Code postal</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+                <tbody>
+                {{ form_start(form, {'attr': {'class': "mx-1 mx-md-4"}}) }}
+                    <tr>
+                        <td>{{ form_row(form.nom) }}</td>
+                        <td>{{ form_row(form.codepostal) }}</td>
+                        <td>
+                            <button class="btn btn-primary" type="submit">Ajouter</button>
+                        </td>
+                    </tr>
+                {{ form_end(form) }}
+
+                {% for ville in villes %}
+                    <tr>
+                        <td>{{ ville.nom }}</td>
+                        <td>{{ ville.codePostal }}</td>
+                        <td>
+                            <a href="#" class="btn btn-primary">Modifier</a>
+                            <a href="{{ path('app_ville_supprimer', {'id' : ville.id}) }}" class="btn btn-warning"
+                               onclick="return confirm('Attention ! Vous êtes sur le point de supprimer une ville. Cela supprimera les sorties associées. Confirmez-vous la suppression ?')">
+                                Suprimer</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+        </table>
+    </div>
+{% endblock %}

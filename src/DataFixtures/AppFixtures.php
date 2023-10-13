@@ -109,6 +109,21 @@ class AppFixtures extends Fixture
         $sortie->setLieux($lieu);
         $sortie->setEtat(Etats::Ouverte);
         $sortie->setOrganisateur($utilisateur);
+        $sortie->setEstHistorise(false);
+        $manager->persist($sortie);
+
+        $sortie = new Sortie();
+        $sortie->setNom("Prison");
+        $sortie->setDateDebut(new \DateTime('2023-12-01 14:00'));
+        $sortie->setDuree(180);
+        $sortie->setDateLimiteInscription(new \DateTime('2023-11-21 14:00'));
+        $sortie->setNbInscriptionMax(9);
+        $sortie->setInfosSortie("Sortie au Prison Island avec 3 équipes de 3");
+        $sortie->setSite($site);
+        $sortie->setLieux($lieu);
+        $sortie->setEtat(Etats::Ouverte);
+        $sortie->setOrganisateur($utilisateur);
+        $sortie->setEstHistorise(false);
         $manager->persist($sortie);
 
         $manager->flush();
