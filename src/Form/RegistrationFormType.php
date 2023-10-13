@@ -18,22 +18,36 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('pseudo')
-            ->add('prenom')
-            ->add('nom')
-            ->add('email')
-            ->add('telephone')
-            ->add('idSite', EntityType::class, ['class' => Sites::class, "choice_label"=>'nom', 'required' =>false])
+            ->add('pseudo',null, [
+                'label' => 'Pseudo* :',
+            ])
+            ->add('prenom',null, [
+                'label' => 'Prénom* :',
+            ])
+            ->add('nom',null, [
+                'label' => 'Nom* :',
+            ])
+            ->add('email',null, [
+                'label' => 'Email* :',
+            ])
+            ->add('telephone',null, [
+                'label' => 'Téléphone* :',
+            ])
+            ->add('idSite', EntityType::class, [
+                'class' => Sites::class,
+                'label' => 'Site de rattachement* :',
+                "choice_label"=>'nom',
+                ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => "Ce n'est pas le même password",
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
-                'first_options'  => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Répéter votre mot de passe'],
+                'first_options'  => ['label' => 'Mot de passe* :'],
+                'second_options' => ['label' => 'Répéter votre mot de passe* :'],
             ])
-            ->add('photoProfil', FileType::class, [
-                'label' => 'Image',
+            ->add('imageProfil', FileType::class, [
+                'label' => 'Photo (PNG, JPG, BMP)* :',
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
@@ -42,12 +56,13 @@ class RegistrationFormType extends AbstractType
                         'mimeTypes' => [
                             'image/png',
                             'image/jpeg',
-                            'image/jpg',
+                            'image/bmp',
                         ],
-                        'mimeTypesMessage' => 'Entrez votre photo de profil',
+                        'mimeTypesMessage' => 'Veuillez uploader un PNG ou un JPG',
                     ])
                 ],
             ])
+
         ;
     }
 

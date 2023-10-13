@@ -14,7 +14,7 @@ class RegisterWithCsvType extends AbstractType
     {
         $builder
             ->add('fichierCSV', FileType::class, [
-                'label' => 'Image',
+                'label' => 'Fichier* :',
                 'mapped' => false,
                 'required' => true,
                 'constraints' => [

@@ -1,15 +1,18 @@
-{% extends 'admin/baseAdmin.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminFilRougeController!{% endblock %}
-{% block contenu %}
+{% block title %}Admin - Utilisateur{% endblock %}
+
+{% block body %}
     <div class="list-realisation">
 {#        {% for message in app.flashes('notice') %}#}
 {#            <div class="alert-success">#}
 {#                {{ message }}#}
 {#            </div>#}
 {#        {% endfor %}#}
-        <a class="btn btn-primary" href="{{path('app_register')}}">Ajouter un utilisateur Manuellement</a>
-        <a class="btn btn-primary" href="{{path('app_admin_utilisateur_ajouter_csv')}}">Ajouter un Utilisateur avec un csv</a>
+        <div>
+            <a class="btn btn-primary" href="{{path('app_register')}}">Ajouter un utilisateur Manuellement</a>
+            <a class="btn btn-primary" href="{{path('app_admin_utilisateur_ajouter_csv')}}">Ajouter un Utilisateur avec un csv</a>
+        </div>
         <table class="table table-striped">
             <thead>
             <tr>
