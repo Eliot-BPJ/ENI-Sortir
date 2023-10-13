@@ -67,11 +67,11 @@
         </div>
         <p class="text-center h2 fw-bold mb-5 mx-1 mx-md-4 mt-4">Liste des participants inscrits</p>
         {% if app.user in sortie.inscriptions %}
-            <i>Déjà inscrit !</i>
+            <i>Vous vous êtes déjà inscrit à cette sortie !</i>
         {% elseif nbInscrit == sortie.nbInscriptionMax %}
-            <i>Vous êtes l'organisateur</i>
-        {% elseif sortie.organisateur == app.user %}
-            <i>Il n'y a plus de place</i>
+            <i>Il n'y a plus de place !</i>
+        {% elseif is_granted('ROLE_ADMIN') %}
+            <i>Vous ne pouvez pas vous inscrire en étant administrateur !</i>
         {% else %}
             <a href="{{ path("app_sortie_signup", {'id': sortie.id}) }}" class="btn btn-outline-info btn-lg">S'inscrire</a>
         {% endif %}

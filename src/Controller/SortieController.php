@@ -104,7 +104,9 @@ class SortieController extends AbstractController
             array_push($signed_up_ids, $inscrit->getId());
             $nbInscrit++;
         };
-        if (!in_array($this->getUser()->getId(), $signed_up_ids) && $this->getUser()->getId() !== $sortie->getOrganisateur() && $nbInscrit >$sortie->getNbInscriptionMax()) {
+
+        if (!in_array($this->getUser()->getId(), $signed_up_ids) && $this->getUser()->isAdministrateur() == 0 && $nbInscrit < $sortie->getNbInscriptionMax()) {
+
             $sortie->addInscription($this->getUser());
 
             $entityManager->persist($sortie);
@@ -117,6 +119,24 @@ class SortieController extends AbstractController
             'sortie' => $sortie,
             'nbInscrit' => $nbInscrit
         ]);
+    }
+
+    #[Route('/voir/{id}/quitter', name: '_leave')]
+    public function leave(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SortieRepository $sortieRepository,
+        SluggerInterface $slugger,
+        int $id = null
+    ): Response
+    {
+        $sortie = $sortieRepository->find($id);
+        $sortie->removeInscription($this->getUser());
+
+        $entityManager->persist($sortie);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_accueil');
     }
 
     #[Route('/annuler/{id}', name: '_annuler')]
