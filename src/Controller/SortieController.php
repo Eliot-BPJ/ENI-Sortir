@@ -114,6 +114,24 @@ class SortieController extends AbstractController
         ]);
     }
 
+    #[Route('/voir/{id}/quitter', name: '_leave')]
+    public function leave(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SortieRepository $sortieRepository,
+        SluggerInterface $slugger,
+        int $id = null
+    ): Response
+    {
+        $sortie = $sortieRepository->find($id);
+        $sortie->removeInscription($this->getUser());
+
+        $entityManager->persist($sortie);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_accueil');
+    }
+
     #[Route('/annuler/{id}', name: '_annuler')]
     public function annulerSortie(Request $request,
                                   EntityManagerInterface $entityManager,
