@@ -104,7 +104,9 @@ class SortieController extends AbstractController
             array_push($signed_up_ids, $inscrit->getId());
             $nbInscrit++;
         };
-        if (!in_array($this->getUser()->getId(), $signed_up_ids) && $this->getUser()->getId() !== $sortie->getOrganisateur() && $nbInscrit >$sortie->getNbInscriptionMax()) {
+
+        if (!in_array($this->getUser()->getId(), $signed_up_ids) && $this->getUser()->isAdministrateur() == 0 && $nbInscrit < $sortie->getNbInscriptionMax()) {
+
             $sortie->addInscription($this->getUser());
 
             $entityManager->persist($sortie);

@@ -70,7 +70,7 @@
             <i>Vous vous êtes déjà inscrit à cette sortie !</i>
         {% elseif nbInscrit == sortie.nbInscriptionMax %}
             <i>Il n'y a plus de place !</i>
-        {% elseif app.user.isGranted %}
+        {% elseif is_granted('ROLE_ADMIN') %}
             <i>Vous ne pouvez pas vous inscrire en étant administrateur !</i>
         {% else %}
             <a href="{{ path("app_sortie_signup", {'id': sortie.id}) }}" class="btn btn-outline-info btn-lg">S'inscrire</a>
