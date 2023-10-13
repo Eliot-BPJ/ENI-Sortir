@@ -19,6 +19,21 @@ use Symfony\Component\Validator\Constraints\DateTime;
 #[Route('/sortie', name: 'app_sortie')]
 class SortieController extends AbstractController
 {
+    #[Route('/voir/{id}', name: '_list')]
+    public function read(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SortieRepository $sortieRepository,
+        SluggerInterface $slugger,
+        int $id = null
+    ): Response {
+        $sortie = $sortieRepository->find($id);
+
+        return $this->render('sortie/voir.html.twig', [
+            'sortie' => $sortie,
+        ]);
+    }
+
     #[Route('/add', name: '_add')]
     #[Route('/save', name: '_save')]
     #[Route('/edit/{id}', name: '_edit')]
@@ -28,9 +43,7 @@ class SortieController extends AbstractController
         SortieRepository $sortieRepository,
         SluggerInterface $slugger,
         int $id = null
-    ): Response
-    {
-        //dd($request);
+    ): Response {
         if ($id == null) {
             $sortie = new Sortie();
         } else {
@@ -50,13 +63,13 @@ class SortieController extends AbstractController
             $duree =  floor($diff_in_seconds / 60); #in minutes
 
             $sortie->setDuree($duree);
-            //dd($request->request->has('save'));
+
             if($request->request->has('save')) {
                 $etat = Etats::Creee;
             } else if($request->request->has('add')) {
                 $etat = Etats::Ouverte;
             }
-            //dd($etat);
+
             $sortie->setEtat($etat);
             $sortie->setEstHistorise(false);
 
@@ -70,6 +83,37 @@ class SortieController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/voir/{id}/inscription', name: '_signup')]
+    public function signup(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SortieRepository $sortieRepository,
+        SluggerInterface $slugger,
+        int $id = null
+    ): Response
+    {
+        $sortie = $sortieRepository->find($id);
+
+        $signed_up_ids = [];
+        foreach ($sortie->getInscriptions()->getValues() as $inscrit) {
+            array_push($signed_up_ids, $inscrit->getId());
+        };
+
+        if (!in_array($this->getUser()->getId(), $signed_up_ids)) {
+            $sortie->addInscription($this->getUser());
+
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_accueil');
+        }
+
+        return $this->render('sortie/voir.html.twig', [
+            'sortie' => $sortie,
+        ]);
+    }
+
     #[Route('/annuler/{id}', name: '_annuler')]
     public function annulerSortie(Request $request,
                                   EntityManagerInterface $entityManager,

@@ -52,6 +52,7 @@
         {{ form_end(form) }}
     </div>
     <h1 class="text-center mt-2">Liste des sorties</h1>
+    <a href="{{ path('app_sortie_add') }}" class="btn btn-outline-primary">Créer une sortie</a>
     <div>
         <table id="tableSortie" class="table table-striped" style="width:100%">
             <thead>
@@ -74,15 +75,15 @@
                     <td>{{ sortie.dateLimiteInscription | date("d-m-Y") }}</td>
                     <td>{{ sortie.inscriptions.count }} / {{ sortie.nbInscriptionMax }}</td>
                     <td>{{ sortie.etat.value }}</td>
-                    <td> {% if inscrit[loop.index0] == 1 %}
+                    <td> {% if app.user in sortie.inscriptions %}
                             ✔️
                         {% else %}
                             ❌
                         {% endif %}
                     </td>
-                    <td><a href="{{ path('app_utilisateur_afficher_participant', {'id' : sortie.organisateur.id})}}">{{ sortie.organisateur.nom }}</a></td>
+                    <td><a href="{{ path('app_utilisateur_afficher_participant', {'id' : sortie.organisateur.id})}}">{{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }}</a></td>
                     <td>
-                        <a class="btn btn-primary">à définir</a>
+                        <a href="{{ path('app_sortie_list', {'id': sortie.id}) }}" class="btn btn-info">Afficher</a>
                         {% if sortie.organisateur.id == app.user.id %}
                             <a href="{{path('app_sortie_annuler', {id : sortie.id})}}" class="btn btn-primary">Annuler</a>
                         {% endif %}
