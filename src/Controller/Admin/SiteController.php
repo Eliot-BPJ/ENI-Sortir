@@ -7,6 +7,7 @@ use App\Form\SiteType;
 use App\Repository\SitesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,6 +43,33 @@ class SiteController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    // Dans SiteController.php
+
+    #[Route('/modifier/{id}', name: '_update')]
+    public function update(Request $request,
+                           EntityManagerInterface $entityManager,
+                           $id = null): Response
+    {
+        $site = $entityManager->getRepository(Sites::class)->find($id);
+
+        if (!$site) {
+            // Gérer le cas où le site n'est pas trouvé
+            return new JsonResponse(['message' => 'Site introuvable'], Response::HTTP_NOT_FOUND);
+        }
+
+        $newSiteName = $request->request->get('editedSite');
+
+        // Mettre à jour le nom du site
+        $site->setNom($newSiteName);
+
+        $entityManager->persist($site);
+        $entityManager->flush();
+
+        // Répondre avec un message de succès
+        return new JsonResponse(['message' => 'Site mis à jour avec succès']);
+    }
+
 
     #[Route('/supprimer/{id}', name: '_supprimer')]
     public function suprimer(EntityManagerInterface $entityManager,
