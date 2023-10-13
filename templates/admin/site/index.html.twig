@@ -2,39 +2,50 @@
 
 {% block title %}Sites{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {{ encore_entry_script_tags('site') }}
+{% endblock %}
+
 {% block body %}
-    <div>
-        <table id="tableSortie" class="table table-striped" style="width:100%">
-            <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {{ form_start(form, {'attr': {'class': "mx-1 mx-md-4"}}) }}
-            <tr>
-                <td>{{ form_row(form.nom) }}</td>
-                <td>
-                    <button class="btn btn-primary" type="submit">Ajouter</button>
-                </td>
-            </tr>
-            {{ form_end(form) }}
 
-            {% for site in sites %}
-                <tr>
-                    <td>{{ site.nom }}</td>
-                    <td>
-                        <a href="#" class="btn btn-primary">Modifier</a>
-                        <a href="{{ path('app_site_supprimer', {'id' : site.id}) }}" class="btn btn-warning"
-                           onclick="return confirm('Attention ! Vous êtes sur le point de supprimer un site. Cela supprimera les sorties associées. Confirmez-vous la suppression ?')">
-                            Suprimer</a>
-                    </td>
-                </tr>
-            {% endfor %}
+<div class="card mb-3" style="width: 80% ; padding: 8px;">
+    <div class="row g-0">
+        <h2 class="mb-4">Sites</h2>
+        <div class="card-body">
+            <table id="tableSortie" class="table table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
 
-            </tbody>
+                <tbody>
+                    {{ form_start(form, {'attr': {'class': "mx-1 mx-md-4"}}) }}
+                        <tr>
+                            <td>{{ form_row(form.nom) }}</td>
+                            <td>
+                                <button class="btn btn-primary" type="submit">Ajouter</button>
+                            </td>
+                        </tr>
+                    {{ form_end(form) }}
 
-        </table>
+                    {% for site in sites %}
+                        <tr>
+                            <td>{{ site.nom }}</td>
+                            <td>
+                                <a href="#" class="btn btn-primary btn-edit" data-site-id="{{ site.id }}">Modifier</a>
+                                <a href="{{ path('app_site_supprimer', {'id' : site.id}) }}" class="btn btn-warning"
+                                   onclick="return confirm('Attention ! Vous êtes sur le point de supprimer un site. Cela supprimera les sorties associées. Confirmez-vous la suppression ?')">
+                                    Suprimer</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
+</div>
 {% endblock %}
