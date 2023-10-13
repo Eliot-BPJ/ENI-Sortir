@@ -6,6 +6,7 @@ use App\DTO\FiltersDTO;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @extends ServiceEntityRepository<Sortie>
@@ -22,7 +23,7 @@ class SortieRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
-    public function findWithSearchFilters(FiltersDTO $filters)
+    public function findWithSearchFilters(FiltersDTO $filters, UserInterface $user)
     {
         $qb = $this->createQueryBuilder('s');
         if (isset($filters->search)) {
@@ -32,6 +33,36 @@ class SortieRepository extends ServiceEntityRepository
         }
         if ($filters->organisateurFilter) {
             $qb->andWhere('s.organisateur = :organisateur')->setParameter('organisateur', true);
+        }
+        if (isset($filters->sites) && $filters->sites->getId()) {
+            $qb->andWhere('s.site = :term')->setParameter('term', $filters->sites->getId());
+        }
+        if (isset($filters->etat) && $filters->etat->value) {
+            $qb->andWhere('s.etat LIKE :term')->setParameter('term', '%' . $filters->etat->value . '%');
+        }
+        if ($filters->passeFilter) {
+            $qb->andWhere('s.etat LIKE :term')->setParameter('term', "Passée");
+        }
+        if ($filters->inscritFilter) {
+            $qb->andWhere(':user MEMBER OF s.inscriptions')->setParameter('user', $user);
+        }
+        if ($filters->pasInscritFilter) {
+            $qb->andWhere(':user NOT MEMBER OF s.inscriptions')->setParameter('user', $user);
+        }
+
+        if ($filters->dateDebut && $filters->dateFin) {
+
+            $diffInSeconds = $filters->dateFin->getTimestamp() - $filters->dateDebut->getTimestamp();
+            $dureeInMinutes = floor($diffInSeconds / 60);
+            $interval = new \DateInterval('PT' . $dureeInMinutes . 'M');
+            $filters->dateFin = $filters->dateDebut->add($interval);
+            $qb->andWhere('s.dateDebut > :term')->setParameter('term', $filters->dateDebut->format("Y-m-d H:i:s"));
+        }
+        if ($filters->dateDebut && !$filters->dateFin) {
+            $qb->andWhere('s.dateDebut > :term')->setParameter('term', $filters->dateDebut->format("Y-m-d H:i:s"));
+        }
+        if ($filters->dateFin && !$filters->dateDebut) {
+            $qb->andWhere('DATE_ADD(s.dateDebut, s.duree, \'minute\') < :date')->setParameter('date', $filters->dateFin);
         }
 
         return $qb->getQuery()->getResult();
