@@ -17,6 +17,21 @@ use Symfony\Component\Validator\Constraints\DateTime;
 #[Route('/sortie', name: 'app_sortie')]
 class SortieController extends AbstractController
 {
+    #[Route('/voir/{id}', name: '_list')]
+    public function read(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SortieRepository $sortieRepository,
+        SluggerInterface $slugger,
+        int $id = null
+    ): Response {
+        $sortie = $sortieRepository->find($id);
+
+        return $this->render('sortie/voir.html.twig', [
+            'sortie' => $sortie,
+        ]);
+    }
+
     #[Route('/add', name: '_add')]
     #[Route('/edit/{id}', name: '_edit')]
     public function editer(
@@ -25,8 +40,7 @@ class SortieController extends AbstractController
         SortieRepository $sortieRepository,
         SluggerInterface $slugger,
         int $id = null
-    ): Response
-    {
+    ): Response {
         if ($id == null) {
             $sortie = new Sortie();
         } else {
@@ -55,6 +69,39 @@ class SortieController extends AbstractController
 
         return $this->render('sortie/editer.html.twig', [
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/voir/{id}/inscription', name: '_signup')]
+    public function signup(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SortieRepository $sortieRepository,
+        SluggerInterface $slugger,
+        int $id = null
+    ): Response {
+        $sortie = $sortieRepository->find($id);
+
+        #dd($sortie->getInscriptions()->getValues());
+
+        $signed_up_ids = [];
+        foreach($sortie->getInscriptions()->getValues() as $inscrit) {
+            array_push($signed_up_ids, $inscrit->getId());
+        };
+
+        #dd($signed_up_ids);
+
+        if (!in_array($this->getUser()->getId(), $signed_up_ids)) {
+            $sortie->addInscription($this->getUser());
+
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_accueil');
+        }
+
+        return $this->render('sortie/voir.html.twig', [
+            'sortie' => $sortie,
         ]);
     }
 }
