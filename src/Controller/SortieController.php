@@ -28,9 +28,13 @@ class SortieController extends AbstractController
         int $id = null
     ): Response {
         $sortie = $sortieRepository->find($id);
-
+        $nbInscrit = 0;
+        foreach ($sortie->getInscriptions()->getValues() as $inscrit) {
+            $nbInscrit++;
+        };
         return $this->render('sortie/voir.html.twig', [
             'sortie' => $sortie,
+            'nbInscrit' => $nbInscrit
         ]);
     }
 
@@ -94,13 +98,13 @@ class SortieController extends AbstractController
     ): Response
     {
         $sortie = $sortieRepository->find($id);
-
+        $nbInscrit = 0;
         $signed_up_ids = [];
         foreach ($sortie->getInscriptions()->getValues() as $inscrit) {
             array_push($signed_up_ids, $inscrit->getId());
+            $nbInscrit++;
         };
-
-        if (!in_array($this->getUser()->getId(), $signed_up_ids)) {
+        if (!in_array($this->getUser()->getId(), $signed_up_ids) && $this->getUser()->getId() !== $sortie->getOrganisateur() && $nbInscrit >$sortie->getNbInscriptionMax()) {
             $sortie->addInscription($this->getUser());
 
             $entityManager->persist($sortie);
@@ -111,6 +115,7 @@ class SortieController extends AbstractController
 
         return $this->render('sortie/voir.html.twig', [
             'sortie' => $sortie,
+            'nbInscrit' => $nbInscrit
         ]);
     }
 

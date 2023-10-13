@@ -20,13 +20,14 @@ class AccueilController extends AbstractController
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
+        $sorties = $sortieRepository->findAll();
 
         $filters = new FiltersDTO();
         $form = $this->createForm(FiltersFormType::class, $filters);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $filters = $form->getData();
-            $sorties = $sortieRepository->findWithSearchFilters($filters);
+            $sorties = $sortieRepository->findWithSearchFilters($filters, $this->getUser());
         } else {
             $sorties = $sortieRepository->findAll();
         }
