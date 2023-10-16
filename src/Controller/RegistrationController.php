@@ -28,7 +28,7 @@ class RegistrationController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
-    #[Route('/register', name: 'app_register')]
+    #[Route('/admin/register', name: 'app_register')]
     public function register(Request $request,
                              UserPasswordHasherInterface $userPasswordHasher,
                              EntityManagerInterface $entityManager,
@@ -69,17 +69,10 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
-            if($this->getUser() && $this->getUser()->getRoles()[0] === 'ROLE_ADMIN') {
-                return $this->redirectToRoute('app_admin_utilisateur_lister');
-            }
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('app_admin_utilisateur_lister');
+
         }
-        if($this->getUser() && $this->getUser()->getRoles()[0] === 'ROLE_ADMIN') {
-            return $this->render('admin/utilisateur/adminRegister.html.twig', [
-                'registrationForm' => $form->createView(),
-            ]);
-        }
-        return $this->render('registration/register.html.twig', [
+        return $this->render('admin/utilisateur/adminRegister.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
