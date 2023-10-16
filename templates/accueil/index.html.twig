@@ -75,10 +75,9 @@
                     <td>{{ sortie.dateLimiteInscription | date("d-m-Y") }}</td>
                     <td>{{ sortie.inscriptions.count }} / {{ sortie.nbInscriptionMax }}</td>
                     <td>{{ sortie.etat.value }}</td>
-                    <td> {% if app.user in sortie.inscriptions %}
+                    <td>
+                        {% if app.user in sortie.inscriptions %}
                             ✔️
-                        {% else %}
-                            ❌
                         {% endif %}
                     </td>
                     <td><a href="{{ path('app_utilisateur_afficher_participant', {'id' : sortie.organisateur.id})}}">{{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }}</a></td>
