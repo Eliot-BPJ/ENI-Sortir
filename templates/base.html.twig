@@ -23,11 +23,11 @@
             <div>
                 <img class="logo" src="{{ asset('assets/logo.jpg') }}" alt="Logo" />
             </div>
-            <a href="{{ path('app_accueil') }}">Accueil</a>
 
             {% if is_granted('ROLE_USER') %}
+            <a class="{{ app.request.get('_route') == 'app_accueil' ? 'active' : '' }}" href="{{ path('app_accueil') }}">Accueil</a>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="{{ app.request.get('_route') starts with 'app_admin_' ? 'active' : '' }} nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Administration
                 </a>
                 <ul class="dropdown-menu">
@@ -39,10 +39,12 @@
                     {% endif %}
                 </ul>
             </li>
+            {% else %}
+                <a class="{{ app.request.get('_route') == 'app_login' ? 'active' : '' }}" href="{{ path('app_login') }}">Accueil</a>
             {% endif %}
 
             {% if is_granted('ROLE_USER') %}
-            <a href="{{ path('app_utilisateur_modifier') }}">Mon profil</a>
+            <a class="{{ app.request.get('_route') == 'app_utilisateur_modifier' ? 'active' : '' }}" href="{{ path('app_utilisateur_modifier') }}">Mon profil</a>
             <a href="{{ path('app_logout') }}">Se déconnecter</a>
             {% endif %}
         </nav>
