@@ -44,8 +44,6 @@ class SiteController extends AbstractController
         ]);
     }
 
-    // Dans SiteController.php
-
     #[Route('/modifier/{id}', name: '_update')]
     public function update(Request $request,
                            EntityManagerInterface $entityManager,
@@ -68,25 +66,5 @@ class SiteController extends AbstractController
 
         // Répondre avec un message de succès
         return new JsonResponse(['message' => 'Site mis à jour avec succès']);
-    }
-
-
-    #[Route('/supprimer/{id}', name: '_supprimer')]
-    public function suprimer(EntityManagerInterface $entityManager,
-                             SitesRepository $sitesRepository,
-                             int $id):Response {
-
-        //S'il existe, on est dans le cas de la modification
-        $site = $sitesRepository->find($id);
-
-        //traitement des données
-        $entityManager->remove($site); //sauvegarde le bien
-        $entityManager->flush(); //enregistre en base
-
-        $this->addFlash(
-            'success',
-            'le site à bien été suprimé.');
-
-        return  $this->redirectToRoute('app_site_liste');
     }
 }

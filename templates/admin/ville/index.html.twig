@@ -4,6 +4,7 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     {{ encore_entry_script_tags('ville') }}
 {% endblock %}
 
@@ -33,13 +34,15 @@
 
                         {% for ville in villes %}
                             <tr>
-                                <td>{{ ville.nom }}</td>
-                                <td>{{ ville.codePostal }}</td>
-                                <td>
-                                    <a href="#" class="btn btn-primary">Modifier</a>
+                                <td class="ville-nom">{{ ville.nom }}</td>
+                                <td class="ville-codepostal">{{ ville.codePostal }}</td>
+                                <td class="ville-actions">
+                                    <a href="#" class="btn btn-primary btn-edit" data-ville-id="{{ ville.id }}">Modifier</a>
+                                    <button class="btn btn-success btn-save" style="display: none;" data-ville-id="{{ ville.id }}">Sauvegarder</button>
                                 </td>
                             </tr>
                         {% endfor %}
+
                     </tbody>
             </table>
         </div>

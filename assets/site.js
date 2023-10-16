@@ -1,55 +1,49 @@
 // Attendre que le document HTML soit complètement chargé avant d'exécuter ce code
 
 $(document).ready(function () {
-    // Lorsque l'on clique sur un élément avec la classe 'btn-edit'
-    $('.btn-edit').on('click', function () {
-        // Récupérer l'identifiant du site à partir de l'attribut 'data-site-id' de l'élément cliqué
-        let siteId = $(this).data('site-id');
+    // Gestion du bouton "Modifier"
+    $('.btn-edit').click(function () {
+        let tr = $(this).closest('tr');
+        let id = $(this).data('site-id');
+        let nomCell = tr.find('td:first-child');
 
-        // Trouver la première cellule (colonne) du même ligne (tr) que le bouton cliqué
-        let siteCell = $(this).closest('tr').find('td:first');
+        let nomValue = nomCell.text();
+        let inputField = '<input type="text" class="form-control" name="editedSite" value="' + nomValue + '">';
+        nomCell.html(inputField);
 
-        // Récupérer le nom du site à partir du texte de la cellule
-        let siteName = siteCell.text();
+        // Sauvegarder l'ID dans une variable
+        tr.data('editing-site-id', id);
 
-        let inputField = $('<input type="text" id="edit-site-' + siteId + '" value="' + siteName + '">');
-        let saveButton = $('<button class="btn-save" data-site-id="' + siteId + '">Sauvegarder</button>');
-
-        // Remplacer le texte de la cellule par un champ de texte <input> contenant le nom du site
-        siteCell.empty().append(inputField, saveButton);
-
+        // Masquer le bouton "Modifier" et afficher le bouton "Sauvegarder"
+        tr.find('.btn-edit').hide();
+        tr.find('.btn-save').show();
     });
 
-    // Lorsque l'on clique sur un élément avec la classe 'btn-save' (utilisation de delegation d'événements)
-    $(document).on('click', '.btn-save', function () {
-        // Récupérer l'identifiant du site à partir de l'attribut 'data-site-id' de l'élément cliqué
-        let siteId = $(this).data('site-id');
+    // Gestion du bouton "Sauvegarder"
+    $('.btn-save').click(function () {
+        let tr = $(this).closest('tr');
+        let nomCell = tr.find('td:first-child');
+        let updatedNom = nomCell.find('input').val();
 
-        // Récupérer la valeur modifiée du champ de texte correspondant à cet identifiant
-        let editedSite = $('#edit-site-' + siteId).val();
-
-        // Conserver une référence à l'élément input et au bouton "Sauvegarder"
-        let inputField = $('#edit-site-' + siteId);
-        let saveButton = $(this);
-
-        // Effectuer une requête AJAX pour mettre à jour le site dans la base de données
+        // Récupérer l'ID à partir de la variable
+        let id = tr.data('editing-site-id');
+        // Mettre à jour le nom du site via une requête AJAX
         $.ajax({
-            type: 'POST', // Méthode HTTP (POST pour les mises à jour)
-            url: '/site/modifier/' + siteId, // URL de votre API ou script côté serveur
-            data: {
-                editedSite: editedSite // Envoyer le nouveau nom du site
-            },
-            success: function (response) {
-                // La mise à jour côté serveur a réussi
+            type: 'POST',
+            url: '/site/modifier/' + id,
+            data: { editedSite: updatedNom },
+            success: function (data) {
+                // Mettre à jour la cellule du nom avec la nouvelle valeur
+                nomCell.html(updatedNom);
 
-                // Remplacer l'input par un champ texte avec le nouveau nom du site
-                inputField.replaceWith('<span>' + editedSite + '</span>');
-                // Masquer le bouton "Sauvegarder"
-                saveButton.hide();
+                // Masquer le bouton "Sauvegarder" et afficher le bouton "Modifier"
+                tr.find('.btn-edit').show();
+                tr.find('.btn-save').hide();
+
+                // Afficher un message de succès ou gérer les erreurs ici
             },
-            error: function (xhr, status, error) {
-                // La mise à jour côté serveur a échoué
-                console.log("Erreur lors de la mise à jour : " + error);
+            error: function (data) {
+                // Gérer les erreurs ici
             }
         });
     });
