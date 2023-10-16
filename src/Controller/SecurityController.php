@@ -32,4 +32,15 @@ class SecurityController extends AbstractController
         // controller can be blank: it will never be called!
         throw new \Exception('Don\'t forget to activate logout in security.yaml');
     }
+
+    #[Route(path: '/mot-de-passe-oublie', name: 'app_forgot_password')]
+    #[Route(path: '/mot-de-passe-oublie/{email}', name: 'app_forgot_password_email')]
+    public function forgotPassword(String $email, UtilisateurRepository $utilisateurRepository ): Response
+    {
+        if($email) {
+            $utilisateur = $utilisateurRepository->findOneBy(['email' => $email]);
+        }
+
+        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+    }
 }
