@@ -51,18 +51,17 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         if ($filters->dateDebut && $filters->dateFin) {
-
-            $diffInSeconds = $filters->dateFin->getTimestamp() - $filters->dateDebut->getTimestamp();
-            $dureeInMinutes = floor($diffInSeconds / 60);
-            $interval = new \DateInterval('PT' . $dureeInMinutes . 'M');
-            $filters->dateFin = $filters->dateDebut->add($interval);
-            $qb->andWhere('s.dateDebut > :term')->setParameter('term', $filters->dateDebut->format("Y-m-d H:i:s"));
+            $qb->andWhere(':start_date < s.dateDebut')
+                ->andWhere('s.dateDebut < :end_date')
+                ->setParameters([
+                    'start_date' => $filters->dateDebut->format("Y-m-d H:i:s"),
+                    'end_date' => $filters->dateFin->format("Y-m-d H:i:s")]);
         }
         if ($filters->dateDebut && !$filters->dateFin) {
             $qb->andWhere('s.dateDebut > :term')->setParameter('term', $filters->dateDebut->format("Y-m-d H:i:s"));
         }
         if ($filters->dateFin && !$filters->dateDebut) {
-            $qb->andWhere('DATE_ADD(s.dateDebut, s.duree, \'minute\') < :date')->setParameter('date', $filters->dateFin);
+            $qb->andWhere('DATE_ADD(s.dateDebut, s.duree, \'minute\') < :date')->setParameter('date', $filters->dateFin->format("Y-m-d H:i:s"));
         }
 
         return $qb->getQuery()->getResult();

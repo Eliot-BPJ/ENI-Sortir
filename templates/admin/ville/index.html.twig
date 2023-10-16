@@ -37,9 +37,6 @@
                                 <td>{{ ville.codePostal }}</td>
                                 <td>
                                     <a href="#" class="btn btn-primary">Modifier</a>
-                                    <a href="{{ path('app_ville_supprimer', {'id' : ville.id}) }}" class="btn btn-warning"
-                                       onclick="return confirm('Attention ! Vous êtes sur le point de supprimer une ville. Cela supprimera les sorties associées. Confirmez-vous la suppression ?')">
-                                        Suprimer</a>
                                 </td>
                             </tr>
                         {% endfor %}

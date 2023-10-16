@@ -37,9 +37,6 @@
                             <td>{{ site.nom }}</td>
                             <td>
                                 <a href="#" class="btn btn-primary btn-edit" data-site-id="{{ site.id }}">Modifier</a>
-                                <a href="{{ path('app_site_supprimer', {'id' : site.id}) }}" class="btn btn-warning"
-                                   onclick="return confirm('Attention ! Vous êtes sur le point de supprimer un site. Cela supprimera les sorties associées. Confirmez-vous la suppression ?')">
-                                    Suprimer</a>
                             </td>
                         </tr>
                     {% endfor %}
