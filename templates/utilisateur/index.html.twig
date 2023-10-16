@@ -27,21 +27,25 @@
                                 </div>
                                 <div class="col-lg-6 px-xl-10">
                                     <div class="bg-secondary d-lg-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
-                                        <h3 class="h2 text-white mb-0">Mon profile</h3>
+                                        <h3 class="h2 text-white mb-0">Mon profil</h3>
                                     </div>
                                     <div>
+                                        <div class="form-floating mb-3">
+                                            Nom : {{ app.user.nom }}
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            Prénom : {{ app.user.prenom }}
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            Ville de rattachement : {{ app.user.idSite.nom }}
+                                        </div>
+
                                         {{ form_start(form, {'attr':{'class':'form-floating'}}) }}
 
                                         <div class="form-floating mb-3">
                                             {{ form_row(form.pseudo, {'attr':{'class':'form-control'}}) }}
-                                        </div>
-
-                                        <div class="form-floating mb-3">
-                                            {{ form_row(form.nom, {'attr':{'class':'form-control'}}) }}
-                                        </div>
-
-                                        <div class="form-floating mb-3">
-                                            {{ form_row(form.prenom, {'attr':{'class':'form-control'}}) }}
                                         </div>
 
                                         <div class="form-floating mb-3">
@@ -54,10 +58,6 @@
 
                                         <div class="form-floating mb-3">
                                             {{ form_row(form.password, {'attr':{'class':'form-control'}}) }}
-                                        </div>
-
-                                        <div class="form-floating mb-3">
-                                            {{ form_row(form.idSite, {'attr':{'class':'form-select'}}) }}
                                         </div>
 
                                         <div class="form-floating mb-3">
