@@ -56,7 +56,7 @@ class AppFixtures extends Fixture
         $utilisateur = new Utilisateur();
         $utilisateur->setEmail('f.delacour@gmail.com');
         $utilisateur->setRoles(["ROLE_ADMIN"]);
-        $password = $this->hasher->hashPassword($utilisateur, 'admin');
+        $password = $this->hasher->hashPassword($utilisateur, 'Pa$$w0rd');
         $utilisateur->setPassword($password);
         $utilisateur->setPseudo('SuperFleur');
         $utilisateur->setNom('Delacour');
@@ -71,7 +71,7 @@ class AppFixtures extends Fixture
 
         $utilisateur = new Utilisateur();
         $utilisateur->setEmail('v.belgrade@gmail.com');
-        $password2 = $this->hasher->hashPassword($utilisateur, 'user');
+        $password2 = $this->hasher->hashPassword($utilisateur, 'Pa$$w0rd');
         $utilisateur->setPassword($password2);
         $utilisateur->setPseudo('Vivi');
         $utilisateur->setNom('Belgrade');
@@ -85,7 +85,7 @@ class AppFixtures extends Fixture
 
         $utilisateur = new Utilisateur();
         $utilisateur->setEmail('m.monroe@gmail.com');
-        $password2 = $this->hasher->hashPassword($utilisateur, 'user');
+        $password2 = $this->hasher->hashPassword($utilisateur, 'Pa$$w0rd');
         $utilisateur->setPassword($password2);
         $utilisateur->setPseudo('Monroe17');
         $utilisateur->setNom('Monroe');

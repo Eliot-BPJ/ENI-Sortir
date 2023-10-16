@@ -21,6 +21,7 @@ class UtilisateurType extends AbstractType
             ])
             ->add('telephone',null, [
                 'label' => 'Téléphone* :',
+
             ])
             ->add('email',null, [
                 'label' => 'Email* :',
