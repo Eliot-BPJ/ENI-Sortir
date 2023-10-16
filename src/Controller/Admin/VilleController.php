@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/ville', name: 'app_ville')]
+#[Route('/admin/ville', name: 'app_admin_ville')]
 class VilleController extends AbstractController
 {
     #[Route('/', name: '_liste')]
