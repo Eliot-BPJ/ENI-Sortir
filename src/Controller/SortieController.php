@@ -2,11 +2,16 @@
 
 namespace App\Controller;
 
+use App\DTO\FiltersDTO;
 use App\Entity\Etats;
+use App\Entity\Lieu;
 use App\Entity\Sites;
 use App\Entity\Sortie;
 use App\Form\AnnulerSortieType;
+use App\Form\FiltersFormType;
+use App\Form\LieuType;
 use App\Form\SortieType;
+use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,6 +51,7 @@ class SortieController extends AbstractController
         EntityManagerInterface $entityManager,
         SortieRepository $sortieRepository,
         SluggerInterface $slugger,
+        LieuRepository $lieuRepository,
         int $id = null
     ): Response {
         if ($id == null) {
@@ -53,10 +59,25 @@ class SortieController extends AbstractController
         } else {
             $sortie = $sortieRepository->find($id);
         }
-
+        $lieu = new Lieu();
+        $idLieu = -1;
         $form = $this->createForm(SortieType::class, $sortie);
-        $form->handleRequest($request);
 
+        $formLieu = $this->createForm(LieuType::class,$lieu);
+        $form->handleRequest($request);
+        $formLieu->handleRequest($request);
+        if ($lieu->getNom()) {
+
+            $entityManager->persist($lieu);
+            $entityManager->flush();
+
+            $lieux = $lieuRepository->findAll();
+            foreach ($lieux as $l){
+                if($l->getId() > $idLieu) {
+                    $idLieu = $l->getId();
+                }
+            }
+        }
         if ($form->isSubmitted() && $form->isValid()) {
             $sortie->setSite($this->getUser()->getIdSite());
             $sortie->setOrganisateur($this->getUser());
@@ -76,6 +97,10 @@ class SortieController extends AbstractController
 
             $sortie->setEtat($etat);
             $sortie->setEstHistorise(false);
+            if($idLieu !== -1) {
+                $lieu = $lieuRepository->findOneBy((array('id' => $idLieu)));
+                $sortie->setLieux($lieu);
+            }
 
             $entityManager->persist($sortie);
             $entityManager->flush();
@@ -85,6 +110,7 @@ class SortieController extends AbstractController
 
         return $this->render('sortie/editer.html.twig', [
             'form' => $form,
+            'formLieu' => $formLieu
         ]);
     }
 
