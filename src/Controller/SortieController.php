@@ -72,6 +72,7 @@ class SortieController extends AbstractController
         $formLieu = $this->createForm(LieuType::class,$lieu);
         $form->handleRequest($request);
         $formLieu->handleRequest($request);
+
         if ($lieu->getNom()) {
 
             $entityManager->persist($lieu);
@@ -107,7 +108,6 @@ class SortieController extends AbstractController
                 $lieu = $lieuRepository->findOneBy((array('id' => $idLieu)));
                 $sortie->setLieux($lieu);
             }
-
             $entityManager->persist($sortie);
             $entityManager->flush();
 
