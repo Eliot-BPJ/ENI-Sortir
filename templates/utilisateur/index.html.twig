@@ -15,57 +15,70 @@
             </div>
         {% endfor %}
 
-    <div>
-        <img class="img-profile" src="{{ asset('assets/uploads/' ~ utilisateur.imageProfil) }}" alt="Image profil">
-    </div>
+    <section class="bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 mb-4 mb-sm-5">
+                    <div class="card card-style1 border-0">
+                        <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
+                            <div class="row align-items-center">
+                                <div class="col-lg-6 mb-4 mb-lg-0">
+                                    <img class="rounded-circle img-fluid img-profile" src="{{ asset('assets/uploads/' ~ utilisateur.imageProfil) }}" alt="Image profil">
+                                </div>
+                                <div class="col-lg-6 px-xl-10">
+                                    <div class="bg-secondary d-lg-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
+                                        <h3 class="h2 text-white mb-0">Mon profile</h3>
+                                    </div>
+                                    <div>
+                                        {{ form_start(form, {'attr':{'class':'form-floating'}}) }}
 
+                                        <div class="form-floating mb-3">
+                                            {{ form_row(form.pseudo, {'attr':{'class':'form-control'}}) }}
+                                        </div>
 
-        <div class="card mb-3" style="width: 80% ; padding: 8px;">
-            <div class="row g-0">
-                <h2 class="mb-4">Mon profile</h2>
-                <div class="card-body">
-                    {{ form_start(form, {'attr':{'class':'form-floating'}}) }}
+                                        <div class="form-floating mb-3">
+                                            {{ form_row(form.nom, {'attr':{'class':'form-control'}}) }}
+                                        </div>
 
-                    <div class="form-floating mb-3">
-                        {{ form_row(form.pseudo, {'attr':{'class':'form-control'}}) }}
+                                        <div class="form-floating mb-3">
+                                            {{ form_row(form.prenom, {'attr':{'class':'form-control'}}) }}
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            {{ form_row(form.telephone, {'attr':{'class':'form-control'}}) }}
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            {{ form_row(form.email, {'attr':{'class':'form-select'}}) }}
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            {{ form_row(form.password, {'attr':{'class':'form-control'}}) }}
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            {{ form_row(form.idSite, {'attr':{'class':'form-select'}}) }}
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            {{ form_row(form.imageProfil, {'attr':{'class':'form-control form-control-sm'}}) }}
+                                        </div>
+
+                                        <div class="col-sm" style="text-align: center">
+                                            <button class="btn btn-success" type="submit">Enregistrer</button>
+                                            <a href="{{ path('app_accueil') }}" class="btn btn-secondary">Annuler</a>
+                                            <a href="{{ path('app_utilisateur_modifier_pw', {'id' : utilisateur.id}) }}" class="btn btn-primary">Modifier Mot de Passe</a>
+                                        </div>
+                                        {{ form_end(form) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="form-floating mb-3">
-                        {{ form_row(form.nom, {'attr':{'class':'form-control'}}) }}
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        {{ form_row(form.prenom, {'attr':{'class':'form-control'}}) }}
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        {{ form_row(form.telephone, {'attr':{'class':'form-control'}}) }}
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        {{ form_row(form.email, {'attr':{'class':'form-select'}}) }}
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        {{ form_row(form.password, {'attr':{'class':'form-control'}}) }}
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        {{ form_row(form.idSite, {'attr':{'class':'form-select'}}) }}
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        {{ form_row(form.imageProfil, {'attr':{'class':'form-control form-control-sm'}}) }}
-                    </div>
-
-                    <div class="col-sm" style="text-align: center">
-                        <button class="btn btn-success" type="submit">Enregistrer</button>
-                        <a href="{{ path('app_accueil') }}" class="btn btn-secondary">Annuler</a>
-                        <a href="{{ path('app_utilisateur_modifier_pw', {'id' : utilisateur.id}) }}" class="btn btn-primary">Modifier Mot de Passe</a>
-                    </div>
-                    {{ form_end(form) }}
                 </div>
+
             </div>
         </div>
+    </section>
 
 {% endblock %}
