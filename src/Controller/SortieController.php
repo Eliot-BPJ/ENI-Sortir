@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 #[Route('/sortie', name: 'app_sortie')]
 class SortieController extends AbstractController
@@ -28,13 +27,20 @@ class SortieController extends AbstractController
         int $id = null
     ): Response {
         $sortie = $sortieRepository->find($id);
+
         $nbInscrit = 0;
         foreach ($sortie->getInscriptions()->getValues() as $inscrit) {
             $nbInscrit++;
         };
+
+        $datetimeFin = new \DateTime($sortie->getDateDebut()->format('Y-m-d H:i'));
+        date_add($datetimeFin, new \DateInterval('PT' . $sortie->getDuree() . 'M'));
+
         return $this->render('sortie/voir.html.twig', [
             'sortie' => $sortie,
-            'nbInscrit' => $nbInscrit
+            'nbInscrit' => $nbInscrit,
+            'datetimeFin' => $datetimeFin,
+            'datetimeActuelle' => new \DateTime('now')
         ]);
     }
 
