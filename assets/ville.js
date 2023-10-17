@@ -1,4 +1,3 @@
-// assets/js/ville.js
 $(document).ready(function() {
     $('.btn-edit').click(function() {
         let tr = $(this).closest('tr');
