@@ -7,11 +7,12 @@ use App\Form\VilleType;
 use App\Repository\VillesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/ville', name: 'app_ville')]
+#[Route('/admin/ville', name: 'app_admin_ville')]
 class VilleController extends AbstractController
 {
     #[Route('/', name: '_liste')]
@@ -41,24 +42,28 @@ class VilleController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/modifier/{id}', name: '_update', methods: ['POST'])]
+    public function update(Request $request, EntityManagerInterface $entityManager, $id = null): JsonResponse
+    {
+        $ville = $entityManager->getRepository(Villes::class)->find($id);
 
-    #[Route('/supprimer/{id}', name: '_supprimer')]
-    public function suprimer(EntityManagerInterface $entityManager,
-                             VillesRepository $villesRepository,
-                             int $id):Response {
+        if (!$ville) {
+            return new JsonResponse(['message' => 'Ville introuvable'], Response::HTTP_NOT_FOUND);
+        }
+        try {
+            $editedNom = $request->request->get('editedNom');
+            $editedCodePostal = $request->request->get('editedCodePostal');
 
-        //S'il existe, on est dans le cas de la modification
-        $ville = $villesRepository->find($id);
+            $ville->setNom($editedNom);
+            $ville->setCodePostal($editedCodePostal);
 
-        //traitement des données
-        $entityManager->remove($ville); //sauvegarde le bien
-        $entityManager->flush(); //enregistre en base
+            $entityManager->persist($ville);
+            $entityManager->flush();
 
-        $this->addFlash(
-            'success',
-            'la ville a bien été suprimé.');
-
-        return  $this->redirectToRoute('app_ville_liste');
+            return new JsonResponse(['message' => 'Ville mise à jour avec succès']);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
