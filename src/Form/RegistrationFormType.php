@@ -38,31 +38,6 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Site de rattachement* :',
                 "choice_label"=>'nom',
                 ])
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'invalid_message' => "Ce n'est pas le même password",
-                'options' => ['attr' => ['class' => 'password-field']],
-                'required' => true,
-                'first_options'  => ['label' => 'Mot de passe* :'],
-                'second_options' => ['label' => 'Répéter votre mot de passe* :'],
-            ])
-            ->add('imageProfil', FileType::class, [
-                'label' => 'Photo (PNG, JPG, BMP)* :',
-                'mapped' => false,
-                'required' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'image/png',
-                            'image/jpeg',
-                            'image/bmp',
-                        ],
-                        'mimeTypesMessage' => 'Veuillez uploader un PNG ou un JPG',
-                    ])
-                ],
-            ])
-
         ;
     }
 
