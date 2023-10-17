@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Utilisateur;
 use App\Form\UpdatePasswordType;
 use App\Form\UtilisateurType;
 use App\Repository\UtilisateurRepository;
@@ -78,10 +77,6 @@ class UtilisateurController extends AbstractController
         // Récupérez l'utilisateur connecté
         $utilisateur = $this->getUser();
 
-        // Récupérez le mot de passe stocké en base de données
-        //pour le debug
-        //$storedPassword = $utilisateur->getPassword();
-
         // Créez le formulaire de modification
         $form = $this->createForm(UpdatePasswordType::class, $utilisateur);
         $form->handleRequest($request);
@@ -106,10 +101,6 @@ class UtilisateurController extends AbstractController
 
                 // Redirigez l'utilisateur vers la paged'accueil
                 return $this->redirectToRoute('app_accueil');
-            } else {
-                // Mot de passe actuel incorrect
-                $this->addFlash('error',
-                    'Mot de passe actuel incorrect.');
             }
         }
 
