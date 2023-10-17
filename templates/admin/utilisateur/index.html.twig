@@ -12,8 +12,8 @@
         <div class="mb-4">
             <h2 class="mb-4">Utilisateurs</h2>
 
-            <a class="btn btn-primary" href="{{path('app_register')}}">Ajouter un utilisateur Manuellement</a>
-            <a class="btn btn-primary" href="{{path('app_admin_utilisateur_ajouter_csv')}}">Ajouter un Utilisateur avec un csv</a>
+            <a class="btn btn-outline-primary" href="{{path('app_register')}}">Ajouter un utilisateur Manuellement</a>
+            <a class="btn btn-outline-primary" href="{{path('app_admin_utilisateur_ajouter_csv')}}">Ajouter un Utilisateur avec un csv</a>
         </div>
         <table class="table table-striped">
             <thead>
@@ -39,8 +39,8 @@
                     <td>{{ utilisateur.actif ? "Oui" : "Non"}}</td>
                     <td>{{ utilisateur.idSite.nom }}</td>
                     <td>
-                        <a class="btn btn-warning" type="submit" href="{{ path('app_admin_utilisateur_desactiver', {'id' : utilisateur.id}) }}">{{ utilisateur.isActif() ? 'Désactiver' : 'Activer'}}</a>
-                        <a class="btn btn-danger" type="submit" onclick="return confirm('Etes vous sur')" href="{{ path('app_admin_utilisateur_supprimer', {'id' : utilisateur.id}) }}">Supprimer</a>
+                        <a class="btn btn-outline-warning" type="submit" href="{{ path('app_admin_utilisateur_desactiver', {'id' : utilisateur.id}) }}">{{ utilisateur.isActif() ? 'Désactiver' : 'Activer'}}</a>
+                        <a class="btn btn-outline-danger" type="submit" onclick="return confirm('Etes vous sur')" href="{{ path('app_admin_utilisateur_supprimer', {'id' : utilisateur.id}) }}">Supprimer</a>
                     </td>
                 </tr>
             {% endfor %}
