@@ -20,29 +20,29 @@ class SortieType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => "Nom de la sortie"
+                'label' => "Nom de la sortie* :"
             ])
             ->add('dateDebut', DateTimeType::class, [
-                'label' => 'Date de debut de la sortie',
+                'label' => 'Date de debut de la sortie* :',
                 'widget' => 'single_text',
             ])
             ->add('dateRetour', DateTimeType::class, [
                 'mapped' => false,
-                'label' => 'Date de retour',
+                'label' => 'Date de fin de la sortie* :',
                 'widget' => 'single_text'
             ])
             ->add('dateLimiteInscription', DateType::class, [
-                'label' => "Date de fin d'inscription",
+                'label' => "Date de fin d'inscription* :",
                 'widget' => 'single_text'
             ])
             ->add('nbInscriptionMax', IntegerType::class, [
-                'label' => "Nombre de places",
+                'label' => "Nombre de places* (minimum 2) :",
             ])
             ->add('infosSortie', TextType::class, [
-                'label' => "Description et infos",
+                'label' => "Description et infos :",
             ])
             ->add('lieux', EntityType::class, [
-                'label' => "Lieu",
+                'label' => "Lieu* :",
                 'class' => Lieu::class,
                 'choice_label' => 'nom',
                 'multiple' => false,
@@ -50,7 +50,7 @@ class SortieType extends AbstractType
                 'by_reference' => false,
             ])
             ->add('ville', EntityType::class, [
-                'label' => "Ville",
+                'label' => "Ville* :",
                 'mapped' => false,
                 'class' => Villes::class,
                 'choice_label' => 'nom'

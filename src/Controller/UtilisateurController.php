@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Utilisateur;
 use App\Form\UpdatePasswordType;
 use App\Form\UtilisateurType;
 use App\Repository\UtilisateurRepository;
@@ -14,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[Route('/utilisateur', name: 'app_utilisateur')]
 class UtilisateurController extends AbstractController

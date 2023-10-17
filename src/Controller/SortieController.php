@@ -86,32 +86,42 @@ class SortieController extends AbstractController
             }
         }
         if ($form->isSubmitted() && $form->isValid()) {
+
             $sortie->setSite($this->getUser()->getIdSite());
             $sortie->setOrganisateur($this->getUser());
 
+            $dateInscription = $form->get("dateLimiteInscription")->getData();
+            //conversion des dates en durée
             $dateDeb = $form->get("dateDebut")->getData();
             $dateFin = $form->get("dateRetour")->getData();
             $diff_in_seconds = $dateFin->getTimestamp() - $dateDeb->getTimestamp();
             $duree =  floor($diff_in_seconds / 60); #in minutes
+            //si la
+            if($dateFin>$dateDeb && $dateDeb>$dateInscription){
+                $sortie->setDuree($duree);
 
-            $sortie->setDuree($duree);
+                if($request->request->has('save')) {
+                    $etat = Etats::Creee;
+                } else if($request->request->has('add')) {
+                    $etat = Etats::Ouverte;
+                }
 
-            if($request->request->has('save')) {
-                $etat = Etats::Creee;
-            } else if($request->request->has('add')) {
-                $etat = Etats::Ouverte;
+                $sortie->setEtat($etat);
+                $sortie->setEstHistorise(false);
+                if($idLieu !== -1) {
+                    $lieu = $lieuRepository->findOneBy((array('id' => $idLieu)));
+                    $sortie->setLieux($lieu);
+                }
+                $entityManager->persist($sortie);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('app_accueil');
+            } else {
+                $this->addFlash('error',
+                    'La date limite d\'inscription doit être avant le début de la sortie. '
+                            .'Le début de la sortie doit être avant la date de fin de sortie');
             }
 
-            $sortie->setEtat($etat);
-            $sortie->setEstHistorise(false);
-            if($idLieu !== -1) {
-                $lieu = $lieuRepository->findOneBy((array('id' => $idLieu)));
-                $sortie->setLieux($lieu);
-            }
-            $entityManager->persist($sortie);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_accueil');
         }
 
         return $this->render('sortie/editer.html.twig', [

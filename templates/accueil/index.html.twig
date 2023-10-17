@@ -82,13 +82,12 @@
                     </td>
                     <td><a href="{{ path('app_utilisateur_afficher_participant', {'id' : sortie.organisateur.id})}}">{{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }}</a></td>
                     <td>
+                        <a href="{{ path('app_sortie_list', {'id': sortie.id}) }}" class="btn btn-outline-info">Afficher</a>
                         {% if is_granted('ROLE_ADMIN') or app.user.id == sortie.organisateur.id%}
                             <a href="{{path('app_sortie_annuler', {id : sortie.id})}}" class="btn btn-outline-danger">Annuler</a>
                         {% endif %}
                         {% if app.user in sortie.inscriptions %}
                             <a href="{{ path('app_sortie_leave', {'id': sortie.id}) }}" class="btn btn-outline-warning" onclick="return confirm('Êtes-vous sûr de vouloir vous désister de cette sortie ?')">Se désister</a>
-                        {% else %}
-                            <a href="{{ path('app_sortie_list', {'id': sortie.id}) }}" class="btn btn-outline-info">Afficher</a>
                         {% endif %}
                     </td>
                 </tr>
