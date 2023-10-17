@@ -177,7 +177,7 @@ class SortieController extends AbstractController
                                   SortieRepository $sortieRepository,
                                   int $id): Response {
         $sortie = $sortieRepository->find($id);
-        if($this->getUser()->getUserIdentifier() === $sortie->getOrganisateur() || in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
+        if($this->getUser()->getId() === $sortie->getOrganisateur()->getId() || in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
             if($sortie->getEtat()->value === "Ouverte") {
                 $form = $this->createForm(AnnulerSortieType::class);
                 $form->handleRequest($request);
