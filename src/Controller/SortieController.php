@@ -177,25 +177,30 @@ class SortieController extends AbstractController
                                   SortieRepository $sortieRepository,
                                   int $id): Response {
         $sortie = $sortieRepository->find($id);
-        if($sortie->getEtat()->value === "Ouverte") {
-            $form = $this->createForm(AnnulerSortieType::class);
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-                $sortie->setMotifAnnulation($form->get('motifAnnulation')->getData());
+        if($this->getUser()->getUserIdentifier() === $sortie->getOrganisateur() || in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
+            if($sortie->getEtat()->value === "Ouverte") {
+                $form = $this->createForm(AnnulerSortieType::class);
+                $form->handleRequest($request);
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $sortie->setMotifAnnulation($form->get('motifAnnulation')->getData());
+                    $sortie->setEstHistorise(true);
+                    $sortie->setEtat(Etats::Annulee);
+                    $entityManager->persist($sortie);
+                    $entityManager->flush();
+                    return $this->redirectToRoute('app_accueil');
+                }
+                return $this->render('sortie/annulerSortie.html.twig', [
+                    'formAnnulationSortie' => $form->createView(),
+                ]);
+            } else {
+                $sortie->setEtat(Etats::Annulee);
                 $sortie->setEstHistorise(true);
                 $entityManager->persist($sortie);
                 $entityManager->flush();
+
                 return $this->redirectToRoute('app_accueil');
             }
-            return $this->render('sortie/annulerSortie.html.twig', [
-                'formAnnulationSortie' => $form->createView(),
-            ]);
-        } else {
-            $sortie->setEstHistorise(true);
-            $entityManager->persist($sortie);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_accueil');
         }
+        return $this->redirectToRoute('app_accueil');
     }
 }
