@@ -1,63 +1,73 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <title>Sortir.com - {% block title %}{% endblock %}</title>
-        <link rel="icon" href="{{ asset('assets/logo.png') }}">
+<head>
+    <meta charset="UTF-8">
+    <title>Sortir.com - {% block title %}{% endblock %}</title>
+    <link rel="icon" href="{{ asset('assets/logo.png') }}">
 
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-        <style>
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+    <style>
 
-        </style>
-    </head>
+    </style>
+</head>
 
-    <body>
-        <header>
-            <nav class="navbar-expand-lg nav-links">
-                <div>
-                    <img class="logo" src="{{ asset('assets/logo.jpg') }}" alt="Logo" />
-                </div>
-                <a href="{{ path('app_accueil') }}">Accueil</a>
+<body>
+    <header>
+        <nav class="navbar-expand-lg nav-links user-select-none">
+            <div>
+                <img class="logo" src="{{ asset('assets/logo.jpg') }}" alt="Logo" />
+            </div>
 
-                {% if is_granted('ROLE_ADMIN') %}
+            {% if is_granted('ROLE_USER') %}
+                <a class="{{ app.request.get('_route') == 'app_accueil' ? 'active' : '' }} user-select-none" href="{{ path('app_accueil') }}">Accueil</a>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="{{ app.request.get('_route') starts with 'app_admin_' ? 'active' : '' }} nav-link dropdown-toggle user-select-none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Administration
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ path('app_ville_liste') }}">Villes</a></li>
-                        <li><a class="dropdown-item" href="{{ path('app_site_liste') }}">Sites</a></li>
-                        <li><a class="dropdown-item" href="{{ path('app_admin_utilisateur_lister') }}">Utilisateurs</a></li>
+                        <li><a class="dropdown-item user-select-none" href="{{ path('app_admin_ville_liste') }}">Ville</a></li>
+                        <li><a class="dropdown-item user-select-none" href="{{ path('app_admin_site_liste') }}">Lieu</a></li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <li><hr class="dropdown-divider user-select-none"></li>
+                        <li><a class="dropdown-item user-select-none" href="{{ path('app_admin_utilisateur_lister') }}">Utilisateur</a></li>
+                        {% endif %}
                     </ul>
                 </li>
-                {% endif %}
+            {% endif %}
 
-                {% if is_granted('ROLE_USER') %}
-                    <a href="{{ path('app_utilisateur_modifier') }}">Mon profil</a>
-                    <a href="{{ path('app_logout') }}">Se déconnecter</a>
-                {% endif %}
-            </nav>
-        </header>
+            {% if is_granted('ROLE_USER') %}
+                <a class="{{ app.request.get('_route') == 'app_utilisateur_modifier' ? 'active' : '' }} user-select-none" href="{{ path('app_utilisateur_modifier') }}">Mon profil</a>
+                <a class="user-select-none" href="{{ path('app_logout') }}">Se déconnecter</a>
+            {% endif %}
+        </nav>
+    </header>
 
-        <main>
-            {% block body %}{% endblock %}
-        </main>
+    <main>
+        {% block body %}{% endblock %}
+    </main>
 
-        <footer class="footer">
-            <div>
-                <ul class="pied-page">
-                    <li><a target=”_blank” class="text-info" href="https://www.eni-ecole.fr/">ENI Ecole Informatique</a></li>
-                    <li><a target=”_blank” class="text-info" href="https://github.com/Eliot-BPJ/ENI-Sortir">Code source sous license</a></li>
-                    <li>Informations légales - Sortir.com by ENI-Ecole</li>
-                </ul>
-            </div>
-        </footer>
+
+    <footer class="footer">
+        <div>
+            <ul class="pied-page">
+                <li>Informations légales</li>
+                <li>-</li>
+                <li>Sortir.com ©</li>
+                <li><a target=”_blank” class="text-primary" href="https://www.eni-ecole.fr/">ENI Ecole Informatique</a></li>
+                <li>-</li>
+                <li><a target=”_blank” class="text-primary" href="https://github.com/Eliot-BPJ/ENI-Sortir">Code source sous license</a></li>
+            </ul>
+
+            <p Informations légales - Sortir.com by Melvin, Eliot, Victor & Mélody</p>
+
+        </div>
+    </footer>
 
 </body>
 </html>
