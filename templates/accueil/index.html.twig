@@ -11,7 +11,7 @@
         <p>Date du jour: {{ "now"|date("m-d-Y") }}</p>
         <p>Participant: {{ app.user.pseudo }}</p>
     </div>
-    <h2>Filtrer les sorties</h2>
+    <h1 class="text-center">Filtrer les sorties</h1>
     <div class="container">
         {{ form_start(form, {'attr': {'id': 'filterForm'}}) }}
         <div class="row">
@@ -43,16 +43,16 @@
                     <label>Sorties passées</label>
                 </div>
                 <div class="m-4">
-                    <button type="submit" class="btn btn-dark">Rechercher</button>
-                    <a class="btn btn-dark" href={{ path('app_accueil')}} >Reinitialiser</a>
+                    <button type="submit" class="btn btn-outline-dark">Rechercher</button>
+                    <a class="btn btn-outline-dark" href={{ path('app_accueil')}} >Reinitialiser</a>
                 </div>
             </div>
         </div>
         {{ form_end(form) }}
 
     </div>
-        <h1 class="mt-2 text-center">Liste des sorties</h1>
-        <a href="{{ path('app_sortie_add') }}" class="btn btn-outline-primary mb-2">Créer une sortie</a>
+    <h1 class="mt-2 text-center">Liste des sorties</h1>
+    <a href="{{ path('app_sortie_add') }}" class="btn btn-outline-primary mb-2">Créer une sortie</a>
     <div>
         <table id="tableSortie" class="table table-striped" style="width:100%">
             <thead>

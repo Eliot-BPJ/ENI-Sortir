@@ -23,42 +23,38 @@
     <section class="bg-light">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 mb-4 mb-sm-5">
-                    <div class="card card-style1 border-0">
-                        <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
+                <div class="col-12">
+                    <div class="card border-0">
+                        <div class="card-body">
                             <div class="row align-items-center">
-
-                                <div class="col-lg-6 mb-4 mb-lg-0">
+                                <div class="col-6 mb-4 text-center">
                                     <img class="rounded-circle img-fluid img-profile" src="{{ asset('assets/uploads/' ~ utilisateur.imageProfil) }}" alt="Image profil">
                                 </div>
-
-                                <div class="col-lg-6 px-xl-10">
-                                    <div class="bg-secondary d-lg-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
-                                        <h3 class="h2 text-white mb-0">Mon profil</h3>
+                                <div class="col-6">
+                                    <div class="bg-secondary rounded">
+                                        <h2 class="text-white text-center">Mon profil</h2>
                                     </div>
                                     <div>
-                                        <div class="form-floating mb-3">
-                                            Nom : {{ app.user.nom }}
+                                        <div class="text-center">
+                                            <span>Nom prénom :</span>
+                                            <span class="fw-bold">
+                                                {{ app.user.nom }} {{ app.user.prenom }}
+                                            </span>
+                                            <p class="mb-2">
+                                                Ville de rattachement :
+                                                <span class="fw-bold">{{ app.user.idSite.nom }}</span>
+                                            </p>
                                         </div>
-
-                                        <div class="form-floating mb-3">
-                                            Prénom : {{ app.user.prenom }}
-                                        </div>
-
-                                        <div class="form-floating mb-3">
-                                            Ville de rattachement : {{ app.user.idSite.nom }}
-                                        </div>
-
                                         {{ form_errors(form) }}
                                         {{ form_start(form, {'attr': {'class': 'row g-3 needs-validation was-validated',
                                             'novalidate': ''}}) }}
 
-                                        <div class="row mb-3">
+                                        <div class="row my-3">
                                             {{ form_label(form.pseudo, null, {'label_attr': {'class': 'form-label'}}) }}
                                             {{ form_widget(form.pseudo, {'attr': {'class': 'form-control', 'aria-describedby': 'inputGroupPrepend', 'required': ''}}) }}
-                                            <div class="invalid-feedback">
+                                            <p class="invalid-feedback">
                                                 Veuillez renseingner un pseudo.
-                                            </div>
+                                            </p>
                                             {% if form_errors(form.pseudo) %}
                                                 <div class="invalid-feedback">{{ form_errors(form.pseudo)|join(', ') }}</div>
                                             {% endif %}
@@ -97,9 +93,9 @@
                                         </div>
 
                                         <div class="col-sm" style="text-align: center">
-                                            <button class="btn btn-success" type="submit">Enregistrer</button>
-                                            <a href="{{ path('app_accueil') }}" class="btn btn-secondary">Annuler</a>
-                                            <a href="{{ path('app_utilisateur_modifier_pw', {'id' : utilisateur.id}) }}" class="btn btn-primary">Modifier Mot de Passe</a>
+                                            <button class="btn btn-outline-success" type="submit">Enregistrer</button>
+                                            <a href="{{ path('app_accueil') }}" class="btn btn-outline-danger">Annuler</a>
+                                            <a href="{{ path('app_utilisateur_modifier_pw', {'id' : utilisateur.id}) }}" class="btn btn-outline-primary">Modifier Mot de Passe</a>
                                         </div>
 
                                         {{ form_end(form) }}

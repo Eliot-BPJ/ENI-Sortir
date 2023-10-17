@@ -27,7 +27,7 @@
                         <tr>
                             <td>{{ form_row(form.nom) }}</td>
                             <td>
-                                <button class="btn btn-primary" type="submit">Ajouter</button>
+                                <button class="btn btn-outline-primary" type="submit">Ajouter</button>
                             </td>
                         </tr>
                     {{ form_end(form) }}
@@ -36,8 +36,8 @@
                         <tr>
                             <td>{{ site.nom }}</td>
                             <td>
-                                <a href="#" class="btn btn-primary btn-edit" data-site-id="{{ site.id }}">Modifier</a>
-                                <button class="btn btn-success btn-save" style="display: none;" data-ville-id="{{ site.id }}">Sauvegarder</button>
+                                <a href="#" class="btn btn-outline-primary btn-edit" data-site-id="{{ site.id }}">Modifier</a>
+                                <button class="btn btn-outline-success btn-save" style="display: none;" data-ville-id="{{ site.id }}">Sauvegarder</button>
                             </td>
                         </tr>
                     {% endfor %}
