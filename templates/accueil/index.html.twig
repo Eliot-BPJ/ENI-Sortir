@@ -82,7 +82,7 @@
                     </td>
                     <td><a href="{{ path('app_utilisateur_afficher_participant', {'id' : sortie.organisateur.id})}}">{{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }}</a></td>
                     <td>
-                        {% if is_granted('ROLE_ADMIN') %}
+                        {% if is_granted('ROLE_ADMIN') or app.user.id == sortie.organisateur.id%}
                             <a href="{{path('app_sortie_annuler', {id : sortie.id})}}" class="btn btn-outline-danger">Annuler</a>
                         {% endif %}
                         {% if app.user in sortie.inscriptions %}
