@@ -55,13 +55,13 @@
 
                                         <div class="row mb-3">
                                             {{ form_label(form.pseudo, null, {'label_attr': {'class': 'form-label'}}) }}
-                                            <div class="input-group has-validation">
-                                                <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                                {{ form_widget(form.pseudo, {'attr': {'class': 'form-control', 'aria-describedby': 'inputGroupPrepend', 'required': ''}}) }}
-                                                <div class="invalid-feedback">
-                                                    Veuillez renseingner un pseudo
-                                                </div>
+                                            {{ form_widget(form.pseudo, {'attr': {'class': 'form-control', 'aria-describedby': 'inputGroupPrepend', 'required': ''}}) }}
+                                            <div class="invalid-feedback">
+                                                Veuillez renseingner un pseudo.
                                             </div>
+                                            {% if form_errors(form.pseudo) %}
+                                                <div class="invalid-feedback">{{ form_errors(form.pseudo)|join(', ') }}</div>
+                                            {% endif %}
                                         </div>
 
                                         <div class="row mb-3">
