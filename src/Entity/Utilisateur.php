@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Rollerworks\Component\PasswordStrength\Validator\Constraints as RollerworksPassword;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -20,6 +22,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 100, unique: true)]
+    #[Assert\Email(
+        message: 'L\'Email {{ value }} n\'est pas un Email valide.',
+    )]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -29,6 +34,12 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[RollerworksPassword\PasswordRequirements(
+        minLength: 8,
+        requireLetters: true,
+        tooShortMessage: "Votre mot de passe doit faire au moins 8 caractères",
+        missingLettersMessage: "Votre mot de passe doit contenir au moins 1 lettre"
+    )]
     private ?string $password = null;
 
     #[ORM\Column(length: 50, unique: true)]
@@ -41,6 +52,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $prenom = null;
 
     #[ORM\Column(length: 20, nullable: true)]
+    #[Assert\Regex(pattern:'/^0[1-9]([-. ]?[0-9]{2}){4}$/')]
     private ?string $telephone = null;
 
     #[ORM\Column]
