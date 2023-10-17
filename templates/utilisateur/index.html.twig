@@ -7,10 +7,15 @@
     {{ encore_entry_link_tags('profil') }}
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('profil') }}
+{% endblock %}
+
 {% block body %}
     <div class="container">
         {% for message in app.flashes('error') %}
-            <div class="alert alert-error" role="alert">
+            <div class="alert alert-danger" role="alert">
                 {{ message }}
             </div>
         {% endfor %}
@@ -22,9 +27,11 @@
                     <div class="card card-style1 border-0">
                         <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
                             <div class="row align-items-center">
+
                                 <div class="col-lg-6 mb-4 mb-lg-0">
                                     <img class="rounded-circle img-fluid img-profile" src="{{ asset('assets/uploads/' ~ utilisateur.imageProfil) }}" alt="Image profil">
                                 </div>
+
                                 <div class="col-lg-6 px-xl-10">
                                     <div class="bg-secondary d-lg-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
                                         <h3 class="h2 text-white mb-0">Mon profil</h3>
@@ -42,26 +49,51 @@
                                             Ville de rattachement : {{ app.user.idSite.nom }}
                                         </div>
 
-                                        {{ form_start(form, {'attr':{'class':'form-floating'}}) }}
+                                        {{ form_errors(form) }}
+                                        {{ form_start(form, {'attr': {'class': 'row g-3 needs-validation was-validated',
+                                            'novalidate': ''}}) }}
 
-                                        <div class="form-floating mb-3">
-                                            {{ form_row(form.pseudo, {'attr':{'class':'form-control'}}) }}
+                                        <div class="row mb-3">
+                                            {{ form_label(form.pseudo, null, {'label_attr': {'class': 'form-label'}}) }}
+                                            {{ form_widget(form.pseudo, {'attr': {'class': 'form-control', 'aria-describedby': 'inputGroupPrepend', 'required': ''}}) }}
+                                            <div class="invalid-feedback">
+                                                Veuillez renseingner un pseudo.
+                                            </div>
+                                            {% if form_errors(form.pseudo) %}
+                                                <div class="invalid-feedback">{{ form_errors(form.pseudo)|join(', ') }}</div>
+                                            {% endif %}
                                         </div>
 
-                                        <div class="form-floating mb-3">
-                                            {{ form_row(form.telephone, {'attr':{'class':'form-control'}}) }}
+                                        <div class="row mb-3">
+                                            {{ form_label(form.telephone, null, {'label_attr': {'class': 'form-label'}}) }}
+                                            {{ form_widget(form.telephone, {'attr': {'class': 'form-control', 'required': ''}}) }}
+                                            <div class="invalid-feedback">
+                                                Le champ doit respecter le format de numéro de téléphone français.
+                                            </div>
                                         </div>
 
-                                        <div class="form-floating mb-3">
-                                            {{ form_row(form.email, {'attr':{'class':'form-select'}}) }}
+                                        <div class="row mb-3">
+                                            {{ form_label(form.email, null, {'label_attr': {'class': 'form-label'}}) }}
+                                            {{ form_widget(form.email, {'attr': {'class': 'form-control', 'required': ''}}) }}
+                                            <div class="invalid-feedback">
+                                                Le format de l'adresse mail doit être valide. (ex: p-dupond@gmail.com)
+                                            </div>
                                         </div>
 
-                                        <div class="form-floating mb-3">
-                                            {{ form_row(form.password, {'attr':{'class':'form-control'}}) }}
+                                        <div class="row mb-3">
+                                            {{ form_label(form.password, null, {'label_attr': {'class': 'form-label'}}) }}
+                                            {{ form_widget(form.password, {'attr': {'class': 'form-control', 'required': ''}}) }}
+                                            <div class="invalid-feedback">
+                                                Le mot de passe est incorrecte.
+                                            </div>
                                         </div>
 
-                                        <div class="form-floating mb-3">
-                                            {{ form_row(form.imageProfil, {'attr':{'class':'form-control form-control-sm'}}) }}
+                                        <div class="row mb-3">
+                                            {{ form_label(form.imageProfil,  null, {'label_attr': {'class': 'form-label'}}) }}
+                                            {{ form_widget(form.imageProfil, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                                            <div class="invalid-feedback">
+                                                L'image doit être au format png,jpeg ou bmp.
+                                            </div>
                                         </div>
 
                                         <div class="col-sm" style="text-align: center">
@@ -69,6 +101,7 @@
                                             <a href="{{ path('app_accueil') }}" class="btn btn-secondary">Annuler</a>
                                             <a href="{{ path('app_utilisateur_modifier_pw', {'id' : utilisateur.id}) }}" class="btn btn-primary">Modifier Mot de Passe</a>
                                         </div>
+
                                         {{ form_end(form) }}
                                     </div>
                                 </div>
