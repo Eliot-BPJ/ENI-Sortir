@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Sortir.com - {% block title %}{% endblock %}</title>
-    <link rel="icon" href="{{ asset('assets/logo.png') }}">
+    <head>
+        <meta charset="UTF-8">
+        <title>Sortir.com - {% block title %}{% endblock %}</title>
+        <link rel="icon" href="{{ asset('assets/logo.jpg') }}">
 
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
@@ -25,32 +25,29 @@
             </div>
             <a href="{{ path('app_accueil') }}">Accueil</a>
 
-            {% if is_granted('ROLE_USER') %}
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Administration
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{{ path('app_ville_liste') }}">Ville</a></li>
-                    <li><a class="dropdown-item" href="{{ path('app_site_liste') }}">Lieu</a></li>
-                    {% if is_granted('ROLE_ADMIN') %}
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="{{ path('app_admin_utilisateur_lister') }}">Utilisateur</a></li>
-                    {% endif %}
-                </ul>
-            </li>
-            {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Administration
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('app_admin_ville_liste') }}">Villes</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_admin_site_liste') }}">Sites</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_admin_utilisateur_lister') }}">Utilisateurs</a></li>
+                    </ul>
+                </li>
+                {% endif %}
 
-            {% if is_granted('ROLE_USER') %}
-            <a href="{{ path('app_utilisateur_modifier') }}">Mon profil</a>
-            <a href="{{ path('app_logout') }}">Se déconnecter</a>
-            {% endif %}
-        </nav>
-    </header>
+                {% if is_granted('ROLE_USER') %}
+                    <a href="{{ path('app_utilisateur_modifier') }}">Mon profil</a>
+                    <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                {% endif %}
+            </nav>
+        </header>
 
-    <main>
-        {% block body %}{% endblock %}
-    </main>
+        <main>
+            {% block body %}{% endblock %}
+        </main>
 
 
     <footer class="footer">
