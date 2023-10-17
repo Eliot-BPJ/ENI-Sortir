@@ -90,13 +90,18 @@ class SortieController extends AbstractController
             $sortie->setSite($this->getUser()->getIdSite());
             $sortie->setOrganisateur($this->getUser());
 
-            $dateInscription = $form->get("dateLimiteInscription")->getData();
+            $dateInscription = $form->get("nbInscriptionMax")->getData();
+            $nbInscription = $form->get("dateLimiteInscription")->getData();
+
             //conversion des dates en durée
             $dateDeb = $form->get("dateDebut")->getData();
             $dateFin = $form->get("dateRetour")->getData();
             $diff_in_seconds = $dateFin->getTimestamp() - $dateDeb->getTimestamp();
             $duree =  floor($diff_in_seconds / 60); #in minutes
-            //si la
+            //si la date de debut de la sortie est avant la date de fin
+            //si la date d'inscription est avant la date de début
+            //je traite des données
+
             if($dateFin>$dateDeb && $dateDeb>$dateInscription){
                 $sortie->setDuree($duree);
 
