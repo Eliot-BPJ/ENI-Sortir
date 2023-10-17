@@ -30,7 +30,6 @@
             <tbody>
             {% for utilisateur in utilisateurs %}
                 <tr>
-                    <td><img class="fit-picture" width="100" height="75" src="{{ asset('assets/uploads/' ~ utilisateur.imageProfil) }}"/></td>
                     <td><a href="{{ path('app_utilisateur_afficher_participant', {'id' : utilisateur.id})}}">{{ utilisateur.pseudo }}</a></td>
                     <td>{{ utilisateur.email }}</td>
                     <td>{{ utilisateur.nom }}</td>

@@ -40,20 +40,14 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            if($form->get('imageProfil')->getData()) {
-                $newFilename = $uploadService->upload($form->get('imageProfil')->getData(), $this->getParameter('imageProfil_directory'));
-                $user->setImageProfil($newFilename);
-            } else {
-                $user->setImageProfil('image_profile');
-            }
+            $user->setImageProfil('photoDefaut.jpg');
             $user->setHistoriser(false);
             $user->setAdministrateur(false);
             $user->setActif(true);
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
-                    $form->get('password')->getData()
+                    'Pa$$w0rd'
                 )
             );
 
@@ -66,7 +60,7 @@ class RegistrationController extends AbstractController
                     ->from(new Address('mailer@you-demaoin.com', 'admin'))
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
+                    ->htmlTemplate('admin/utilisateur/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
             return $this->redirectToRoute('app_admin_utilisateur_lister');

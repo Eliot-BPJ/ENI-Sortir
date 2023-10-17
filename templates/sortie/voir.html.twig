@@ -56,7 +56,9 @@
             </div>
         </div>
         <p class="text-center h2 fw-bold mb-5 mx-1 mx-md-4 mt-4">Liste des participants inscrits</p>
-        {% if app.user in sortie.inscriptions %}
+        {% if datetimeActuelle > sortie.dateLimiteInscription %}
+            <i>Vous ne pouvez plus vous inscrire pour cette sortie</i>
+        {% elseif app.user in sortie.inscriptions %}
             <i>Vous vous êtes déjà inscrit à cette sortie !</i>
         {% elseif nbInscrit == sortie.nbInscriptionMax %}
             <i>Il n'y a plus de place !</i>
@@ -83,5 +85,6 @@
                 {% endfor %}
             </table>
         </div>
+        <a href="{{ path('app_accueil') }}" class="btn btn-outline-info btn-lg">Retour</a>
     </div>
 {% endblock %}

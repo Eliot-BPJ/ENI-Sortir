@@ -16,7 +16,7 @@
     <div class="container">
         {{ form_start(form) }}
         <div class="row">
-            <div id="inputs" class="col-6">
+            <div id="inputs" class="col">
                 {{ form_row(form.search, {'label': false, 'attr': {'class': 'form-control m-2 fw-normal', 'placeholder': "Search"}}) }}
                 {{ form_row(form.sites, {'label': false, 'attr': {'class': 'form-control m-2'}}) }}
                 {{ form_row(form.etat, {'label': false, 'attr': {'class': 'form-control m-2'}})  }}
@@ -26,35 +26,33 @@
                 {{ form_row(form.dateFin, {'label': false, 'attr': {'class': 'form-control m-2'}}) }}
 
             </div>
-            <div id="checkboxs" class="col-6">
-                <div class="d-flex flex-column mt-5">
-                    <div class="form-check d-flex mb-2">
-                        {{ form_row(form.organisateurFilter, {'label': false, 'attr': {'class': 'form-check mx-2'}}) }}
-                        <label>Sorties dont je suis l'organisteur.trice</label>
-                    </div>
-                    <div class="form-check d-flex mb-2">
-                        {{ form_row(form.inscritFilter, {'label': false, 'attr': {'class': 'form-check mx-2'}}) }}
-                        <label>Sorties auxquelles je suis inscrit.e</label>
-                    </div>
-                    <div class="form-check d-flex mb-2">
-                        {{ form_row(form.pasInscritFilter, {'label': false, 'attr': {'class': 'form-check mx-2'}}) }}
-                        <label>Sorties auxquelles je ne suis pas inscrit.e</label>
-                    </div>
-                    <div class="form-check d-flex mb-2">
-                        {{ form_row(form.passeFilter, {'label': false, 'attr': {'class': 'form-check mx-2'}}) }}
-                        <label>Sorties passées</label>
-                    </div>
-                    <div class="m-4">
-                        <button type="submit" class="btn btn-dark">Rechercher</button>
-                        <button type="reset" class="btn btn-dark">Reintialiser</button>
-                    </div>
+            <div id="checkboxs" class="col">
+                <div class="form-check form-check-inline">
+                    <label>Organisateur</label>
+                    {{ form_row(form.organisateurFilter, {'label': false, 'attr': {'class': 'form-check m-2'}}) }}
+                </div>
+                <div class="form-check form-check-inline">
+                    <label>Inscrit</label>
+                    {{ form_row(form.inscritFilter, {'label': false, 'attr': {'class': 'form-check m-2'}}) }}
+                </div>
+                <div class="form-check form-check-inline">
+                    <label>Pas inscrit</label>
+                    {{ form_row(form.pasInscritFilter, {'label': false, 'attr': {'class': 'form-check m-2'}}) }}
+                </div>
+                <div class="form-check form-check-inline">
+                    <label>Passé</label>
+                    {{ form_row(form.passeFilter, {'label': false, 'attr': {'class': 'form-check m-2'}}) }}
+                </div>
+                <div class="m-4">
+                    <button type="submit" class="btn btn-dark">Rechercher</button>
+                    <button type="" class="btn btn-dark" disabled>Reintialiser</button>
                 </div>
             </div>
         </div>
         {{ form_end(form) }}
     </div>
-    <h1 class="text-center mt-2">Liste des sorties</h1>
-    <a href="{{ path('app_sortie_add') }}" class="btn btn-outline-primary mb-2">Créer une sortie</a>
+        <h1 class="mt-2 text-center">Liste des sorties</h1>
+        <a href="{{ path('app_sortie_add') }}" class="btn btn-outline-primary mb-2">Créer une sortie</a>
     <div>
         <table id="tableSortie" class="table table-striped" style="width:100%">
             <thead>
@@ -77,13 +75,14 @@
                     <td>{{ sortie.dateLimiteInscription | date("d-m-Y") }}</td>
                     <td>{{ sortie.inscriptions.count }} / {{ sortie.nbInscriptionMax }}</td>
                     <td>{{ sortie.etat.value }}</td>
-                    <td> {% if app.user in sortie.inscriptions %}
+                    <td>
+                        {% if app.user in sortie.inscriptions %}
                             ✔️
                         {% endif %}
                     </td>
                     <td><a href="{{ path('app_utilisateur_afficher_participant', {'id' : sortie.organisateur.id})}}">{{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }}</a></td>
                     <td>
-                        {% if is_granted('ROLE_ADMIN') %}
+                        {% if sortie.organisateur.id == app.user.id %}
                             <a href="{{path('app_sortie_annuler', {id : sortie.id})}}" class="btn btn-outline-danger">Annuler</a>
                         {% endif %}
                         {% if app.user in sortie.inscriptions %}
