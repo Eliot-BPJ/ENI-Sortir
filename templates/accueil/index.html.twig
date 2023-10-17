@@ -7,16 +7,15 @@
 {% endblock %}
 
 {% block body %}
-
     <div style="display: flex; flex-direction: column; justify-content: end; align-items: end">
         <p>Date du jour: {{ "now"|date("m-d-Y") }}</p>
         <p>Participant: {{ app.user.pseudo }}</p>
     </div>
     <h2>Filtrer les sorties</h2>
     <div class="container">
-        {{ form_start(form) }}
+        {{ form_start(form, {'attr': {'id': 'filterForm'}}) }}
         <div class="row">
-            <div id="inputs" class="col">
+            <div id="inputs" class="col-6">
                 {{ form_row(form.search, {'label': false, 'attr': {'class': 'form-control m-2 fw-normal', 'placeholder': "Search"}}) }}
                 {{ form_row(form.sites, {'label': false, 'attr': {'class': 'form-control m-2'}}) }}
                 {{ form_row(form.etat, {'label': false, 'attr': {'class': 'form-control m-2'}})  }}
@@ -26,30 +25,31 @@
                 {{ form_row(form.dateFin, {'label': false, 'attr': {'class': 'form-control m-2'}}) }}
 
             </div>
-            <div id="checkboxs" class="col">
-                <div class="form-check form-check-inline">
-                    <label>Organisateur</label>
-                    {{ form_row(form.organisateurFilter, {'label': false, 'attr': {'class': 'form-check m-2'}}) }}
+            <div id="checkboxs" class="col-6 d-flex flex-column mt-5">
+                <div class="form-check d-flex">
+                    {{ form_row(form.organisateurFilter, {'label': false, 'attr': {'class': 'form-check mx-2'}}) }}
+                    <label>Sorties dont je suis l'organisateur.trice</label>
                 </div>
-                <div class="form-check form-check-inline">
-                    <label>Inscrit</label>
-                    {{ form_row(form.inscritFilter, {'label': false, 'attr': {'class': 'form-check m-2'}}) }}
+                <div class="form-check d-flex">
+                    {{ form_row(form.inscritFilter, {'label': false, 'attr': {'class': 'form-check mx-2'}}) }}
+                    <label>Sorties auxquelles je suis inscrit.e</label>
                 </div>
-                <div class="form-check form-check-inline">
-                    <label>Pas inscrit</label>
-                    {{ form_row(form.pasInscritFilter, {'label': false, 'attr': {'class': 'form-check m-2'}}) }}
+                <div class="form-check d-flex">
+                    {{ form_row(form.pasInscritFilter, {'label': false, 'attr': {'class': 'form-check mx-2'}}) }}
+                    <label>Sorties auxquelles je ne suis pas inscrit.e</label>
                 </div>
-                <div class="form-check form-check-inline">
-                    <label>Passé</label>
-                    {{ form_row(form.passeFilter, {'label': false, 'attr': {'class': 'form-check m-2'}}) }}
+                <div class="form-check d-flex">
+                    {{ form_row(form.passeFilter, {'label': false, 'attr': {'class': 'form-check mx-2'}}) }}
+                    <label>Sorties passées</label>
                 </div>
                 <div class="m-4">
                     <button type="submit" class="btn btn-dark">Rechercher</button>
-                    <button type="" class="btn btn-dark" disabled>Reintialiser</button>
+                    <a class="btn btn-dark" href={{ path('app_accueil')}} >Reinitialiser</a>
                 </div>
             </div>
         </div>
         {{ form_end(form) }}
+
     </div>
         <h1 class="mt-2 text-center">Liste des sorties</h1>
         <a href="{{ path('app_sortie_add') }}" class="btn btn-outline-primary mb-2">Créer une sortie</a>
@@ -82,7 +82,7 @@
                     </td>
                     <td><a href="{{ path('app_utilisateur_afficher_participant', {'id' : sortie.organisateur.id})}}">{{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }}</a></td>
                     <td>
-                        {% if sortie.organisateur.id == app.user.id %}
+                        {% if is_granted('ROLE_ADMIN') %}
                             <a href="{{path('app_sortie_annuler', {id : sortie.id})}}" class="btn btn-outline-danger">Annuler</a>
                         {% endif %}
                         {% if app.user in sortie.inscriptions %}

@@ -26,19 +26,19 @@
 
         {% if is_granted('ROLE_USER') %}
             <a class="{{ app.request.get('_route') == 'app_accueil' ? 'active' : '' }}" href="{{ path('app_accueil') }}">Accueil</a>
-            <li class="nav-item dropdown">
-                <a class="{{ app.request.get('_route') starts with 'app_admin_' ? 'active' : '' }} nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Administration
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{{ path('app_admin_ville_liste') }}">Ville</a></li>
-                    <li><a class="dropdown-item" href="{{ path('app_admin_site_liste') }}">Lieu</a></li>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{{ path('app_admin_utilisateur_lister') }}">Utilisateur</a></li>
-                    {% endif %}
-                </ul>
-            </li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item dropdown">
+                    <a class="{{ app.request.get('_route') starts with 'app_admin_' ? 'active' : '' }} nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Administration
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('app_admin_ville_liste') }}">Ville</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_admin_site_liste') }}">Lieu</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ path('app_admin_utilisateur_lister') }}">Utilisateur</a></li>
+                    </ul>
+                </li>
+            {% endif %}
         {% else %}
             <a class="{{ app.request.get('_route') == 'app_login' ? 'active' : '' }}" href="{{ path('app_login') }}">Accueil</a>
         {% endif %}

@@ -4,29 +4,29 @@
 {% block body %}
 <div>
     <h1>Informations du participant</h1>
-    <table>
-        <tbody>
-            <tr>
-                <img class="" src="{{ asset('assets/uploads/' ~ utilisateur.imageProfil) }}" alt="Image profil">
-            </tr>
-            <tr>
-                <td>Username</td>
-                <td>Prénom</td>
-                <td>nom</td>
-                <td>Téléphone</td>
-                <td>Email</td>
-                <td>Ville de rattachement</td>
-            </tr>
-            <tr>
-                <td>{{ utilisateur.pseudo }}</td>
-                <td>{{ utilisateur.prenom }}</td>
-                <td>{{ utilisateur.nom }}</td>
-                <td>{{ utilisateur.telephone }}</td>
-                <td>{{ utilisateur.email }}</td>
-                <td>{{ utilisateur.idSite.nom }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="d-flex flex-column align-items-center">
+        <img class="my-4" src="{{ asset('assets/uploads/' ~ utilisateur.imageProfil) }}" alt="Image profil">
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td>Username</td>
+                    <td>Prénom</td>
+                    <td>nom</td>
+                    <td>Téléphone</td>
+                    <td>Email</td>
+                    <td>Ville de rattachement</td>
+                </tr>
+                <tr>
+                    <td>{{ utilisateur.pseudo }}</td>
+                    <td>{{ utilisateur.prenom }}</td>
+                    <td>{{ utilisateur.nom }}</td>
+                    <td>{{ utilisateur.telephone }}</td>
+                    <td>{{ utilisateur.email }}</td>
+                    <td>{{ utilisateur.idSite.nom }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 {% endblock %}

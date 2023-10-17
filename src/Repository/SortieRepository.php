@@ -28,26 +28,26 @@ class SortieRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('s');
         if (isset($filters->search)) {
             if ($filters->search) {
-                $qb->andWhere('s.nom LIKE :term')->setParameter('term', '%' . $filters->search . '%');
+                $qb->andWhere('s.nom LIKE :search')->setParameter('search', '%' . $filters->search . '%');
             }
         }
         if ($filters->organisateurFilter) {
             $qb->andWhere('s.organisateur = :organisateur')->setParameter('organisateur', true);
         }
         if (isset($filters->sites) && $filters->sites->getId()) {
-            $qb->andWhere('s.site = :term')->setParameter('term', $filters->sites->getId());
+            $qb->andWhere('s.site = :site')->setParameter('site', $filters->sites->getId());
         }
         if (isset($filters->etat) && $filters->etat->value) {
-            $qb->andWhere('s.etat LIKE :term')->setParameter('term', '%' . $filters->etat->value . '%');
+            $qb->andWhere('s.etat LIKE :etat')->setParameter('etat', '%' . $filters->etat->value . '%');
         }
         if ($filters->passeFilter) {
-            $qb->andWhere('s.etat LIKE :term')->setParameter('term', "Passée");
+            $qb->andWhere('s.etat LIKE :passe')->setParameter('passe', "Passée");
         }
         if ($filters->inscritFilter) {
-            $qb->andWhere(':user MEMBER OF s.inscriptions')->setParameter('user', $user);
+            $qb->andWhere(':user1 MEMBER OF s.inscriptions')->setParameter('user1', $user);
         }
         if ($filters->pasInscritFilter) {
-            $qb->andWhere(':user NOT MEMBER OF s.inscriptions')->setParameter('user', $user);
+            $qb->andWhere(':user2 NOT MEMBER OF s.inscriptions')->setParameter('user2', $user);
         }
 
         if ($filters->dateDebut && $filters->dateFin) {
@@ -58,10 +58,10 @@ class SortieRepository extends ServiceEntityRepository
                     'end_date' => $filters->dateFin->format("Y-m-d H:i:s")]);
         }
         if ($filters->dateDebut && !$filters->dateFin) {
-            $qb->andWhere('s.dateDebut > :term')->setParameter('term', $filters->dateDebut->format("Y-m-d H:i:s"));
+            $qb->andWhere('s.dateDebut > :date_debut')->setParameter('date_debut', $filters->dateDebut->format("Y-m-d H:i:s"));
         }
         if ($filters->dateFin && !$filters->dateDebut) {
-            $qb->andWhere('DATE_ADD(s.dateDebut, s.duree, \'minute\') < :date')->setParameter('date', $filters->dateFin->format("Y-m-d H:i:s"));
+            $qb->andWhere('DATE_ADD(s.dateDebut, s.duree, \'minute\') < :date_fin')->setParameter('date_fin', $filters->dateFin->format("Y-m-d H:i:s"));
         }
 
         return $qb->getQuery()->getResult();
