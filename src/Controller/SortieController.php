@@ -192,10 +192,12 @@ class SortieController extends AbstractController
     }
 
     #[Route('/annuler/{id}', name: '_annuler')]
-    public function annulerSortie(Request $request,
-                                  EntityManagerInterface $entityManager,
-                                  SortieRepository $sortieRepository,
-                                  int $id): Response {
+    public function annulerSortie(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SortieRepository $sortieRepository,
+        int $id): Response
+    {
         $user = $this->getUser();
         if (!$user) {
             return $this->redirectToRoute('app_login');
