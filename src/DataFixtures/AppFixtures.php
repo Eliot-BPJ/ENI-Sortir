@@ -30,11 +30,25 @@ class AppFixtures extends Fixture
         $ville->setCodepostal('79000');
         $manager->persist($ville);
 
-        $ville = new Villes();
-        $ville->setNom('La Rochelle');
-        $ville->setCodepostal('17000');
-        $manager->persist($ville);
+        $ville1 = new Villes();
+        $ville1->setNom('La Rochelle');
+        $ville1->setCodepostal('17000');
+        $manager->persist($ville1);
 
+        $ville2 = new Villes();
+        $ville2->setNom('Rochefort');
+        $ville2->setCodepostal('17300');
+        $manager->persist($ville2);
+
+        $ville3 = new Villes();
+        $ville3->setNom('Poitier');
+        $ville3->setCodepostal('86000');
+        $manager->persist($ville3);
+
+        $ville4 = new Villes();
+        $ville4->setNom('Bordeaux');
+        $ville4->setCodepostal('33000');
+        $manager->persist($ville4);
         // ------------ LIEUX ------------
         $lieu = new Lieu();
         $lieu->setNom("Prison Island");
@@ -42,15 +56,68 @@ class AppFixtures extends Fixture
         $lieu->setRue("Zone commeciale Mendes France");
         $lieu->setLatitude(1.02668);
         $lieu->setLongitude(0.23654);
+        $manager->persist($lieu);
+
+        $lieu2 = new Lieu();
+        $lieu2->setNom("Patinoire");
+        $lieu2->setVille($ville);
+        $lieu2->setRue("6 Rue des équarts");
+        $lieu2->setLatitude(1.02668);
+        $lieu2->setLongitude(0.23654);
+        $manager->persist($lieu2);
+
+        $lieu3 = new Lieu();
+        $lieu3->setNom("Stade de foot");
+        $lieu3->setVille($ville);
+        $lieu3->setRue("8 Rue des équarts");
+        $lieu3->setLatitude(1.02668);
+        $lieu3->setLongitude(0.23654);
+        $manager->persist($lieu3);
+
+        $lieu3 = new Lieu();
+        $lieu3->setNom("Stade de rugby");
+        $lieu3->setVille($ville1);
+        $lieu3->setRue("6 rue du stade");
+        $lieu3->setLatitude(1.02668);
+        $lieu3->setLongitude(0.23654);
+        $manager->persist($lieu3);
+
+        $lieu4 = new Lieu();
+        $lieu4->setNom("Port des minimes");
+        $lieu4->setVille($ville1);
+        $lieu4->setRue("les minimes");
+        $lieu4->setLatitude(1.02668);
+        $lieu4->setLongitude(0.23654);
+        $manager->persist($lieu4);
+
+        $lieu5 = new Lieu();
+        $lieu5->setNom("Corderie royale");
+        $lieu5->setVille($ville2);
+        $lieu5->setRue("rue de la corderie");
+        $lieu5->setLatitude(1.02668);
+        $lieu5->setLongitude(0.23654);
+        $manager->persist($lieu5);
+
+        $lieu6 = new Lieu();
+        $lieu6->setNom("Futuroscope");
+        $lieu6->setVille($ville3);
+        $lieu6->setRue("6 rue du futur");
+        $lieu6->setLatitude(1.02668);
+        $lieu6->setLongitude(0.23654);
+        $manager->persist($lieu6);
 
         // ------------ SITES ------------
         $site = new Sites();
         $site->setNom('ENI - Niort');
         $manager->persist($site);
 
-        $site = new Sites();
-        $site->setNom('ENI - Nantes');
-        $manager->persist($site);
+        $site1 = new Sites();
+        $site1->setNom('ENI - Nantes');
+        $manager->persist($site1);
+
+        $site2 = new Sites();
+        $site2->setNom('ENI - Saint-Herblain');
+        $manager->persist($site2);
 
         // ------------ UTILISATEURS ------------
         $utilisateur = new Utilisateur();
@@ -66,37 +133,53 @@ class AppFixtures extends Fixture
         $utilisateur->setAdministrateur(true);
         $utilisateur->setActif(true);
         $utilisateur->setIdSite($site);
-        $utilisateur->setImageProfil('fleurDelacours-6525394eca12a.jpg');
+        $utilisateur->setImageProfil('fleurDelacours.jpg');
         $utilisateur->setHistoriser(false);
         $manager->persist($utilisateur);
 
-        $utilisateur = new Utilisateur();
-        $utilisateur->setEmail('v.belgrade@gmail.com');
-        $utilisateur->setImageProfil('photoDefaut.jpg');
-        $password2 = $this->hasher->hashPassword($utilisateur, 'Pa$$w0rd');
-        $utilisateur->setPassword($password2);
-        $utilisateur->setPseudo('Vivi');
-        $utilisateur->setNom('Belgrade');
-        $utilisateur->setPrenom('Victor');
-        $utilisateur->setTelephone('0625489654');
-        $utilisateur->setAdministrateur(false);
-        $utilisateur->setActif(true);
-        $utilisateur->setIdSite($site);
-        $utilisateur->setHistoriser(false);
-        $manager->persist($utilisateur);
+        $utilisateur1 = new Utilisateur();
+        $utilisateur1->setEmail('v.belgrade@gmail.com');
+        $utilisateur1->setImageProfil('VictorKrum.jpg');
+        $password = $this->hasher->hashPassword($utilisateur1, 'Pa$$w0rd');
+        $utilisateur1->setPassword($password);
+        $utilisateur1->setPseudo('Vivi');
+        $utilisateur1->setNom('Belgrade');
+        $utilisateur1->setPrenom('Victor');
+        $utilisateur1->setTelephone('0625489654');
+        $utilisateur1->setAdministrateur(false);
+        $utilisateur1->setActif(true);
+        $utilisateur1->setIdSite($site1);
+        $utilisateur1->setHistoriser(false);
+        $manager->persist($utilisateur1);
+
+        $utilisateur2 = new Utilisateur();
+        $utilisateur2->setEmail('m.monroe@gmail.com');
+        $utilisateur2->setImageProfil('photoDefaut.jpg');
+        $password = $this->hasher->hashPassword($utilisateur2, 'Pa$$w0rd');
+        $utilisateur2->setPassword($password);
+        $utilisateur2->setPseudo('Monroe17');
+        $utilisateur2->setNom('Monroe');
+        $utilisateur2->setPrenom('Marilyn');
+        $utilisateur2->setTelephone('0698563214');
+        $utilisateur2->setAdministrateur(false);
+        $utilisateur2->setActif(true);
+        $utilisateur2->setIdSite($site2);
+        $utilisateur2->setHistoriser(false);
+        $manager->persist($utilisateur2);
 
         $utilisateur = new Utilisateur();
-        $utilisateur->setEmail('m.monroe@gmail.com');
+        $utilisateur->setEmail('f.gaillard@gmail.com');
         $utilisateur->setImageProfil('photoDefaut.jpg');
-        $password2 = $this->hasher->hashPassword($utilisateur, 'Pa$$w0rd');
-        $utilisateur->setPassword($password2);
-        $utilisateur->setPseudo('Monroe17');
-        $utilisateur->setNom('Monroe');
-        $utilisateur->setPrenom('Marilyn');
-        $utilisateur->setTelephone('0698563214');
+        $password = $this->hasher->hashPassword($utilisateur, 'Pa$$w0rd');
+        $utilisateur->setPassword($password);
+        $utilisateur->setPseudo('fgaillard');
+        $utilisateur->setNom('Gaillard');
+        $utilisateur->setPrenom('Francis');
+        $utilisateur->setTelephone('0662366659');
         $utilisateur->setAdministrateur(false);
         $utilisateur->setActif(true);
-        $utilisateur->setIdSite($site);
+        $utilisateur->setIdSite($site2);
+        $utilisateur->setImageProfil('photoDefaut.jpg');
         $utilisateur->setHistoriser(false);
         $manager->persist($utilisateur);
 
