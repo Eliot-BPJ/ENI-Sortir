@@ -36,7 +36,7 @@ class SortieType extends AbstractType
                 'widget' => 'single_text'
             ])
             ->add('nbInscriptionMax', IntegerType::class, [
-                'label' => "Nombre de places* (minimum 2) :",
+                'label' => "Nombre de places* (minimum 1) :",
             ])
             ->add('infosSortie', TextType::class, [
                 'label' => "Description et infos* :",
@@ -44,15 +44,11 @@ class SortieType extends AbstractType
             ->add('lieux', EntityType::class, [
                 'label' => "Lieu* :",
                 'class' => Lieu::class,
-                'choice_label' => 'nom',
+                'choice_label' => function ($lieu) {
+                    return $lieu->getNom() . ' - ' . $lieu->getVille()->getNom();
+                },
                 'multiple' => false,
                 'expanded' => false,
-            ])
-            ->add('ville', EntityType::class, [
-                'label' => "Ville* :",
-                'mapped' => false,
-                'class' => Villes::class,
-                'choice_label' => 'nom'
             ])
         ;
     }
