@@ -55,7 +55,6 @@ class SortieController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         SortieRepository $sortieRepository,
-        SluggerInterface $slugger,
         LieuRepository $lieuRepository,
         int $id = null
     ): Response {
@@ -138,9 +137,9 @@ class SortieController extends AbstractController
                     $this->addFlash('error',
                         'La date limite d\'inscription doit être avant le début de la sortie.');
                 }
-                if($nbInscription<2){
+                if($nbInscription<1){
                     $this->addFlash('error',
-                        'Il doit y avoir au moins 2 participants.');
+                        'Il doit y avoir au moins 1 participant.');
                 }
             }
 
