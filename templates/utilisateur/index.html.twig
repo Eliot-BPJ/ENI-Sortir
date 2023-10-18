@@ -31,9 +31,8 @@
                                     <img class="rounded-circle img-fluid img-profile" src="{{ asset('assets/uploads/' ~ utilisateur.imageProfil) }}" alt="Image profil">
                                 </div>
                                 <div class="col-6">
-                                    <div class="bg-secondary rounded">
-                                        <h2 class="text-white text-center">Mon profil</h2>
-                                    </div>
+                                    <h1 class="text-center mb-4">Mon profil</h1>
+
                                     <div>
                                         <div class="text-center">
                                             <span>Nom prénom :</span>
@@ -53,7 +52,7 @@
                                             {{ form_label(form.pseudo, null, {'label_attr': {'class': 'form-label'}}) }}
                                             {{ form_widget(form.pseudo, {'attr': {'class': 'form-control', 'aria-describedby': 'inputGroupPrepend', 'required': ''}}) }}
                                             <p class="invalid-feedback">
-                                                Veuillez renseingner un pseudo.
+                                                Veuillez renseigner un pseudo.
                                             </p>
                                             {% if form_errors(form.pseudo) %}
                                                 <div class="invalid-feedback">{{ form_errors(form.pseudo)|join(', ') }}</div>
