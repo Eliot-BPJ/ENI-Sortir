@@ -73,14 +73,15 @@
                                     <div class="form-outline flex-fill mb-0">
                                         {{ form_row(form.lieux, {'attr': {'class': "form-control"}}) }}
                                         {{ form_errors(form.lieux) }}
-                                        <div>
-                                            <button onclick="appearLieu()" type="button" class="btn btn-outline-info btn-circle">+</button>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <button onclick="appearLieu()" type="button" class="btn btn-outline-primary btn-circle">+</button>
                                         </div>
-
                                     </div>
+
                                 </div>
+
                                 <div id="form-lieu" style="display: none">
-                                    <div>
+                                    <div class="form-outline flex-fill mb-0">
                                         <button onclick="disappearLieu()" type="button" class="btn btn-outline-primary btn-circle">-</button>
                                     </div>
 
