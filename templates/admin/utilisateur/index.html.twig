@@ -34,6 +34,7 @@
                     <td>{{ utilisateur.actif ? "Oui" : "Non"}}</td>
                     <td>{{ utilisateur.idSite.nom }}</td>
                     <td>
+                        <a class="btn btn-outline-info" type="submit" href="{{ path('app_admin_utilisateur_modifier', {'id' : utilisateur.id}) }}">Modifier</a>
                         <a class="btn btn-outline-warning" type="submit" href="{{ path('app_admin_utilisateur_desactiver', {'id' : utilisateur.id}) }}">{{ utilisateur.isActif() ? 'Désactiver' : 'Activer'}}</a>
                         <a class="btn btn-outline-danger" type="submit" onclick="return confirm('Etes vous sur')" href="{{ path('app_admin_utilisateur_supprimer', {'id' : utilisateur.id}) }}">Supprimer</a>
                     </td>
