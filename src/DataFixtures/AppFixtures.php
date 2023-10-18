@@ -123,7 +123,7 @@ class AppFixtures extends Fixture
         $utilisateur = new Utilisateur();
         $utilisateur->setEmail('f.delacour@gmail.com');
         $utilisateur->setRoles(["ROLE_ADMIN"]);
-        $utilisateur->setImageProfil('photoDefaut.jpg');
+        $utilisateur->setImageProfil('fleurDelacours.jpg');
         $password = $this->hasher->hashPassword($utilisateur, 'Pa$$w0rd');
         $utilisateur->setPassword($password);
         $utilisateur->setPseudo('SuperFleur');
@@ -133,7 +133,6 @@ class AppFixtures extends Fixture
         $utilisateur->setAdministrateur(true);
         $utilisateur->setActif(true);
         $utilisateur->setIdSite($site);
-        $utilisateur->setImageProfil('fleurDelacours.jpg');
         $utilisateur->setHistoriser(false);
         $manager->persist($utilisateur);
 
@@ -167,21 +166,51 @@ class AppFixtures extends Fixture
         $utilisateur2->setHistoriser(false);
         $manager->persist($utilisateur2);
 
-        $utilisateur = new Utilisateur();
-        $utilisateur->setEmail('f.gaillard@gmail.com');
-        $utilisateur->setImageProfil('photoDefaut.jpg');
-        $password = $this->hasher->hashPassword($utilisateur, 'Pa$$w0rd');
-        $utilisateur->setPassword($password);
-        $utilisateur->setPseudo('fgaillard');
-        $utilisateur->setNom('Gaillard');
-        $utilisateur->setPrenom('Francis');
-        $utilisateur->setTelephone('0662366659');
-        $utilisateur->setAdministrateur(false);
-        $utilisateur->setActif(true);
-        $utilisateur->setIdSite($site2);
-        $utilisateur->setImageProfil('photoDefaut.jpg');
-        $utilisateur->setHistoriser(false);
-        $manager->persist($utilisateur);
+        $utilisateur3 = new Utilisateur();
+        $utilisateur3->setEmail('f.gaillard@gmail.com');
+        $utilisateur3->setImageProfil('photoDefaut.jpg');
+        $password = $this->hasher->hashPassword($utilisateur3, 'Pa$$w0rd');
+        $utilisateur3->setPassword($password);
+        $utilisateur3->setPseudo('fgaillard');
+        $utilisateur3->setNom('Gaillard');
+        $utilisateur3->setPrenom('Francis');
+        $utilisateur3->setTelephone('0662366659');
+        $utilisateur3->setAdministrateur(false);
+        $utilisateur3->setActif(true);
+        $utilisateur3->setIdSite($site2);
+        $utilisateur3->setHistoriser(false);
+        $manager->persist($utilisateur3);
+
+        $utilisateur4 = new Utilisateur();
+        $utilisateur4->setEmail('f.lefrancaisd@gmail.com');
+        $utilisateur4->setImageProfil('photoDefaut.jpg');
+        $password = $this->hasher->hashPassword($utilisateur4, 'Pa$$w0rd');
+        $utilisateur4->setPassword($password);
+        $utilisateur4->setPseudo('franfran');
+        $utilisateur4->setNom('Le Français');
+        $utilisateur4->setPrenom('François');
+        $utilisateur4->setTelephone('0662366659');
+        $utilisateur4->setAdministrateur(false);
+        $utilisateur4->setActif(true);
+        $utilisateur4->setIdSite($site1);
+        $utilisateur4->setImageProfil('photoDefaut.jpg');
+        $utilisateur4->setHistoriser(false);
+        $manager->persist($utilisateur4);
+
+        $utilisateur5 = new Utilisateur();
+        $utilisateur5->setEmail('guillaume@gmail.com');
+        $utilisateur5->setImageProfil('photoDefaut.jpg');
+        $password = $this->hasher->hashPassword($utilisateur5, 'Pa$$w0rd');
+        $utilisateur5->setPassword($password);
+        $utilisateur5->setPseudo('guigui');
+        $utilisateur5->setNom('Duchêne');
+        $utilisateur5->setPrenom('Guillaume');
+        $utilisateur5->setTelephone('0254685474');
+        $utilisateur5->setAdministrateur(false);
+        $utilisateur5->setActif(true);
+        $utilisateur5->setIdSite($site);
+        $utilisateur5->setHistoriser(false);
+        $manager->persist($utilisateur5);
 
         // ------------ SORTIE ------------
         $sortie = new Sortie();
