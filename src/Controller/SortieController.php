@@ -2,13 +2,10 @@
 
 namespace App\Controller;
 
-use App\DTO\FiltersDTO;
 use App\Entity\Etats;
 use App\Entity\Lieu;
-use App\Entity\Sites;
 use App\Entity\Sortie;
 use App\Form\AnnulerSortieType;
-use App\Form\FiltersFormType;
 use App\Form\LieuType;
 use App\Form\SortieType;
 use App\Repository\LieuRepository;
@@ -25,10 +22,7 @@ class SortieController extends AbstractController
 {
     #[Route('/voir/{id}', name: '_list')]
     public function read(
-        Request $request,
-        EntityManagerInterface $entityManager,
         SortieRepository $sortieRepository,
-        SluggerInterface $slugger,
         int $id = null
     ): Response {
         $user = $this->getUser();
@@ -114,8 +108,7 @@ class SortieController extends AbstractController
             $duree =  floor($diff_in_seconds / 60); #in minutes
             //si la date de debut de la sortie est avant la date de fin
             //si la date d'inscription est avant la date de début
-            //je traite des données
-
+            //je traite les données
             if($dateFin>$dateDeb && $dateDeb>$dateInscription && $nbInscription>1){
                 $sortie->setDuree($duree);
 
@@ -161,7 +154,6 @@ class SortieController extends AbstractController
 
     #[Route('/voir/{id}/inscription', name: '_signup')]
     public function signup(
-        Request $request,
         EntityManagerInterface $entityManager,
         SortieRepository $sortieRepository,
         SluggerInterface $slugger,
@@ -198,10 +190,8 @@ class SortieController extends AbstractController
 
     #[Route('/voir/{id}/quitter', name: '_leave')]
     public function leave(
-        Request $request,
         EntityManagerInterface $entityManager,
         SortieRepository $sortieRepository,
-        SluggerInterface $slugger,
         int $id = null
     ): Response
     {
@@ -232,6 +222,7 @@ class SortieController extends AbstractController
         }
 
         $sortie = $sortieRepository->find($id);
+
         if($this->getUser()->getId() === $sortie->getOrganisateur()->getId() || in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
             if($sortie->getEtat()->value === "Ouverte") {
                 $form = $this->createForm(AnnulerSortieType::class);
@@ -245,6 +236,7 @@ class SortieController extends AbstractController
                     return $this->redirectToRoute('app_accueil');
                 }
                 return $this->render('sortie/annulerSortie.html.twig', [
+                    'sortie'=> $sortie,
                     'formAnnulationSortie' => $form->createView(),
                 ]);
             } else {
