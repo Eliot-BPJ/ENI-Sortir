@@ -10,11 +10,13 @@
     <div>
         <a href="{{ path('app_accueil') }}" class="btn btn-outline-primary">Retour</a>
         <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-4">Afficher une sortie</p>
-        <div class="d-flex flex-column align-items-center text-center mb-4">
-            <p class="text-bg-danger rounded fw-bold w-75">Motif d'annulation</p>
-            <p class="fw-medium">Météo dévaforable à la sortie Piscine</p>
-            <hr class="w-75" />
-        </div>
+        {% if sortie.motifAnnulation %}
+            <div class="d-flex flex-column align-items-center text-center mb-4">
+                <p class="text-bg-danger rounded fw-bold w-75">Motif d'annulation</p>
+                <p class="fw-medium">Météo dévaforable à la sortie Piscine</p>
+                <hr class="w-75" />
+            </div>
+        {% endif %}
         <div class="container h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-lg-12 col-xl-12">
