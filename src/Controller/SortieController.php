@@ -64,6 +64,9 @@ class SortieController extends AbstractController
             $sortie = new Sortie();
         } else {
             $sortie = $sortieRepository->find($id);
+            if((strpos($request->getPathInfo(), 'edit') && $sortie->getOrganisateur()->getId() !== $this->getUser()->getId()) || $sortie->getEtat()->value !== 'Créee') {
+                return $this->redirectToRoute('app_accueil');
+            }
         }
         $lieu = new Lieu();
         $idLieu = -1;
