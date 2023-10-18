@@ -53,7 +53,7 @@
                                             {{ form_label(form.pseudo, null, {'label_attr': {'class': 'form-label'}}) }}
                                             {{ form_widget(form.pseudo, {'attr': {'class': 'form-control', 'aria-describedby': 'inputGroupPrepend', 'required': ''}}) }}
                                             <p class="invalid-feedback">
-                                                Veuillez renseingner un pseudo.
+                                                Veuillez renseigner un pseudo.
                                             </p>
                                             {% if form_errors(form.pseudo) %}
                                                 <div class="invalid-feedback">{{ form_errors(form.pseudo)|join(', ') }}</div>

@@ -22,9 +22,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 100, unique: true)]
-    #[Assert\Email(
-        message: 'L\'Email {{ value }} n\'est pas un Email valide.',
-    )]
+    #[Assert\Regex(pattern:'/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/')]
     private ?string $email = null;
 
     #[ORM\Column]

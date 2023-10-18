@@ -4,12 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Utilisateur;
 use App\Form\RegistrationFormType;
+use App\Repository\UtilisateurRepository;
 use App\Security\EmailVerifier;
 use App\Service\UploadService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
@@ -32,6 +32,7 @@ class RegistrationController extends AbstractController
     public function register(Request $request,
                              UserPasswordHasherInterface $userPasswordHasher,
                              EntityManagerInterface $entityManager,
+                             UtilisateurRepository $utilisateurRepository,
                              SluggerInterface $slugger,
                              UploadService $uploadService): Response
     {
@@ -40,31 +41,43 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setImageProfil('photoDefaut.jpg');
-            $user->setHistoriser(false);
-            $user->setAdministrateur(false);
-            $user->setActif(true);
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    'Pa$$w0rd'
-                )
-            );
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+            // Vérifiez si le pseudo a été modifié
+            $newPseudo = $form->get('pseudo')->getData();
 
-            // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('mailer@you-demaoin.com', 'admin'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('admin/utilisateur/confirmation_email.html.twig')
-            );
-            // do anything else you need here, like send an email
-            return $this->redirectToRoute('app_admin_utilisateur_lister');
+            // Vérifiez si le speudo est unique
+            $existingUser = $utilisateurRepository->findOneBy(['pseudo' => $newPseudo]);
 
+            //si le speudo existe déjà
+            if ($existingUser) {
+                $this->addFlash('error',
+                    'Le pseudo existe déjà');
+            } else {
+                $user->setImageProfil('photoDefaut.jpg');
+                $user->setHistoriser(false);
+                $user->setAdministrateur(false);
+                $user->setActif(true);
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        'Pa$$w0rd'
+                    )
+                );
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                // generate a signed url and email it to the user
+                $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                    (new TemplatedEmail())
+                        ->from(new Address('mailer@you-demaoin.com', 'admin'))
+                        ->to($user->getEmail())
+                        ->subject('Please Confirm your Email')
+                        ->htmlTemplate('admin/utilisateur/confirmation_email.html.twig')
+                );
+                // do anything else you need here, like send an email
+                return $this->redirectToRoute('app_admin_utilisateur_lister');
+            }
         }
         return $this->render('admin/utilisateur/adminRegister.html.twig', [
             'registrationForm' => $form->createView(),

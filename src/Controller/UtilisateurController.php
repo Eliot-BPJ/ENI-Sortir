@@ -26,7 +26,6 @@ class UtilisateurController extends AbstractController
         // Récupérez l'utilisateur connecté
         $utilisateur = $this->getUser();
         $pseudo = $this->getUser()->getPseudo();
-        //dd($pseudo);
         // Créez le formulaire de modification
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
         $form->handleRequest($request);
