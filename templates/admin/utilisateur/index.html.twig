@@ -4,13 +4,8 @@
 
 {% block body %}
     <div class="card p-4 container">
-{#        {% for message in app.flashes('notice') %}#}
-{#            <div class="alert-success">#}
-{#                {{ message }}#}
-{#            </div>#}
-{#        {% endfor %}#}
         <div class="mb-4">
-            <h2 class="mb-4">Utilisateurs</h2>
+            <h1 class="text-center mb-4">Utilisateurs</h1>
 
             <a class="btn btn-outline-primary" href="{{path('app_register')}}">Ajouter un utilisateur Manuellement</a>
             <a class="btn btn-outline-primary" href="{{path('app_admin_utilisateur_ajouter_csv')}}">Ajouter un Utilisateur avec un csv</a>
@@ -39,6 +34,7 @@
                     <td>{{ utilisateur.actif ? "Oui" : "Non"}}</td>
                     <td>{{ utilisateur.idSite.nom }}</td>
                     <td>
+                        <a class="btn btn-outline-info" type="submit" href="{{ path('app_admin_utilisateur_modifier', {'id' : utilisateur.id}) }}">Modifier</a>
                         <a class="btn btn-outline-warning" type="submit" href="{{ path('app_admin_utilisateur_desactiver', {'id' : utilisateur.id}) }}">{{ utilisateur.isActif() ? 'Désactiver' : 'Activer'}}</a>
                         <a class="btn btn-outline-danger" type="submit" onclick="return confirm('Etes vous sur')" href="{{ path('app_admin_utilisateur_supprimer', {'id' : utilisateur.id}) }}">Supprimer</a>
                     </td>
