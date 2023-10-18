@@ -90,8 +90,8 @@ class SortieController extends AbstractController
             $sortie->setSite($this->getUser()->getIdSite());
             $sortie->setOrganisateur($this->getUser());
 
-            $dateInscription = $form->get("nbInscriptionMax")->getData();
-            $nbInscription = $form->get("dateLimiteInscription")->getData();
+            $dateInscription = $form->get("dateLimiteInscription")->getData();
+            $nbInscription = $form->get("nbInscriptionMax")->getData();
 
             //conversion des dates en durée
             $dateDeb = $form->get("dateDebut")->getData();
@@ -102,7 +102,7 @@ class SortieController extends AbstractController
             //si la date d'inscription est avant la date de début
             //je traite des données
 
-            if($dateFin>$dateDeb && $dateDeb>$dateInscription){
+            if($dateFin>$dateDeb && $dateDeb>$dateInscription && $nbInscription>1){
                 $sortie->setDuree($duree);
 
                 if($request->request->has('save')) {
@@ -122,9 +122,19 @@ class SortieController extends AbstractController
 
                 return $this->redirectToRoute('app_accueil');
             } else {
-                $this->addFlash('error',
-                    'La date limite d\'inscription doit être avant le début de la sortie. '
-                            .'Le début de la sortie doit être avant la date de fin de sortie');
+                //affichage d'un message flash en fonction de chaque erreur
+                if($dateFin<$dateDeb){
+                    $this->addFlash('error',
+                        'Le début de la sortie doit être avant la date de fin de sortie');
+                }
+                if($dateDeb<$dateInscription){
+                    $this->addFlash('error',
+                        'La date limite d\'inscription doit être avant le début de la sortie.');
+                }
+                if($nbInscription<2){
+                    $this->addFlash('error',
+                        'Il doit y avoir au moins 2 participants.');
+                }
             }
 
         }
