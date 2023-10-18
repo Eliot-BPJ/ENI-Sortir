@@ -8,7 +8,13 @@
 
 {% block body %}
     <div>
-        <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Afficher une sortie</p>
+        <a href="{{ path('app_accueil') }}" class="btn btn-outline-primary">Retour</a>
+        <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-4">Afficher une sortie</p>
+        <div class="d-flex flex-column align-items-center text-center mb-4">
+            <p class="text-bg-danger rounded fw-bold w-75">Motif d'annulation</p>
+            <p class="fw-medium">Météo dévaforable à la sortie Piscine</p>
+            <hr class="w-75" />
+        </div>
         <div class="container h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-lg-12 col-xl-12">
@@ -16,12 +22,12 @@
                         <div class="row justify-content-center">
                             <div class="col-6 row">
                                 <div class="col-6">
-                                    <p class="text-primary mb-4">Nom de la sortie</p>
-                                    <p class="text-primary mb-4">Date et heure de la sortie</p>
-                                    <p class="text-primary mb-4">Date limite d'inscription</p>
-                                    <p class="text-primary mb-4">Nombre de places</p>
-                                    <p class="text-primary mb-4">Durée (minutes)</p>
-                                    <p class="text-primary mb-4">Description et infos</p>
+                                    <p class="fw-bold mb-4">Nom de la sortie</p>
+                                    <p class="fw-bold mb-4">Date et heure de la sortie</p>
+                                    <p class="fw-bold mb-4">Date limite d'inscription</p>
+                                    <p class="fw-bold mb-4">Nombre de places</p>
+                                    <p class="fw-bold mb-4">Durée (minutes)</p>
+                                    <p class="fw-bold mb-4">Description et infos</p>
                                 </div>
                                 <div class="col-6">
                                     <p class="mb-4">{{ sortie.nom }}</p>
@@ -34,12 +40,12 @@
                             </div>
                             <div class="col-6 row">
                                 <div class="col-6">
-                                    <p class="text-primary mb-4">Ville</p>
-                                    <p class="text-primary mb-4">Lieu</p>
-                                    <p class="text-primary mb-4">Rue</p>
-                                    <p class="text-primary mb-4">Code postal</p>
-                                    <p class="text-primary mb-4">Latitude</p>
-                                    <p class="text-primary mb-4">Longitude</p>
+                                    <p class="fw-bold mb-4">Ville</p>
+                                    <p class="fw-bold mb-4">Lieu</p>
+                                    <p class="fw-bold mb-4">Rue</p>
+                                    <p class="fw-bold mb-4">Code postal</p>
+                                    <p class="fw-bold mb-4">Latitude</p>
+                                    <p class="fw-bold mb-4">Longitude</p>
                                 </div>
                                 <div class="col-6">
                                     <p class="mb-4">{{ sortie.lieux.ville.nom }}</p>
@@ -54,6 +60,7 @@
                     </div>
                 </div>
             </div>
+            <hr />
         </div>
         <p class="text-center h2 fw-bold mb-5 mx-1 mx-md-4 mt-4">Liste des participants inscrits</p>
         {% if datetimeActuelle > sortie.dateLimiteInscription %}
@@ -85,6 +92,5 @@
                 {% endfor %}
             </table>
         </div>
-        <a href="{{ path('app_accueil') }}" class="btn btn-outline-info btn-lg">Retour</a>
     </div>
 {% endblock %}
