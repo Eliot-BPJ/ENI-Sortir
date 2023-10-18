@@ -10,10 +10,10 @@ class FiltersDTO
     public string $search;
     public Sites $sites;
     public Etats $etat;
-    public ?\DateTimeInterface $dateDebut;
-    public ?\DateTimeInterface $dateFin;
-    public bool $organisateurFilter;
-    public bool $inscritFilter;
-    public bool $pasInscritFilter;
-    public bool $passeFilter;
+    public ?\DateTimeInterface $dateDebut = null;
+    public ?\DateTimeInterface $dateFin = null;
+    public bool $organisateurFilter = true;
+    public bool $inscritFilter = true;
+    public bool $pasInscritFilter = true;
+    public bool $passeFilter = false;
 }

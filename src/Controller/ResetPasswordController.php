@@ -39,6 +39,11 @@ class ResetPasswordController extends AbstractController
     #[Route('', name: 'app_forgot_password_request')]
     public function request(Request $request, MailerInterface $mailer, TranslatorInterface $translator, SessionInterface $session): Response
     {
+        $logged_user = $this->getUser();
+        if ($logged_user) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
@@ -63,6 +68,11 @@ class ResetPasswordController extends AbstractController
     #[Route('/check-email', name: 'app_check_email')]
     public function checkEmail(SessionInterface $session): Response
     {
+        $logged_user = $this->getUser();
+        if ($logged_user) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
         $resetToken = $session->get("reset_token");
 
         return $this->render('reset_password/check_email.html.twig', [
@@ -76,6 +86,11 @@ class ResetPasswordController extends AbstractController
     #[Route('/reset/{token}', name: 'app_reset_password')]
     public function reset(Request $request, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator, string $token = null): Response
     {
+        $logged_user = $this->getUser();
+        if ($logged_user) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
         if ($token) {
             // We store the token in session and remove it from the URL, to avoid the URL being
             // loaded in a browser and potentially leaking the token to 3rd party JavaScript.

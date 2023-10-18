@@ -31,6 +31,11 @@ class SortieController extends AbstractController
         SluggerInterface $slugger,
         int $id = null
     ): Response {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $sortie = $sortieRepository->find($id);
 
         $nbInscrit = 0;
@@ -60,6 +65,11 @@ class SortieController extends AbstractController
         LieuRepository $lieuRepository,
         int $id = null
     ): Response {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
         if ($id == null) {
             $sortie = new Sortie();
         } else {
@@ -158,6 +168,11 @@ class SortieController extends AbstractController
         int $id = null
     ): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $sortie = $sortieRepository->find($id);
         $nbInscrit = 0;
         $signed_up_ids = [];
@@ -190,6 +205,11 @@ class SortieController extends AbstractController
         int $id = null
     ): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $sortie = $sortieRepository->find($id);
         $sortie->removeInscription($this->getUser());
 
@@ -200,10 +220,17 @@ class SortieController extends AbstractController
     }
 
     #[Route('/annuler/{id}', name: '_annuler')]
-    public function annulerSortie(Request $request,
-                                  EntityManagerInterface $entityManager,
-                                  SortieRepository $sortieRepository,
-                                  int $id): Response {
+    public function annulerSortie(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SortieRepository $sortieRepository,
+        int $id): Response
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $sortie = $sortieRepository->find($id);
         if($this->getUser()->getId() === $sortie->getOrganisateur()->getId() || in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
             if($sortie->getEtat()->value === "Ouverte") {
