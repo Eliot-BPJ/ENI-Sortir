@@ -30,7 +30,7 @@ $(document).ready(function () {
         // Mettre à jour le nom du site via une requête AJAX
         $.ajax({
             type: 'POST',
-            url: '/site/modifier/' + id,
+            url: '/admin/site/modifier/' + id,
             data: { editedSite: updatedNom },
             success: function (data) {
                 // Mettre à jour la cellule du nom avec la nouvelle valeur

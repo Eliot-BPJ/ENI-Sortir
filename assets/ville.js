@@ -35,7 +35,7 @@ $(document).ready(function() {
         // Envoyer les données au serveur pour mise à jour
         $.ajax({
             method: 'POST',
-            url: '/ville/modifier/' + id,
+            url: '/admin/ville/modifier/' + id,
             data: {
                 editedNom: editedNom,
                 editedCodePostal: editedCodePostal
