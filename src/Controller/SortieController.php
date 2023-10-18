@@ -143,6 +143,7 @@ class SortieController extends AbstractController
     public function signup(
         EntityManagerInterface $entityManager,
         SortieRepository $sortieRepository,
+        SluggerInterface $slugger,
         int $id = null
     ): Response
     {
