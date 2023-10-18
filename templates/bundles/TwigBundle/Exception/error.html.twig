@@ -1,72 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <title>Vous êtes perdu ?</title>
+    <meta charset="UTF-8">
+    <title>{% block title %}Sortir.com - Erreur 404{% endblock %}</title>
+    <link rel="icon" href="{{ asset('assets/logo.jpg') }}">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
 
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <style>
-
-        /*======================
-            404 page
-        =======================*/
-
-
-        .page_404{ padding:40px 0; background:#fff; font-family: 'Arvo', serif;
-        }
-
-        .page_404  img{ width:100%;}
-
-        .four_zero_four_bg{
-
-            background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
-            height: 400px;
-            background-position: center;
-        }
-
-
-        .four_zero_four_bg h1{
-            font-size:42px;
-        }
-
-        .four_zero_four_bg h3{
-            font-size:80px;
-        }
-
-        .link_404{
-            color: #fff!important;
-            padding: 10px 20px;
-            background: #39ac31;
-            margin: 20px 0;
-            display: inline-block;}
-        .contant_box_404{ margin-top:-50px;}
-    </style>
-
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+    
 </head>
-<body>
-<section class="page_404">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 ">
-                <div class="col-sm-10 col-sm-offset-1  text-center">
-                    <div class="four_zero_four_bg">
-                        <h1 class="text-center ">Bravo, vous avez trouvé nos coulisses ..!</h1>
-                    </div>
-
-                    <div class="contant_box_404">
-                        <h3 class="h2">
-                            Ici, nos techniciens travaillent d'arrache pied<br/>pour vous proposer le meilleur des sorties ENI !
-                        </h3>
-
-                        <p>Ne les dérangeons pas plus longtemps...</p>
-
-                        <a href="{{ path('app_login') }}" class="link_404">Revenir à la maison</a>
-                    </div>
-                </div>
+<body style="background-color: #fff">
+<!-- Error Page -->
+<div class="error">
+    <div class="container-floud">
+        <div class="col-xs-12 ground-color text-center">
+            <div class="container-error-404">
+                <img class="" src="{{ asset('assets/404.png') }}" alt="Erreur 404" />
             </div>
+            <h2 class="h1">Oops, la page que vous essayez d'atteindre n'existe pas !</h2>
+            <h3 class="h2">Si vous tentez de saisir vous même une URL existante, vérifiez son intégrité puis réessayez.</h3>
+            <a class="btn btn-outline-info" href="{{ path("app_login") }}">Retour à l'accueil</a>
         </div>
     </div>
-</section>
+</div>
+<!-- Error Page -->
 </body>
+<script>
+    function randomNum()
+    {
+        "use strict";
+        return Math.floor(Math.random() * 9)+1;
+    }
+    var loop1,loop2,loop3,time=30, i=0, number, selector3 = document.querySelector('.thirdDigit'), selector2 = document.querySelector('.secondDigit'),
+        selector1 = document.querySelector('.firstDigit');
+    loop3 = setInterval(function()
+    {
+        "use strict";
+        if(i > 40)
+        {
+            clearInterval(loop3);
+            selector3.textContent = 4;
+        }else
+        {
+            selector3.textContent = randomNum();
+            i++;
+        }
+    }, time);
+    loop2 = setInterval(function()
+    {
+        "use strict";
+        if(i > 80)
+        {
+            clearInterval(loop2);
+            selector2.textContent = 0;
+        }else
+        {
+            selector2.textContent = randomNum();
+            i++;
+        }
+    }, time);
+    loop1 = setInterval(function()
+    {
+        "use strict";
+        if(i > 100)
+        {
+            clearInterval(loop1);
+            selector1.textContent = 4;
+        }else
+        {
+            selector1.textContent = randomNum();
+            i++;
+        }
+    }, time);
+</script>
 </html>
