@@ -22,13 +22,14 @@ class AccueilController extends AbstractController
         }
 
         $filters = new FiltersDTO();
-        $form = $this->createForm(FiltersFormType::class, $filters);
+        $form = $this->createForm(FiltersFormType::class, $filters, ['user' => $user]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $filters = $form->getData();
-            $sorties = $sortieRepository->findWithSearchFilters($filters, $this->getUser());
+            $sorties = $sortieRepository->findWithSearchFilters($filters, $user);
         } else {
-            $sorties = $sortieRepository->findAll();
+            $filters->organisateurFilter = true;
+            $sorties = $sortieRepository->findWithSearchFilters($filters, $user);
         }
 
         $inscrit = [];

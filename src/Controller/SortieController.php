@@ -25,6 +25,11 @@ class SortieController extends AbstractController
         SortieRepository $sortieRepository,
         int $id = null
     ): Response {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $sortie = $sortieRepository->find($id);
 
         $nbInscrit = 0;
@@ -54,10 +59,18 @@ class SortieController extends AbstractController
         LieuRepository $lieuRepository,
         int $id = null
     ): Response {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
         if ($id == null) {
             $sortie = new Sortie();
         } else {
             $sortie = $sortieRepository->find($id);
+            if((strpos($request->getPathInfo(), 'edit') && $sortie->getOrganisateur()->getId() !== $this->getUser()->getId()) || $sortie->getEtat()->value !== 'Créee') {
+                return $this->redirectToRoute('app_accueil');
+            }
         }
         $lieu = new Lieu();
         $idLieu = -1;
@@ -147,6 +160,11 @@ class SortieController extends AbstractController
         int $id = null
     ): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $sortie = $sortieRepository->find($id);
         $nbInscrit = 0;
         $signed_up_ids = [];
@@ -177,6 +195,11 @@ class SortieController extends AbstractController
         int $id = null
     ): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $sortie = $sortieRepository->find($id);
         $sortie->removeInscription($this->getUser());
 
@@ -187,10 +210,16 @@ class SortieController extends AbstractController
     }
 
     #[Route('/annuler/{id}', name: '_annuler')]
-    public function annulerSortie(Request $request,
-                                  EntityManagerInterface $entityManager,
-                                  SortieRepository $sortieRepository,
-                                  int $id): Response {
+    public function annulerSortie(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SortieRepository $sortieRepository,
+        int $id): Response
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
 
         $sortie = $sortieRepository->find($id);
 

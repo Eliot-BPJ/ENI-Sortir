@@ -20,6 +20,7 @@ class FiltersFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $user = $options['user'];
         $builder
             ->add('search', TextType::class, [
                 'required' => false
@@ -29,6 +30,7 @@ class FiltersFormType extends AbstractType
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir le site',
                 'required' => false,
+                'data' => $user->getIdSite()
             ])
             ->add('etat', ChoiceType::class, [
                 'choices' => array_reduce(
@@ -69,5 +71,6 @@ class FiltersFormType extends AbstractType
         $resolver->setDefaults([
             'data_class' => FiltersDTO::class,
         ]);
+        $resolver->setRequired('user');
     }
 }
