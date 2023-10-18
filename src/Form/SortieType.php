@@ -39,7 +39,7 @@ class SortieType extends AbstractType
                 'label' => "Nombre de places* (minimum 2) :",
             ])
             ->add('infosSortie', TextType::class, [
-                'label' => "Description et infos :",
+                'label' => "Description et infos* :",
             ])
             ->add('lieux', EntityType::class, [
                 'label' => "Lieu* :",
