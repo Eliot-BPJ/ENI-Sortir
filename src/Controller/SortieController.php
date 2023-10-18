@@ -70,6 +70,7 @@ class SortieController extends AbstractController
         $form = $this->createForm(SortieType::class, $sortie);
 
         $formLieu = $this->createForm(LieuType::class,$lieu);
+
         $form->handleRequest($request);
         $formLieu->handleRequest($request);
 
@@ -161,7 +162,6 @@ class SortieController extends AbstractController
             array_push($signed_up_ids, $inscrit->getId());
             $nbInscrit++;
         };
-
         if (!in_array($this->getUser()->getId(), $signed_up_ids) && $this->getUser()->isAdministrateur() == 0 && $nbInscrit < $sortie->getNbInscriptionMax()) {
 
             $sortie->addInscription($this->getUser());
