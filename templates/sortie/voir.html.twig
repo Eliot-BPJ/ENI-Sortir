@@ -8,8 +8,9 @@
 
 {% block body %}
     <div>
+
         <a href="{{ path('app_accueil') }}" class="btn btn-outline-primary">Retour</a>
-        <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-4">Afficher une sortie</p>
+        <h1 class="text-center fw-bold mb-5 mx-1 mx-md-4 mt-4">Afficher une sortie</h1>
         {% if sortie.motifAnnulation %}
             <div class="d-flex flex-column align-items-center text-center mb-4">
                 <p class="text-bg-danger rounded fw-bold w-75">Motif d'annulation</p>
@@ -24,12 +25,12 @@
                         <div class="row justify-content-center">
                             <div class="col-6 row">
                                 <div class="col-6">
-                                    <p class="fw-bold mb-4">Nom de la sortie</p>
-                                    <p class="fw-bold mb-4">Date et heure de la sortie</p>
-                                    <p class="fw-bold mb-4">Date limite d'inscription</p>
-                                    <p class="fw-bold mb-4">Nombre de places</p>
-                                    <p class="fw-bold mb-4">Durée (minutes)</p>
-                                    <p class="fw-bold mb-4">Description et infos</p>
+                                    <p class="text-primary mb-4">Nom de la sortie :</p>
+                                    <p class="text-primary mb-4">Date et heure de la sortie :</p>
+                                    <p class="text-primary mb-4">Date limite d'inscription :</p>
+                                    <p class="text-primary mb-4">Nombre de places :</p>
+                                    <p class="text-primary mb-4">Durée (minutes) :</p>
+                                    <p class="text-primary mb-4">Description et infos :</p>
                                 </div>
                                 <div class="col-6">
                                     <p class="mb-4">{{ sortie.nom }}</p>
@@ -42,12 +43,12 @@
                             </div>
                             <div class="col-6 row">
                                 <div class="col-6">
-                                    <p class="fw-bold mb-4">Ville</p>
-                                    <p class="fw-bold mb-4">Lieu</p>
-                                    <p class="fw-bold mb-4">Rue</p>
-                                    <p class="fw-bold mb-4">Code postal</p>
-                                    <p class="fw-bold mb-4">Latitude</p>
-                                    <p class="fw-bold mb-4">Longitude</p>
+                                    <p class="text-primary mb-4">Ville :</p>
+                                    <p class="text-primary mb-4">Lieu :</p>
+                                    <p class="text-primary mb-4">Rue :</p>
+                                    <p class="text-primary mb-4">Code postal :</p>
+                                    <p class="text-primary mb-4">Latitude :</p>
+                                    <p class="text-primary mb-4">Longitude :</p>
                                 </div>
                                 <div class="col-6">
                                     <p class="mb-4">{{ sortie.lieux.ville.nom }}</p>
@@ -64,7 +65,7 @@
             </div>
             <hr />
         </div>
-        <p class="text-center h2 fw-bold mb-5 mx-1 mx-md-4 mt-4">Liste des participants inscrits</p>
+        <h2 class="text-center fw-bold mb-5 mx-1 mx-md-4 mt-4">Liste des participants inscrits</h2>
         {% if datetimeActuelle > sortie.dateLimiteInscription %}
             <i>Vous ne pouvez plus vous inscrire pour cette sortie</i>
         {% elseif app.user in sortie.inscriptions %}
