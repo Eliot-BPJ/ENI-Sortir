@@ -75,14 +75,15 @@
                                                 Le format de l'adresse mail doit être valide. (ex: p-dupond@gmail.com)
                                             </div>
                                         </div>
-
-                                        <div class="row mb-3">
-                                            {{ form_label(form.password, null, {'label_attr': {'class': 'form-label'}}) }}
-                                            {{ form_widget(form.password, {'attr': {'class': 'form-control', 'required': ''}}) }}
-                                            <div class="invalid-feedback">
-                                                Le mot de passe est incorrecte.
+                                        {% if 'admin' not in app.request.pathinfo %}
+                                            <div class="row mb-3">
+                                                {{ form_label(form.password, null, {'label_attr': {'class': 'form-label'}}) }}
+                                                {{ form_widget(form.password, {'attr': {'class': 'form-control', 'required': ''}}) }}
+                                                <div class="invalid-feedback">
+                                                    Le mot de passe est incorrecte.
+                                                </div>
                                             </div>
-                                        </div>
+                                        {% endif %}
 
                                         <div class="row mb-3">
                                             {{ form_label(form.imageProfil,  null, {'label_attr': {'class': 'form-label'}}) }}
@@ -94,8 +95,10 @@
 
                                         <div class="col-sm" style="text-align: center">
                                             <button class="btn btn-outline-success" type="submit">Enregistrer</button>
-                                            <a href="{{ path('app_accueil') }}" class="btn btn-outline-danger">Annuler</a>
-                                            <a href="{{ path('app_utilisateur_modifier_pw', {'id' : utilisateur.id}) }}" class="btn btn-outline-primary">Modifier Mot de Passe</a>
+                                            <a href="{{ 'admin' not in app.request.pathinfo ? path('app_admin_utilisateur_lister') : path('app_accueil') }}" class="btn btn-outline-danger">Annuler</a>
+                                            {% if 'admin' not in app.request.pathinfo %}
+                                                <a href="{{ path('app_utilisateur_modifier_pw', {'id' : utilisateur.id}) }}" class="btn btn-outline-primary">Modifier Mot de Passe</a>
+                                            {% endif %}
                                         </div>
 
                                         {{ form_end(form) }}

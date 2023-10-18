@@ -4,13 +4,17 @@ namespace App\Controller\Admin;
 
 use App\Entity\Utilisateur;
 use App\Entity\Sites;
+use App\Form\AdminUtilisateurType;
 use App\Form\RegisterWithCsvType;
+use App\Form\UtilisateurType;
 use App\Repository\SitesRepository;
 use App\Repository\UtilisateurRepository;
+use App\Service\UploadService;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Exception;
 use League\Csv\UnavailableStream;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -100,6 +104,59 @@ class UtilisateurController extends AbstractController
 
         return $this->render('admin/utilisateur/adminAjoutRegisterWithCsv.html.twig', [
             'formRegisterWithCsv' => $form->createView(),
+        ]);
+    }
+    #[Route('/modifier/{id}', name: '_modifier')]
+    public function editer(Request                $request,
+                           EntityManagerInterface $entityManager,
+                           UtilisateurRepository $utilisateurRepository,
+                           UploadService          $uploadService,
+                           int $id): Response
+    {
+        // Récupérez l'utilisateur connecté
+        $utilisateur = $utilisateurRepository->find($id);
+        $pseudo = $this->getUser()->getPseudo();
+
+        // Créez le formulaire de modification
+        $form = $this->createForm(AdminUtilisateurType::class, $utilisateur);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            // Vérifiez si le pseudo a été modifié
+            $newPseudo = $form->get('pseudo')->getData();
+
+            //dd($newPseudo !== $pseudo);
+            if ($newPseudo !== $pseudo) {
+                // Le pseudo a été modifié, vérifiez s'il est unique
+                $existingUser = $utilisateurRepository->findOneBy(['pseudo' => $newPseudo]);
+                if ($existingUser && $existingUser !== $utilisateur) {
+                    $form->get('pseudo')->addError(new FormError('Ce pseudo existe déjà.'));
+                    $this->addFlash('error',
+                        'Le pseudo existe déjà');
+                }
+            }
+            if ($form->get('imageProfil')->getData()) {
+                $newFilename = $uploadService->upload($form->get('imageProfil')->getData(), $this->getParameter('imageProfil_directory'));
+                $utilisateur->setImageProfil($newFilename);
+            }
+
+            // Enregistrez les modifications dans la base de données
+            $entityManager->persist($utilisateur);
+            $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'L \'utilisateur a été modifié !'
+            );
+
+            // Redirigez l'utilisateur vers une autre page (par exemple, page_bateau.html.twig)
+            return $this->redirectToRoute('app_admin_utilisateur_lister');
+        }
+        return $this->render('utilisateur/index.html.twig', [
+            'form' => $form->createView(),
+            'utilisateur' => $utilisateur,
         ]);
     }
 }
