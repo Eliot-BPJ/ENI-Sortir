@@ -1,5 +1,11 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Liste des sorties{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
 {% block body %}
     <div>
         <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Afficher une sortie</p>
@@ -8,56 +14,40 @@
                 <div class="col-lg-12 col-xl-12">
                     <div class="text-black" style="border-radius: 25px;">
                         <div class="row justify-content-center">
-                            <div class="col-6">
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                    <div>Nom de la sortie :</div>
-                                    <div>{{ sortie.nom }}</div>
+                            <div class="col-6 row">
+                                <div class="col-6">
+                                    <p class="text-primary mb-4">Nom de la sortie</p>
+                                    <p class="text-primary mb-4">Date et heure de la sortie</p>
+                                    <p class="text-primary mb-4">Date limite d'inscription</p>
+                                    <p class="text-primary mb-4">Nombre de places</p>
+                                    <p class="text-primary mb-4">Durée (minutes)</p>
+                                    <p class="text-primary mb-4">Description et infos</p>
                                 </div>
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                    <div>Date et heure de la sortie :</div>
-                                    <div>{{ sortie.dateDebut | date('d-m-Y') }}</div>
-                                </div>
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                    <div>Date limite d'inscription :</div>
-                                    <div>{{ sortie.dateLimiteInscription | date('d-m-Y') }}</div>
-                                </div>
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                    <div>Nombre de places :</div>
-                                    <div>{{ sortie.nbInscriptionMax }}</div>
-                                </div>
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                    <div>Durée (minutes) :</div>
-                                    <div>{{ sortie.duree }}</div>
-                                </div>
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                    <div>Description et infos :</div>
-                                    <div>{{ sortie.infosSortie }}</div>
+                                <div class="col-6">
+                                    <p class="mb-4">{{ sortie.nom }}</p>
+                                    <p class="mb-4">{{ sortie.dateDebut | date('d-m-Y') }}</p>
+                                    <p class="mb-4">{{ sortie.dateLimiteInscription | date('d-m-Y') }}</p>
+                                    <p class="mb-4">{{ sortie.nbInscriptionMax }}</p>
+                                    <p class="mb-4">{{ sortie.duree }}</p>
+                                    <p class="mb-4">{{ sortie.infosSortie }}</p>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                    <div>Ville :</div>
-                                    <div>{{ sortie.lieux.ville.nom }}</div>
+                            <div class="col-6 row">
+                                <div class="col-6">
+                                    <p class="text-primary mb-4">Ville</p>
+                                    <p class="text-primary mb-4">Lieu</p>
+                                    <p class="text-primary mb-4">Rue</p>
+                                    <p class="text-primary mb-4">Code postal</p>
+                                    <p class="text-primary mb-4">Latitude</p>
+                                    <p class="text-primary mb-4">Longitude</p>
                                 </div>
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                    <div>Lieu :</div>
-                                    <div>{{ sortie.lieux.nom }}</div>
-                                </div>
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                    <div>Rue :</div>
-                                    <div>{{ sortie.lieux.rue }}</div>
-                                </div>
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                    <div>Code postal :</div>
-                                    <div>{{ sortie.lieux.ville.codePostal }}</div>
-                                </div>
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                    <div>Latitude :</div>
-                                    <div>{{ sortie.lieux.latitude }}</div>
-                                </div>
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                    <div>Longitude :</div>
-                                    <div>{{ sortie.lieux.longitude }}</div>
+                                <div class="col-6">
+                                    <p class="mb-4">{{ sortie.lieux.ville.nom }}</p>
+                                    <p class="mb-4">{{ sortie.lieux.nom }}</p>
+                                    <p class="mb-4">{{ sortie.lieux.rue }}</p>
+                                    <p class="mb-4">{{ sortie.lieux.ville.codePostal }}</p>
+                                    <p class="mb-4">{{ sortie.lieux.latitude }}</p>
+                                    <p class="mb-4">{{ sortie.lieux.longitude }}</p>
                                 </div>
                             </div>
                         </div>
@@ -75,7 +65,7 @@
         {% elseif is_granted('ROLE_ADMIN') %}
             <i>Vous ne pouvez pas vous inscrire en étant administrateur !</i>
         {% else %}
-            <a href="{{ path("app_sortie_signup", {'id': sortie.id}) }}" class="btn btn-outline-info btn-lg">S'inscrire</a>
+            <a href="{{ path("app_sortie_signup", {'id': sortie.id}) }}" class="btn btn-outline-info btn-lg mb-2">S'inscrire</a>
         {% endif %}
         <div>
             <table id="tableSortie" class="table table-striped" style="width:100%">

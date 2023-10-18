@@ -96,32 +96,57 @@ class SortieController extends AbstractController
             }
         }
         if ($form->isSubmitted() && $form->isValid()) {
+
             $sortie->setSite($this->getUser()->getIdSite());
             $sortie->setOrganisateur($this->getUser());
 
+            $dateInscription = $form->get("dateLimiteInscription")->getData();
+            $nbInscription = $form->get("nbInscriptionMax")->getData();
+
+            //conversion des dates en durée
             $dateDeb = $form->get("dateDebut")->getData();
             $dateFin = $form->get("dateRetour")->getData();
             $diff_in_seconds = $dateFin->getTimestamp() - $dateDeb->getTimestamp();
             $duree =  floor($diff_in_seconds / 60); #in minutes
+            //si la date de debut de la sortie est avant la date de fin
+            //si la date d'inscription est avant la date de début
+            //je traite des données
 
-            $sortie->setDuree($duree);
+            if($dateFin>$dateDeb && $dateDeb>$dateInscription && $nbInscription>1){
+                $sortie->setDuree($duree);
 
-            if($request->request->has('save')) {
-                $etat = Etats::Creee;
-            } else if($request->request->has('add')) {
-                $etat = Etats::Ouverte;
+                if($request->request->has('save')) {
+                    $etat = Etats::Creee;
+                } else if($request->request->has('add')) {
+                    $etat = Etats::Ouverte;
+                }
+
+                $sortie->setEtat($etat);
+                $sortie->setEstHistorise(false);
+                if($idLieu !== -1) {
+                    $lieu = $lieuRepository->findOneBy((array('id' => $idLieu)));
+                    $sortie->setLieux($lieu);
+                }
+                $entityManager->persist($sortie);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('app_accueil');
+            } else {
+                //affichage d'un message flash en fonction de chaque erreur
+                if($dateFin<$dateDeb){
+                    $this->addFlash('error',
+                        'Le début de la sortie doit être avant la date de fin de sortie');
+                }
+                if($dateDeb<$dateInscription){
+                    $this->addFlash('error',
+                        'La date limite d\'inscription doit être avant le début de la sortie.');
+                }
+                if($nbInscription<2){
+                    $this->addFlash('error',
+                        'Il doit y avoir au moins 2 participants.');
+                }
             }
 
-            $sortie->setEtat($etat);
-            $sortie->setEstHistorise(false);
-            if($idLieu !== -1) {
-                $lieu = $lieuRepository->findOneBy((array('id' => $idLieu)));
-                $sortie->setLieux($lieu);
-            }
-            $entityManager->persist($sortie);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_accueil');
         }
 
         return $this->render('sortie/editer.html.twig', [
@@ -204,25 +229,30 @@ class SortieController extends AbstractController
         }
 
         $sortie = $sortieRepository->find($id);
-        if($sortie->getEtat()->value === "Ouverte") {
-            $form = $this->createForm(AnnulerSortieType::class);
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-                $sortie->setMotifAnnulation($form->get('motifAnnulation')->getData());
+        if($this->getUser()->getId() === $sortie->getOrganisateur()->getId() || in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
+            if($sortie->getEtat()->value === "Ouverte") {
+                $form = $this->createForm(AnnulerSortieType::class);
+                $form->handleRequest($request);
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $sortie->setMotifAnnulation($form->get('motifAnnulation')->getData());
+                    $sortie->setEstHistorise(true);
+                    $sortie->setEtat(Etats::Annulee);
+                    $entityManager->persist($sortie);
+                    $entityManager->flush();
+                    return $this->redirectToRoute('app_accueil');
+                }
+                return $this->render('sortie/annulerSortie.html.twig', [
+                    'formAnnulationSortie' => $form->createView(),
+                ]);
+            } else {
+                $sortie->setEtat(Etats::Annulee);
                 $sortie->setEstHistorise(true);
                 $entityManager->persist($sortie);
                 $entityManager->flush();
+
                 return $this->redirectToRoute('app_accueil');
             }
-            return $this->render('sortie/annulerSortie.html.twig', [
-                'formAnnulationSortie' => $form->createView(),
-            ]);
-        } else {
-            $sortie->setEstHistorise(true);
-            $entityManager->persist($sortie);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_accueil');
         }
+        return $this->redirectToRoute('app_accueil');
     }
 }

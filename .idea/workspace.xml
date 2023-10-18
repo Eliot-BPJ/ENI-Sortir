@@ -5,29 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7bb9dbbe-5e2b-4ae8-94de-79e1610d067a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/migrations/Version20231016144130.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/migrations/Version20231016144526.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Form/LieuType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/admin/utilisateur/confirmation_email.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/bundles/TwigBundle/Exception/error.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/site.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/site.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/styles/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/ville.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ville.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Admin/SiteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Admin/SiteController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Admin/VilleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Admin/VilleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/RegistrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegistrationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ResetPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ResetPasswordController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SortieController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SortieController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Sortie.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Sortie.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/RegistrationFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RegistrationFormType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/accueil/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/admin/site/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/site/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/utilisateur/adminRegister.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/utilisateur/adminRegister.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/admin/utilisateur/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/utilisateur/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/admin/ville/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/ville/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/reset_password/check_email.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reset_password/check_email.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/security/login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/login.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sortie/editer.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sortie/editer.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/sortie/voir.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sortie/voir.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -207,6 +196,7 @@
       <path value="$PROJECT_DIR$/vendor/doctrine/data-fixtures" />
       <path value="$PROJECT_DIR$/vendor/symfonycasts/verify-email-bundle" />
       <path value="$PROJECT_DIR$/vendor/league/csv" />
+      <path value="$PROJECT_DIR$/vendor/symfonycasts/reset-password-bundle" />
     </include_path>
   </component>
   <component name="ProblemsViewState">
@@ -220,22 +210,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Merging master",
-    "last_opened_file_path": "C:/Users/eboyer2022/Documents/GitHub/ENI-Sortir/bin/console",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.rainbow.brackets.root",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Styling&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/eboyer2022/Documents/GitHub/ENI-Sortir/bin/console&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.rainbow.brackets.root&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\eboyer2022\Documents\GitHub\ENI-Sortir\migrations" />
@@ -246,10 +236,25 @@
       <command value="symfony server:start" />
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="PHP Script.Stmfony server">
     <configuration name="Stmfony server" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/bin/console">
       <method v="2" />
     </configuration>
+    <configuration name="watch" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="watch" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.watch" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -281,6 +286,7 @@
       <workItem from="1697095983865" duration="5993000" />
       <workItem from="1697182537242" duration="1464000" />
       <workItem from="1697184335544" duration="9547000" />
+      <workItem from="1697526586089" duration="529000" />
     </task>
     <servers />
   </component>

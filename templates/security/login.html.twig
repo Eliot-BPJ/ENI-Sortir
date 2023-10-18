@@ -15,24 +15,24 @@
     {% endif %}
 
     <div class="d-flex flex-column align-items-center">
-        <h1 class="h3 mb-3 font-weight-normal text-center">Please sign in</h1>
-        <div class="card shadow-sm w-50 col">
+        <h1 class="h3 mb-3 font-weight-normal text-center">Authentification</h1>
+        <div class="card shadow-sm w-25 col">
             <div class="card-body">
                 <label for="inputEmail">Identifiant</label>
                 <input type="text" value="{{ last_username }}" name="username" id="username" class="form-control" autocomplete="username" required autofocus>
-                <label for="inputPassword">Password</label>
+                <label class="mt-2" for="inputPassword">Mot de passe</label>
                 <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
                 <div class="m-2 text-center">
-                    <label>
+                    <label class="mx-2">
                         <input type="checkbox" name="_remember_me" checked>
-                        Keep me logged in
+                        se souvenir de moi
                     </label>
                     <input type="hidden" name="_csrf_token"
                            value="{{ csrf_token('authenticate') }}"
                     >
 
-                    <button class="btn btn-lg btn-primary" type="submit">
-                        Sign in
+                    <button class="btn btn-outline-primary" type="submit">
+                        Se connecter
                     </button>
                 </div>
                 <a href="{{ path("app_forgot_password_request") }}">Mot de passe oublié</a>

@@ -2,31 +2,72 @@
 
 {% block title %}Hello BienController!{% endblock %}
 {% block body %}
-<div>
-    <h1>Informations du participant</h1>
-    <table>
-        <tbody>
-            <tr>
-                <img class="" src="{{ asset('assets/uploads/' ~ utilisateur.imageProfil) }}" alt="Image profil">
-            </tr>
-            <tr>
-                <td>Username</td>
-                <td>Prénom</td>
-                <td>nom</td>
-                <td>Téléphone</td>
-                <td>Email</td>
-                <td>Ville de rattachement</td>
-            </tr>
-            <tr>
-                <td>{{ utilisateur.pseudo }}</td>
-                <td>{{ utilisateur.prenom }}</td>
-                <td>{{ utilisateur.nom }}</td>
-                <td>{{ utilisateur.telephone }}</td>
-                <td>{{ utilisateur.email }}</td>
-                <td>{{ utilisateur.idSite.nom }}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+    <section style="background-color: #eee;">
+        <div class="container py-5">
 
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <img src="{{ asset('assets/uploads/' ~ utilisateur.imageProfil) }}" alt="avatar"
+                                 class="rounded-circle img-fluid" style="width: 150px;">
+                            <h5 class="my-3">{{ utilisateur.pseudo }}</h5>
+                            <p class="text-muted mb-1">{{ utilisateur.idSite.nom }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Pseudo</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{ utilisateur.pseudo }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Nom Prénom</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{ utilisateur.nom }} {{ utilisateur.prenom }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Email</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{ utilisateur.email }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Téléphone</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{ utilisateur.telephone }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Site de rattachement</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{ utilisateur.idSite.nom }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

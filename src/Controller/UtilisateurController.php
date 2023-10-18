@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Utilisateur;
 use App\Form\UpdatePasswordType;
 use App\Form\UtilisateurType;
 use App\Repository\UtilisateurRepository;
 use App\Service\UploadService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -18,21 +18,39 @@ use Symfony\Component\Routing\Annotation\Route;
 class UtilisateurController extends AbstractController
 {
     #[Route('/modifier', name: '_modifier')]
-    public function editer(Request $request,
+    public function editer(Request                $request,
                            EntityManagerInterface $entityManager,
-                           UploadService $uploadService): Response
+                           UtilisateurRepository $utilisateurRepository,
+                           UploadService          $uploadService): Response
     {
         // Récupérez l'utilisateur connecté
         $utilisateur = $this->getUser();
-
+        $pseudo = $this->getUser()->getPseudo();
+        //dd($pseudo);
         // Créez le formulaire de modification
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $passwordField = $form->get('password');
-            $currentPassword = $passwordField->getData();
+
+            // Vérifiez si le pseudo a été modifié
+            $newPseudo = $form->get('pseudo')->getData();
+
+            //dd($newPseudo !== $pseudo);
+            if ($newPseudo !== $pseudo) {
+                // Le pseudo a été modifié, vérifiez s'il est unique
+                $existingUser = $utilisateurRepository->findOneBy(['pseudo' => $newPseudo]);
+                if ($existingUser && $existingUser !== $utilisateur) {
+                    $form->get('pseudo')->addError(new FormError('Ce pseudo existe déjà.'));
+                    $this->addFlash('error',
+                        'Le pseudo existe déjà');
+                }
+            } else {
+                $passwordField = $form->get('password');
+                $currentPassword = $passwordField->getData();
+            }
+
 
             if (empty($currentPassword)) {
                 // L'utilisateur n'a pas fourni de mot de passe actuel
@@ -57,13 +75,12 @@ class UtilisateurController extends AbstractController
 
                 // Redirigez l'utilisateur vers une autre page (par exemple, page_bateau.html.twig)
                 return $this->redirectToRoute('app_accueil');
+            } elseif(!password_verify($currentPassword, $utilisateur->getPassword())) {
+                // Mot de passe actuel incorrect
+                $this->addFlash('error',
+                    'Le mot de passe est incorrect.');
             }
         }
-//        } else {
-//            // Mot de passe actuel incorrect
-//            $this->addFlash('error',
-//                         'Le mot de passe est incorrect.');
-//        }
 
         return $this->render('utilisateur/index.html.twig', [
             'form' => $form->createView(),
@@ -78,10 +95,6 @@ class UtilisateurController extends AbstractController
     {
         // Récupérez l'utilisateur connecté
         $utilisateur = $this->getUser();
-
-        // Récupérez le mot de passe stocké en base de données
-        //pour le debug
-        $storedPassword = $utilisateur->getPassword();
 
         // Créez le formulaire de modification
         $form = $this->createForm(UpdatePasswordType::class, $utilisateur);
@@ -107,9 +120,6 @@ class UtilisateurController extends AbstractController
 
                 // Redirigez l'utilisateur vers la paged'accueil
                 return $this->redirectToRoute('app_accueil');
-            } else {
-                // Mot de passe actuel incorrect
-                $this->addFlash('error', 'Mot de passe actuel incorrect.');
             }
         }
 

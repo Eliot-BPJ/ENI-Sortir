@@ -9,8 +9,8 @@
 {% endblock %}
 
 {% block body %}
-<div class="card mb-3" style="width: 80% ; padding: 8px;">
-    <div class="row g-0">
+<div class="card p-4 container" style="width: 80% ; padding: 8px;">
+    <div class="row">
         <h2 class="mb-4">Villes</h2>
         <div class="card-body">
             <table id="tableSortie" class="table table-striped" style="width:100%">
@@ -27,7 +27,7 @@
                                 <td>{{ form_row(form.nom) }}</td>
                                 <td>{{ form_row(form.codepostal) }}</td>
                                 <td>
-                                    <button class="btn btn-primary" type="submit">Ajouter</button>
+                                    <button class="btn btn-outline-primary" type="submit">Ajouter</button>
                                 </td>
                             </tr>
                         {{ form_end(form) }}
@@ -37,8 +37,8 @@
                                 <td class="ville-nom">{{ ville.nom }}</td>
                                 <td class="ville-codepostal">{{ ville.codePostal }}</td>
                                 <td class="ville-actions">
-                                    <a href="#" class="btn btn-primary btn-edit" data-ville-id="{{ ville.id }}">Modifier</a>
-                                    <button class="btn btn-success btn-save" style="display: none;" data-ville-id="{{ ville.id }}">Sauvegarder</button>
+                                    <a href="#" class="btn btn-outline-primary btn-edit" data-ville-id="{{ ville.id }}">Modifier</a>
+                                    <button class="btn btn-outline-success btn-save" style="display: none;" data-ville-id="{{ ville.id }}">Sauvegarder</button>
                                 </td>
                             </tr>
                         {% endfor %}
