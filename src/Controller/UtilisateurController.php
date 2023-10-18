@@ -33,11 +33,9 @@ class UtilisateurController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-
             // Vérifiez si le pseudo a été modifié
             $newPseudo = $form->get('pseudo')->getData();
 
-            //dd($newPseudo !== $pseudo);
             if ($newPseudo !== $pseudo) {
                 // Le pseudo a été modifié, vérifiez s'il est unique
                 $existingUser = $utilisateurRepository->findOneBy(['pseudo' => $newPseudo]);
@@ -50,7 +48,6 @@ class UtilisateurController extends AbstractController
                 $passwordField = $form->get('password');
                 $currentPassword = $passwordField->getData();
             }
-
 
             if (empty($currentPassword)) {
                 // L'utilisateur n'a pas fourni de mot de passe actuel
