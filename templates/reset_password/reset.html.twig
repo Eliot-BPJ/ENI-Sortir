@@ -3,11 +3,14 @@
 {% block title %}Mot de passe oublié{% endblock %}
 
 {% block body %}
-
-    <h1>Reset your password</h1>
+    <h1 class="mb-4">Reinitialiser votre mot de passe</h1>
 
     {{ form_start(resetForm) }}
-        {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-outline-primary">Mot de passe oublié</button>
+        <div class="">
+            {{ form_row(resetForm.plainPassword, {'label': false}) }}
+        </div>
+
+        <button type="submit" class="btn btn-outline-primary mt-4" >Envoie de l'email</button>
     {{ form_end(resetForm) }}
+
 {% endblock %}

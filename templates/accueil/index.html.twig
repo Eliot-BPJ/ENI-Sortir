@@ -76,23 +76,22 @@
                     <td>{{ sortie.inscriptions.count }} / {{ sortie.nbInscriptionMax }}</td>
                     <td>{{ sortie.etat.value }}</td>
                     <td>
-                        {% if app.user in sortie.inscriptions %}
+                        {% if app.user in sortie.inscriptions and sortie.etat.value != "Annulée" %}
                             ✔️
                         {% endif %}
                     </td>
                     <td><a href="{{ path('app_utilisateur_afficher_participant', {'id' : sortie.organisateur.id})}}">{{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }}</a></td>
                     <td>
                         <a href="{{ path('app_sortie_list', {'id': sortie.id}) }}" class="btn btn-outline-info">Afficher</a>
-                        {% if (is_granted('ROLE_ADMIN') or app.user.id == sortie.organisateur.id) and sortie.etat.value == 'Créee'%}
+                        {% if (is_granted('ROLE_ADMIN') or app.user.id == sortie.organisateur.id) and sortie.etat.value == 'Créee' and sortie.etat != "Annulée"%}
                             <a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}" class="btn btn-outline-info">Modifier</a>
                         {% endif %}
-                        {% if is_granted('ROLE_ADMIN') or app.user.id == sortie.organisateur.id %}
+                        {% if (is_granted('ROLE_ADMIN') or app.user.id == sortie.organisateur.id) and sortie.etat.value != "Annulée" %}
                             <a href="{{path('app_sortie_annuler', {id : sortie.id})}}" class="btn btn-outline-danger">Annuler</a>
                         {% endif %}
-                        {% if app.user in sortie.inscriptions %}
+                        {% if app.user in sortie.inscriptions and sortie.etat.value != "Annulée" %}
                             <a href="{{ path('app_sortie_leave', {'id': sortie.id}) }}" class="btn btn-outline-warning" onclick="return confirm('Êtes-vous sûr de vouloir vous désister de cette sortie ?')">Se désister</a>
                         {% endif %}
-
                     </td>
                 </tr>
             </tbody>

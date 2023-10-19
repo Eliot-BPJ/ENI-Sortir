@@ -6,29 +6,20 @@
     {% for flash_error in app.flashes('reset_password_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
+    <h1 class="mb-4">Reinitialiser votre mot de passe</h1>
 
-    <div class="d-flex flex-column align-items-center">
-        <h1 class="h3 mb-3 font-weight-normal text-center">Mot de passe oublié</h1>
-        <div class="card shadow-sm w-25 col">
-            <div class="card-body">
-
-                {{ form_start(requestForm, {'attr': {'class': 'row g-3'}}) }}
-
-                <div>
-                    <p>
-                        Entrez votre adresse mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.
-                    </p>
-                </div>
-
-                <div class="row mb-3">
-                    {{ form_label(requestForm.email, null, {'label_attr': {'class': 'form-label'}}) }}
-                    {{ form_widget(requestForm.email, {'attr': {'class': 'form-control', 'required': ''}}) }}
-                </div>
-                <div class="m-2 text-center">
-                    <button class="btn btn-outline-primary">Envoyer le mot de passe par mail</button>
-                </div>
-                {{ form_end(requestForm) }}
-            </div>
+    {{ form_start(requestForm) }}
+        <div class="">
+            <span>{{ form_label(requestForm.email) }}</span>
+            {{ form_row(requestForm.email, {'label': false, 'attr': {'class': 'form-control w-25'}}) }}
         </div>
-    </div>
+        <div>
+            <small>
+                Entrez votre adresse email et nous vous enverrons un
+                lien pour réinitialiser votre mot de passe.
+            </small>
+        </div>
+
+        <button type="submit" class="btn btn-outline-primary mt-4" >Envoie de l'email</button>
+    {{ form_end(requestForm) }}
 {% endblock %}
