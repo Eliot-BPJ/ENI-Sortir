@@ -5,31 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7bb9dbbe-5e2b-4ae8-94de-79e1610d067a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Form/AdminUtilisateurType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/site.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/site.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ville.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ville.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AccueilController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AccueilController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Admin/UtilisateurController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Admin/UtilisateurController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/RegistrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegistrationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SecurityController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SortieController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SortieController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/UtilisateurController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UtilisateurController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DTO/FiltersDTO.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/FiltersDTO.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Utilisateur.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Utilisateur.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/FiltersFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/FiltersFormType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/SortieType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/SortieType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/SortieRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/SortieRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accueil/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/site/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/site/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/utilisateur/adminAjoutRegisterWithCsv.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/utilisateur/adminAjoutRegisterWithCsv.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/utilisateur/adminRegister.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/utilisateur/adminRegister.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/utilisateur/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/utilisateur/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/ville/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/ville/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/bundles/TwigBundle/Exception/error.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/bundles/TwigBundle/Exception/error.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sortie/editer.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sortie/editer.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sortie/voir.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sortie/voir.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/utilisateur/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/utilisateur/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/utilisateur/update_password.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/utilisateur/update_password.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +21,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="fix-paxe-error-404" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -230,7 +206,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Merging fix/1",
+    "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/Users/eboyer2022/Documents/GitHub/ENI-Sortir/bin/console",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
