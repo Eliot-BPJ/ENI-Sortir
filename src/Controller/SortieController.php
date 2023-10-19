@@ -208,7 +208,6 @@ class SortieController extends AbstractController
                 $form->handleRequest($request);
                 if ($form->isSubmitted() && $form->isValid()) {
                     $sortie->setMotifAnnulation($form->get('motifAnnulation')->getData());
-                    $sortie->setEstHistorise(true);
                     $sortie->setEtat(Etats::Annulee);
                     $entityManager->persist($sortie);
                     $entityManager->flush();
@@ -219,7 +218,6 @@ class SortieController extends AbstractController
                 ]);
             } else {
                 $sortie->setEtat(Etats::Annulee);
-                $sortie->setEstHistorise(true);
                 $entityManager->persist($sortie);
                 $entityManager->flush();
 

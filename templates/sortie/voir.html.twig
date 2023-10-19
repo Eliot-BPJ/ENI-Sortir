@@ -13,7 +13,7 @@
         {% if sortie.motifAnnulation %}
             <div class="d-flex flex-column align-items-center text-center mb-4">
                 <p class="text-bg-danger rounded fw-bold w-75">Motif d'annulation</p>
-                <p class="fw-medium">Météo dévaforable à la sortie Piscine</p>
+                <p class="fw-medium">{{ sortie.motifAnnulation }}</p>
                 <hr class="w-75" />
             </div>
         {% endif %}
@@ -33,8 +33,8 @@
                                 </div>
                                 <div class="col-6">
                                     <p class="mb-4">{{ sortie.nom }}</p>
-                                    <p class="mb-4">{{ sortie.dateDebut | date('d-m-Y') }}</p>
-                                    <p class="mb-4">{{ sortie.dateLimiteInscription | date('d-m-Y') }}</p>
+                                    <p class="mb-4">{{ sortie.dateDebut | date("l, j F \\a\\t H\\hi") }}</p>
+                                    <p class="mb-4">{{ sortie.dateLimiteInscription | date('l, j F') }}</p>
                                     <p class="mb-4">{{ sortie.nbInscriptionMax }}</p>
                                     <p class="mb-4">{{ sortie.duree }}</p>
                                     <p class="mb-4">{{ sortie.infosSortie }}</p>
@@ -74,7 +74,7 @@
         {% elseif is_granted('ROLE_ADMIN') %}
             <i>Vous ne pouvez pas vous inscrire en étant administrateur !</i>
         {% else %}
-            <a href="{{ path("app_sortie_signup", {'id': sortie.id}) }}" class="btn btn-outline-info btn-lg mb-2">S'inscrire</a>
+            <a href="{{ path("app_sortie_signup", {'id': sortie.id}) }}" class="btn btn-outline-info mb-2">S'inscrire</a>
         {% endif %}
         <div>
             <table id="tableSortie" class="table table-striped" style="width:100%">

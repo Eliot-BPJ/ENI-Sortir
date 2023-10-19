@@ -38,7 +38,7 @@ class SortieRepository extends ServiceEntityRepository
             $qb->andWhere('s.site = :site')->setParameter('site', $filters->sites->getId());
         }
         if (isset($filters->etat) && $filters->etat->value) {
-            $qb->andWhere('s.etat LIKE :etat')->setParameter('etat', '%' . $filters->etat->value . '%');
+            $qb->andWhere('s.etat LIKE :etat')->setParameter('etat', $filters->etat->value);
         }
         if ($filters->passeFilter) {
             $qb->andWhere('s.etat LIKE :passe')->setParameter('passe', "Passée");

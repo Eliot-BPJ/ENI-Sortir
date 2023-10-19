@@ -31,7 +31,6 @@ class AccueilController extends AbstractController
             $filters->organisateurFilter = true;
             $sorties = $sortieRepository->findWithSearchFilters($filters, $user);
         }
-
         $inscrit = [];
         for ($i = 0; $i < count($sorties); $i++) {
             $inscrit[$i] = 0;
