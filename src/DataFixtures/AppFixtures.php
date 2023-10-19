@@ -277,7 +277,7 @@ class AppFixtures extends Fixture
 
         $sortie3 = new Sortie();
         $sortie3->setNom("Match de rugby : La Rochelle - Bordeaux");
-        $sortie3->setDateDebut(new \DateTime('2023-10-05 18:00'));
+        $sortie3->setDateDebut(new \DateTime('2023-10-20 18:00'));
         $sortie3->setDuree(80);
         $sortie3->setDateLimiteInscription(new \DateTime('2023-09-05 12:00'));
         $sortie3->setNbInscriptionMax(6);
@@ -340,7 +340,7 @@ class AppFixtures extends Fixture
         $sortie7->setInfosSortie("Voir le film le seigneur des anneaux en ciné-concert à bordeaux.");
         $sortie7->setSite($site);
         $sortie7->setLieux($lieu7);
-        $sortie7->setEtat(Etats::Passee);
+        $sortie7->setEtat(Etats::Cloturee);
         $sortie7->setOrganisateur($utilisateur);
         $sortie7->setEstHistorise(false);
         $manager->persist($sortie7);
@@ -358,6 +358,21 @@ class AppFixtures extends Fixture
         $sortie8->setOrganisateur($utilisateur);
         $sortie8->setEstHistorise(false);
         $manager->persist($sortie8);
+
+        $sortie9 = new Sortie();
+        $sortie9->setNom("Aprés-midi plage");
+        $sortie9->setDateDebut(new \DateTime('2023-10-18 09:00'));
+        $sortie9->setDuree(480);
+        $sortie9->setDateLimiteInscription(new \DateTime('2023-10-17 17:00'));
+        $sortie9->setNbInscriptionMax(20);
+        $sortie9->setInfosSortie("Présentation à la promo du site Sortir.com");
+        $sortie9->setSite($site);
+        $sortie9->setLieux($lieu8);
+        $sortie9->setEtat(Etats::Annulee);
+        $sortie9->setMotifAnnulation('Temps pluvieux et orageux.');
+        $sortie9->setOrganisateur($utilisateur);
+        $sortie9->setEstHistorise(false);
+        $manager->persist($sortie9);
     //#endregion ------------ SORTIE ------------
 
         $manager->flush();
