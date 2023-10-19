@@ -63,32 +63,27 @@
                                         {{ form_errors(form.infosSortie) }}
                                     </div>
                                 </div>
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                    <div class="form-outline flex-fill mb-0">
-                                        {{ form_row(form.ville, {'attr': {'class': "form-control"}}) }}
-                                        {{ form_errors(form.ville) }}
-                                    </div>
-                                </div>
                                 <div class="flex-row align-items-center mb-4" id="input-ville" style="display: flex">
-                                    <div class="form-outline flex-fill mb-0">
-                                        {{ form_row(form.lieux, {'attr': {'class': "form-control"}}) }}
-                                        {{ form_errors(form.lieux) }}
-                                        <div class="form-outline mt-2">
-                                            <button onclick="appearLieu()" type="button" class="btn btn-dark fw-bolder">Ajouter</button>
+                                    <div class="form-outline flex-fill mb-0" style="display: flex">
+                                        <div style="width:100%">
+                                            {{ form_row(form.lieux, {'attr': {'class': "form-control" }}) }}
+                                            {{ form_errors(form.lieux) }}
+                                        </div>
+                                        <div class="form-outline flex-fill mb-0" style="display: flex; align-items: center; padding-left: 10px; padding-top: 20px;">
+                                            <button onclick="appearLieu()" type="button" class="btn btn-outline-primary btn-circle">+</button>
                                         </div>
                                     </div>
 
                                 </div>
 
                                 <div id="form-lieu" style="display: none">
-                                    <div class="form-outline mb-2">
-                                        <button onclick="disappearLieu()" type="button" class="btn btn-dark fw-bolder">Annuler</button>
-                                    </div>
-
                                     <div class="d-flex flex-row align-items-center mb-4">
-                                        <div class="form-outline flex-fill mb-0">
+                                        <div class="form-outline flex-fill mb-0" style="width: 100%;">
                                             {{ form_row(formLieu.nom, {'attr': {'class': "form-control"}}) }}
                                             {{ form_errors(formLieu.nom) }}
+                                        </div>
+                                        <div class="form-outline flex-fill mb-0" style="display: flex; align-items: center; padding-left: 10px; padding-top: 20px;">
+                                            <button onclick="disappearLieu()" type="button" class="btn btn-outline-primary btn-circle">-</button>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center mb-4">

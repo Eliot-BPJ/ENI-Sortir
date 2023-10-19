@@ -1,19 +1,80 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Annuler une sortie  {% endblock %}
+{% block title %}Annuler une sortie {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
 
 {% block body %}
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
+    <div>
+        <h1 class="text-center fw-bold mb-5 mx-1 mx-md-4 mt-4">Annuler une sortie</h1>
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-12 col-xl-12">
+                    <div class="text-black" style="border-radius: 25px;">
+                        <div class="row justify-content-center">
+                            <div class="col-6 row">
+                                <div class="col-6">
+                                    <p class="text-primary mb-4">Nom de la sortie</p>
+                                    <p class="text-primary mb-4">Date et heure de la sortie</p>
+                                    <p class="text-primary mb-4">Description et infos</p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="mb-4">{{ sortie.nom }}</p>
+                                    <p class="mb-4">{{ sortie.dateDebut | date('d-m-Y') }}</p>
+                                    <p class="mb-4">{{ sortie.infosSortie }}</p>
+                                </div>
+                            </div>
+                            <div class="col-6 row">
+                                <div class="col-6">
+                                    <p class="text-primary mb-4">Ville</p>
+                                    <p class="text-primary mb-4">Lieu</p>
+                                    <p class="text-primary mb-4">Rue</p>
+                                    <p class="text-primary mb-4">Code postal</p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="mb-4">{{ sortie.lieux.ville.nom }}</p>
+                                    <p class="mb-4">{{ sortie.lieux.nom }}</p>
+                                    <p class="mb-4">{{ sortie.lieux.rue }}</p>
+                                    <p class="mb-4">{{ sortie.lieux.ville.codePostal }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <h1>Register</h1>
+        {{ form_errors(formAnnulationSortie) }}
 
-    {{ form_errors(formAnnulationSortie) }}
 
-    {{ form_start(formAnnulationSortie) }}
-    {{ form_row(formAnnulationSortie.motifAnnulation) }}
+        {{ form_start(formAnnulationSortie, {'attr': {'class': "mx-1 mx-md-4 needs-validation was-validated"}}) }}
 
-    <button type="submit" class="btn">Register</button>
-    {{ form_end(formAnnulationSortie) }}
+
+        <div class="col-6">
+            <div class="d-flex flex-row align-items-center mb-4">
+                <div class="form-outline flex-fill mb-0">
+                    {{ form_row(formAnnulationSortie.motifAnnulation, {'attr': {'class': "form-control"}}) }}
+                    {{ form_errors(formAnnulationSortie.motifAnnulation) }}
+                </div>
+            </div>
+
+        <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                <button type="submit" class="btn btn-outline-primary" name="save">Enregistrer</button>
+            </div>
+            <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                <a type="submit" class="btn btn-outline-info" href="{{ path('app_accueil') }}">Retour</a>
+            </div>
+        </div>
+        {{ form_end(formAnnulationSortie) }}
+
+    </div>
+
+
+
 {% endblock %}

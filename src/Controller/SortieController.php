@@ -2,13 +2,10 @@
 
 namespace App\Controller;
 
-use App\DTO\FiltersDTO;
 use App\Entity\Etats;
 use App\Entity\Lieu;
-use App\Entity\Sites;
 use App\Entity\Sortie;
 use App\Form\AnnulerSortieType;
-use App\Form\FiltersFormType;
 use App\Form\LieuType;
 use App\Form\SortieType;
 use App\Repository\LieuRepository;
@@ -25,12 +22,14 @@ class SortieController extends AbstractController
 {
     #[Route('/voir/{id}', name: '_list')]
     public function read(
-        Request $request,
-        EntityManagerInterface $entityManager,
         SortieRepository $sortieRepository,
-        SluggerInterface $slugger,
         int $id = null
     ): Response {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $sortie = $sortieRepository->find($id);
 
         $nbInscrit = 0;
@@ -56,14 +55,21 @@ class SortieController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         SortieRepository $sortieRepository,
-        SluggerInterface $slugger,
         LieuRepository $lieuRepository,
         int $id = null
     ): Response {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
         if ($id == null) {
             $sortie = new Sortie();
         } else {
             $sortie = $sortieRepository->find($id);
+            if((strpos($request->getPathInfo(), 'edit') && $sortie->getOrganisateur()->getId() !== $this->getUser()->getId()) || $sortie->getEtat()->value !== 'Créee') {
+                return $this->redirectToRoute('app_accueil');
+            }
         }
         $lieu = new Lieu();
         $idLieu = -1;
@@ -101,8 +107,7 @@ class SortieController extends AbstractController
             $duree =  floor($diff_in_seconds / 60); #in minutes
             //si la date de debut de la sortie est avant la date de fin
             //si la date d'inscription est avant la date de début
-            //je traite des données
-
+            //je traite les données
             if($dateFin>$dateDeb && $dateDeb>$dateInscription && $nbInscription>1){
                 $sortie->setDuree($duree);
 
@@ -132,9 +137,9 @@ class SortieController extends AbstractController
                     $this->addFlash('error',
                         'La date limite d\'inscription doit être avant le début de la sortie.');
                 }
-                if($nbInscription<2){
+                if($nbInscription<1){
                     $this->addFlash('error',
-                        'Il doit y avoir au moins 2 participants.');
+                        'Il doit y avoir au moins 1 participant.');
                 }
             }
 
@@ -148,13 +153,17 @@ class SortieController extends AbstractController
 
     #[Route('/voir/{id}/inscription', name: '_signup')]
     public function signup(
-        Request $request,
         EntityManagerInterface $entityManager,
         SortieRepository $sortieRepository,
         SluggerInterface $slugger,
         int $id = null
     ): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $sortie = $sortieRepository->find($id);
         $nbInscrit = 0;
         $signed_up_ids = [];
@@ -180,13 +189,16 @@ class SortieController extends AbstractController
 
     #[Route('/voir/{id}/quitter', name: '_leave')]
     public function leave(
-        Request $request,
         EntityManagerInterface $entityManager,
         SortieRepository $sortieRepository,
-        SluggerInterface $slugger,
         int $id = null
     ): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $sortie = $sortieRepository->find($id);
         $sortie->removeInscription($this->getUser());
 
@@ -197,11 +209,19 @@ class SortieController extends AbstractController
     }
 
     #[Route('/annuler/{id}', name: '_annuler')]
-    public function annulerSortie(Request $request,
-                                  EntityManagerInterface $entityManager,
-                                  SortieRepository $sortieRepository,
-                                  int $id): Response {
+    public function annulerSortie(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SortieRepository $sortieRepository,
+        int $id): Response
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $sortie = $sortieRepository->find($id);
+
         if($this->getUser()->getId() === $sortie->getOrganisateur()->getId() || in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
             if($sortie->getEtat()->value === "Ouverte") {
                 $form = $this->createForm(AnnulerSortieType::class);
@@ -214,6 +234,7 @@ class SortieController extends AbstractController
                     return $this->redirectToRoute('app_accueil');
                 }
                 return $this->render('sortie/annulerSortie.html.twig', [
+                    'sortie'=> $sortie,
                     'formAnnulationSortie' => $form->createView(),
                 ]);
             } else {

@@ -6,18 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7bb9dbbe-5e2b-4ae8-94de-79e1610d067a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/site.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/site.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/styles/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ville.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ville.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Admin/SiteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Admin/SiteController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Admin/VilleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Admin/VilleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accueil/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accueil/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/site/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/site/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/utilisateur/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/utilisateur/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/ville/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/ville/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/security/login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/login.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sortie/voir.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sortie/voir.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +21,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="fix-paxe-error-404" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -206,26 +194,29 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2WWAddJ0wwCjI3Hzfe9tLduFC22" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Styling&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/eboyer2022/Documents/GitHub/ENI-Sortir/bin/console&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.rainbow.brackets.root&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/eboyer2022/Documents/GitHub/ENI-Sortir/bin/console",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.rainbow.brackets.root",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\eboyer2022\Documents\GitHub\ENI-Sortir\migrations" />
