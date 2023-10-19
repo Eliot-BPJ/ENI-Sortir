@@ -65,7 +65,7 @@ class UtilisateurController extends AbstractController
      * @throws Exception
      */
     #[Route('/ajouter-csv', name: '_ajouter_csv')]
-    public function importUsers(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, SitesRepository $sitesRepository): Response
+    public function importUsers(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, SitesRepository $sitesRepository, UtilisateurRepository $utilisateurRepository): Response
     {
         $form = $this->createForm(RegisterWithCsvType::class);
         $form->handleRequest($request);
@@ -77,6 +77,7 @@ class UtilisateurController extends AbstractController
 
             $csv = Reader::createFromPath($csvFilePath, 'r');
             $csv->setHeaderOffset(0);
+            $utilisateursNonEnregistre = [];
 
             foreach ($csv as $user) {
                 $utilisateur = new Utilisateur();
@@ -95,10 +96,21 @@ class UtilisateurController extends AbstractController
                         $user['password']
                     )
                 );
-                $entityManager->persist($utilisateur);
-
+                $utilisateur->setHistoriser(false);
+                if($utilisateurRepository->findOneBy(['pseudo'=> $utilisateur->getPseudo()]) || $utilisateurRepository->findOneBy(['email'=>$utilisateur->getEmail()])) {
+                    array_push($utilisateursNonEnregistre, $utilisateur->getPseudo());
+                    $error = 'L\'utilisateur ne peut pas être car le pseudo ou l\'email est en doublon les utilisateurs concérnés sont :';
+                } else {
+                    $entityManager->persist($utilisateur);
+                }
             }
             $entityManager->flush();
+            if(count($utilisateursNonEnregistre) > 0) {
+                foreach ($utilisateursNonEnregistre as $utilisateurNonEnregisre) {
+                    $error = $error . ' ' . $utilisateurNonEnregisre;
+                }
+                    $this->addFlash('error',$error);
+            }
             return $this->redirectToRoute('app_admin_utilisateur_lister');
         }
 
