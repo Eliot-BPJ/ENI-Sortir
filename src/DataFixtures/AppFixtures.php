@@ -252,7 +252,7 @@ class AppFixtures extends Fixture
         $sortie1->setDateDebut(new \DateTime('2023-12-01 14:00'));
         $sortie1->setDuree(180);
         $sortie1->setDateLimiteInscription(new \DateTime('2023-11-21 14:00'));
-        $sortie1->setNbInscriptionMax(10);
+        $sortie1->setNbInscriptionMax(2);
         $sortie1->setInfosSortie("Sortie à la patinoire de niort.");
         $sortie1->setSite($site);
         $sortie1->setLieux($lieu2);
