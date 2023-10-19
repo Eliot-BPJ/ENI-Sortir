@@ -72,6 +72,8 @@
             <i>Vous vous êtes déjà inscrit à cette sortie !</i>
         {% elseif nbInscrit == sortie.nbInscriptionMax %}
             <i>Il n'y a plus de place !</i>
+        {% elseif sortie.etat.value == 'Créee' %}
+            <i>La sortie n'a pas été publiée</i>
         {% elseif is_granted('ROLE_ADMIN') %}
             <i>Vous ne pouvez pas vous inscrire en étant administrateur !</i>
         {% else %}
