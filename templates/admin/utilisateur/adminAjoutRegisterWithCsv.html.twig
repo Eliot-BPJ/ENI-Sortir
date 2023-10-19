@@ -3,10 +3,6 @@
 {% block title %}Admin - Ajouter liste{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
-
 <div class="card mb-3" style="width: 80% ; padding: 8px;">
     <div class="row g-0">
         <h1 class="text-center mb-4">Nouvelle liste utilisateur</h1>
