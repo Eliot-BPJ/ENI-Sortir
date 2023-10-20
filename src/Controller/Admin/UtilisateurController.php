@@ -70,43 +70,40 @@ class UtilisateurController extends AbstractController
         $form = $this->createForm(RegisterWithCsvType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
             $csvFile = $form->get('fichierCSV')->getData();
-
             $csvFilePath = $csvFile->getPathname();
-
             $csv = Reader::createFromPath($csvFilePath, 'r');
             $csv->setHeaderOffset(0);
             $utilisateursNonEnregistre = [];
-
             foreach ($csv as $user) {
-                if(!$user['pseudo'] || !$user['email'] || !$user['nom'] || !$user['prenom']
-                    || !$user['idSite'] || !$user['administrateur'] || !$user['actif']
-                    || !$user['telephone'] || !$user['password']) {
-                    $this->addFlash('error', 'Ajout d\'utilisateur impossible, il manque des colonnes');
-                }
-                $utilisateur = new Utilisateur();
-                $utilisateur->setPseudo($user['pseudo']);
-                $utilisateur->setEmail($user['email']);
-                $utilisateur->setNom($user['nom']);
-                $utilisateur->setPrenom($user['prenom']);
-                $site = $sitesRepository->find($user['idSite']);
-                $utilisateur->setIdSite($site);
-                $utilisateur->setAdministrateur($user['administrateur']);
-                $utilisateur->setActif($user['actif']);
-                $utilisateur->setTelephone($user['telephone']);
-                $utilisateur->setPassword(
-                    $userPasswordHasher->hashPassword(
-                        $utilisateur,
-                        $user['password']
-                    )
-                );
-                $utilisateur->setHistoriser(false);
-                if($utilisateurRepository->findOneBy(['pseudo'=> $utilisateur->getPseudo()]) || $utilisateurRepository->findOneBy(['email'=>$utilisateur->getEmail()])) {
-                    array_push($utilisateursNonEnregistre, $utilisateur->getPseudo());
-                    $error = 'L\'utilisateur ne peut pas être car le pseudo ou l\'email est en doublon les utilisateurs concérnés sont :';
+                if(!isset($user['pseudo']) || !isset($user['email']) || !isset($user['nom']) || !isset($user['prenom'])
+                    || !isset($user['idSite']) || !isset($user['administrateur']) || !isset($user['actif'])
+                    || !isset($user['telephone']) || !isset($user['password'])) {
+                        $this->addFlash('error', 'Ajout d\'utilisateur impossible, il manque des colonnes');
                 } else {
-                    $entityManager->persist($utilisateur);
+                    $utilisateur = new Utilisateur();
+                    $utilisateur->setPseudo($user['pseudo']);
+                    $utilisateur->setEmail($user['email']);
+                    $utilisateur->setNom($user['nom']);
+                    $utilisateur->setPrenom($user['prenom']);
+                    $site = $sitesRepository->find($user['idSite']);
+                    $utilisateur->setIdSite($site);
+                    $utilisateur->setAdministrateur($user['administrateur']);
+                    $utilisateur->setActif($user['actif']);
+                    $utilisateur->setTelephone($user['telephone']);
+                    $utilisateur->setPassword(
+                        $userPasswordHasher->hashPassword(
+                            $utilisateur,
+                            $user['password']
+                        )
+                    );
+                    $utilisateur->setHistoriser(false);
+                    if($utilisateurRepository->findOneBy(['pseudo'=> $utilisateur->getPseudo()]) || $utilisateurRepository->findOneBy(['email'=>$utilisateur->getEmail()])) {
+                        array_push($utilisateursNonEnregistre, $utilisateur->getPseudo());
+                        $error = 'L\'utilisateur ne peut pas être car le pseudo ou l\'email est en doublon les utilisateurs concérnés sont :';
+                    } else {
+                        $entityManager->persist($utilisateur);
+                    }
                 }
             }
             $entityManager->flush();
@@ -118,7 +115,6 @@ class UtilisateurController extends AbstractController
             }
             return $this->redirectToRoute('app_admin_utilisateur_lister');
         }
-
         return $this->render('admin/utilisateur/adminAjoutRegisterWithCsv.html.twig', [
             'formRegisterWithCsv' => $form->createView(),
         ]);
