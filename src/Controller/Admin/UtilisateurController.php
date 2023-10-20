@@ -80,6 +80,11 @@ class UtilisateurController extends AbstractController
             $utilisateursNonEnregistre = [];
 
             foreach ($csv as $user) {
+                if(!$user['pseudo'] || !$user['email'] || !$user['nom'] || !$user['prenom']
+                    || !$user['idSite'] || !$user['administrateur'] || !$user['actif']
+                    || !$user['telephone'] || !$user['password']) {
+                    $this->addFlash('error', 'Ajout d\'utilisateur impossible, il manque des colonnes');
+                }
                 $utilisateur = new Utilisateur();
                 $utilisateur->setPseudo($user['pseudo']);
                 $utilisateur->setEmail($user['email']);
